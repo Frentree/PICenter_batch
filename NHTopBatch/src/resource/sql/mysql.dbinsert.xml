@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="insert">
+
+	<insert id="settopcomp" parameterClass="com.skyun.app.util.database.ibatis.vo.pi_topcompVo">
+		INSERT INTO pi_topcomp
+			(target_id,regdate,rrn,rrn_pre,foreigner,foreigner_pre,driver,driver_pre,passport,passport_pre,account_num,account_num_pre,card_num,card_num_pre,total,total_pre,total_gap)
+		VALUES
+			(#target_id#,DATE_FORMAT(now(), '%Y%m%d'),#rrn#,#rrn_pre#,#foreigner#,#foreigner_pre#,#driver#,#driver_pre#,#passport#,#passport_pre#,#account_num#,#account_num_pre#,#card_num#,#card_num_pre#,#total#,#total_pre#,#total_gap#)
+		ON DUPLICATE KEY
+		UPDATE
+		  rrn=#rrn#,
+		  rrn_pre=#rrn_pre#,
+		  foreigner=#foreigner#,
+		  foreigner_pre=#foreigner_pre#,
+		  driver=#driver#,
+		  driver_pre=#driver_pre#,
+		  passport=#passport#,
+		  passport_pre=#passport_pre#,
+		  account_num=#account_num#,
+		  account_num_pre=#account_num_pre#,
+		  card_num=#card_num#,
+		  card_num_pre=#card_num_pre#,
+		  total=#total#,
+		  total_pre=#total_pre#,
+		  total_gap=#total_gap#,
+		  regdate=DATE_FORMAT(now(), '%Y%m%d')
+	</insert>
+
+	<insert id="setDelUpdate" parameterClass="com.skyun.app.util.database.ibatis.vo.pifindVo">
+		UPDATE pi_find
+		SET deldate= NOW()
+		WHERE group_id=#group_id#
+		AND   target_id=#target_id#
+		AND   hash_id=#hash_id#
+	</insert>
+	
+</sqlMap>
