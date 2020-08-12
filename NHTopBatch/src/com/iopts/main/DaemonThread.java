@@ -7,15 +7,21 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import org.apache.log4j.BasicConfigurator;
+
 import com.google.gson.Gson;
+import com.ibatis.common.logging.Log;
+import com.ibatis.common.logging.LogFactory;
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.skyun.app.util.config.AppConfig;
 import com.skyun.app.util.database.ibatis.SqlMapInstanceBATCH;
@@ -28,7 +34,6 @@ import com.skyun.app.util.database.ibatis.vo.pi_topcompVo;
 import com.skyun.app.util.database.ibatis.vo.pifindVo;
 
 public class DaemonThread implements Runnable {
-
 	private static SqlMapClient sqlMapPIC = null;
 	List<pi_topcompVo> predata = new ArrayList<pi_topcompVo>();
 
@@ -37,9 +42,9 @@ public class DaemonThread implements Runnable {
 	private MailForm M = new MailForm();
 
 	public DaemonThread() {
-
+		BasicConfigurator.configure();
 		int seq = getFileNo(AppConfig.getProperty("config.email.path"));
-
+		
 		// tgt = AppConfig.getProperty("config.email.path") + "/" +
 		// String.format("%s_%s_%s_%06d.txt",
 		// AppConfig.getProperty("config.email.init"), getCDate(),
@@ -77,6 +82,7 @@ public class DaemonThread implements Runnable {
 		String strDisconnect = "\n\nAGENT_NAME AGENT_CONNECTED_IP AGENT_CONNECTED\n";
 		try {
 			List<EmailItemVo> email = this.sqlMapPIC.openSession().queryForList("query.getAgentDisconnectList");
+			
 
 			EmailVo emailobj = new EmailVo();
 
