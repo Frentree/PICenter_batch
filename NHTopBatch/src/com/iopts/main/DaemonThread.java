@@ -64,12 +64,12 @@ public class DaemonThread implements Runnable {
 		try {
 			predata = this.sqlMapPIC.openSession().queryForList("query.getPreCount");
 			getNowData();
-			UpdateDelDate();
-			sendMail();
+//			UpdateDelDate();
+//			sendMail();
 
-			for (int i = 1; i < 8; i++) {
-				sendMailLoop(i);
-			}
+//			for (int i = 1; i < 8; i++) {
+//				sendMailLoop(i);
+//			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -312,7 +312,7 @@ public class DaemonThread implements Runnable {
 
 				// 어제 데이타를 sum 한다.
 				pi_topcompVo r = predataSum(p);
-
+				System.out.println(r.toString());
 				this.sqlMapPIC.openSession().insert("insert.settopcomp", r);
 
 				System.out.println(">>> DB pi_topcomp Data Insert :" + v.getTarget_id() + " ,," + r.getTotal());
@@ -360,6 +360,13 @@ public class DaemonThread implements Runnable {
 				r.setPassport_pre(predata.get(i).getForeigner());
 				r.setAccount_num_pre(predata.get(i).getAccount_num());
 				r.setCard_num_pre(predata.get(i).getCard_num());
+				r.setPhone_pre(predata.get(i).getPhone_num());
+				r.setPhone_num_pre(predata.get(i).getPhone_num_pre());
+				r.setMobile_phone_pre(predata.get(i).getMobile_phone());
+				r.setNew_rrn_pre(predata.get(i).getNew_rrn());
+				r.setEmail_pre(predata.get(i).getEmail());
+				r.setCarnum_pre(predata.get(i).getCarnum());
+				r.setVehicleid_pre(predata.get(i).getVehicleid());
 				r.setTotal_pre(predata.get(i).getTotal1());
 				r.setTotal_gap(r.getTotal() - predata.get(i).getTotal());
 			}
