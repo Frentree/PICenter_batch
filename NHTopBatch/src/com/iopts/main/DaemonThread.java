@@ -7,21 +7,21 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import org.apache.log4j.BasicConfigurator;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.config.Configurator;
+import org.apache.logging.log4j.core.config.DefaultConfiguration;
 
 import com.google.gson.Gson;
-import com.ibatis.common.logging.Log;
-import com.ibatis.common.logging.LogFactory;
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.skyun.app.util.config.AppConfig;
 import com.skyun.app.util.database.ibatis.SqlMapInstanceBATCH;
@@ -40,9 +40,11 @@ public class DaemonThread implements Runnable {
 	private String tgt_zip = "";
 	private String tgt = "";
 	private MailForm M = new MailForm();
+	private static Logger logger = LogManager.getLogger(DaemonThread.class);
 
 	public DaemonThread() {
-		BasicConfigurator.configure();
+		Configurator.initialize(new DefaultConfiguration());
+	    Configurator.setRootLevel(Level.INFO);
 		//int seq = getFileNo(AppConfig.getProperty("config.email.path"));
 		
 		// tgt = AppConfig.getProperty("config.email.path") + "/" +
@@ -314,8 +316,7 @@ public class DaemonThread implements Runnable {
 				pi_topcompVo r = predataSum(p);
 				System.out.println(r.toString());
 				this.sqlMapPIC.openSession().insert("insert.settopcomp", r);
-
-				System.out.println(">>> DB pi_topcomp Data Insert :" + v.getTarget_id() + " ,," + r.getTotal());
+				logger.info(">>> DB pi_topcomp Data Insert :" + v.getTarget_id() + " ,," + r.getTotal());
 
 			}
 		} catch (SQLException e) {

@@ -4,7 +4,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="lib/commons-io-2.5.jar"/>
 	<classpathentry kind="lib" path="lib/ibatis-sqlmap-2.3.4.726.jar"/>
-	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.45-bin.jar"/>
 	<classpathentry kind="lib" path="lib/sqljdbc42.jar"/>
 	<classpathentry kind="lib" path="lib/classmate-1.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-annotations-2.9.8.jar"/>
@@ -19,6 +18,8 @@
 	<classpathentry kind="lib" path="lib/json-20171018.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.7.25.jar"/>
 	<classpathentry kind="lib" path="lib/gson-2.8.2.jar"/>
-	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-api-2.16.0.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-core-2.16.0.jar"/>
+	<classpathentry kind="lib" path="lib/mariadb-java-client-2.7.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
