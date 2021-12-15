@@ -2,6 +2,8 @@ package com.skyun.app.util.database.ibatis.vo;
 
 public class PersonalVo {
 	private String target_id;
+	private int ap_no;
+	private long path_cnt=0;
 	private long rrn=0;
 	private long foreigner=0;
 	private long driver=0;
@@ -22,6 +24,18 @@ public class PersonalVo {
 	}
 	public void setTarget_id(String target_id) {
 		this.target_id = target_id;
+	}
+	public int getAp_no() {
+		return ap_no;
+	}
+	public void setAp_no(int ap_no) {
+		this.ap_no = ap_no;
+	}
+	public long getPath_cnt() {
+		return path_cnt;
+	}
+	public void setPath_cnt(long path_cnt) {
+		this.path_cnt = path_cnt;
 	}
 	public long getRrn() {
 		return rrn;

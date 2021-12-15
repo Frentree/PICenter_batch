@@ -43,15 +43,15 @@ public class DaemonThread implements Runnable {
 
 	public DaemonThread() {
 		BasicConfigurator.configure();
-		int seq = getFileNo(AppConfig.getProperty("config.email.path"));
+		//int seq = getFileNo(AppConfig.getProperty("config.email.path"));
 		
 		// tgt = AppConfig.getProperty("config.email.path") + "/" +
 		// String.format("%s_%s_%s_%06d.txt",
 		// AppConfig.getProperty("config.email.init"), getCDate(),
 		// AppConfig.getProperty("config.email.division"), seq);
-		tgt = AppConfig.getProperty("config.email.path") + "/" + String.format("BODY.mail");
+		/*tgt = AppConfig.getProperty("config.email.path") + "/" + String.format("BODY.mail");
 		tgt_zip = AppConfig.getProperty("config.email.path") + "/"
-				+ String.format("%s_%s_%s_%06d.zip", AppConfig.getProperty("config.email.init"), getCDate(), AppConfig.getProperty("config.email.division"), seq);
+				+ String.format("%s_%s_%s_%06d.zip", AppConfig.getProperty("config.email.init"), getCDate(), AppConfig.getProperty("config.email.division"), seq);*/
 
 		this.sqlMapPIC = SqlMapInstanceBATCH.getSqlMapInstance();
 		System.out.println("Batch work of information in the ti_topcomp table");

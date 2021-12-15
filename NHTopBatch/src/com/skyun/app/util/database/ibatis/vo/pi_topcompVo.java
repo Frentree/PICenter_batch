@@ -4,6 +4,8 @@ public class pi_topcompVo {
 	
 	private String target_id;
 	private String regdate;
+	private int ap_no;
+	private long path_cnt=0;
 	private long rrn=0;
 	private long rrn_pre=0;
 	private long foreigner=0;
@@ -41,6 +43,8 @@ public class pi_topcompVo {
 	
 	public void setPersol(PersonalVo v) {
 		this.target_id=v.getTarget_id();
+		this.ap_no=v.getAp_no();
+		this.path_cnt=v.getPath_cnt();
 		this.rrn=v.getRrn();
 		this.foreigner=v.getForeigner();
 		this.driver=v.getDriver();
@@ -71,6 +75,22 @@ public class pi_topcompVo {
 
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
+	}
+
+	public int getAp_no() {
+		return ap_no;
+	}
+
+	public void setAp_no(int ap_no) {
+		this.ap_no = ap_no;
+	}
+
+	public long getPath_cnt() {
+		return path_cnt;
+	}
+
+	public void setPath_cnt(long path_cnt) {
+		this.path_cnt = path_cnt;
 	}
 
 	public long getRrn() {
