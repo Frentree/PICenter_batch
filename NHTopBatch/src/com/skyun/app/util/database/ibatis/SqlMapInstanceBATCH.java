@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.util.Properties;
 
-
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.ibatis.sqlmap.client.SqlMapClientBuilder;
 import com.skyun.app.util.config.AppConfig;

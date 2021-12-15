@@ -19,7 +19,14 @@
 	<classpathentry kind="lib" path="lib/slf4j-api-1.7.25.jar"/>
 	<classpathentry kind="lib" path="lib/gson-2.8.2.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-api-2.16.0.jar"/>
-	<classpathentry kind="lib" path="lib/log4j-core-2.16.0.jar"/>
-	<classpathentry kind="lib" path="lib/mariadb-java-client-2.7.4.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-core-2.16.0.jar" sourcepath="C:/Users/pkdls/.m2/repository/org/apache/logging/log4j/log4j-core/2.16.0/log4j-core-2.16.0-sources.jar"/>
+	<classpathentry kind="lib" path="lib/jdom2-2.0.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/httpclient-4.5.13.jar"/>
+	<classpathentry kind="lib" path="lib/httpcore-4.4.14.jar"/>
+	<classpathentry kind="lib" path="lib/commons-beanutils-1.9.4.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/commons-codec-1.15.jar"/>
+	<classpathentry kind="lib" path="lib/junit-4.13.2.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.45-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

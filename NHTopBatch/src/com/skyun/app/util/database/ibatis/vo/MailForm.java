@@ -3,584 +3,240 @@ package com.skyun.app.util.database.ibatis.vo;
 import com.skyun.app.util.config.AppConfig;
 
 public class MailForm {
-
-	private String m1_header="<html>\n" + 
-			"	<head>\n" + 
-			"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n"+			
-			"		<title>Å×½ºÆ®</title>\n" + 
-			"		<style type=\"text/css\">\n" + 
-			"			.tg  {border-collapse:collapse;border-spacing:0;}\n" + 
-			"			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg .tg-qbec{font-weight:bold;background-color:#cccccc;border-color:inherit;text-align:center;vertical-align:top}\n" + 
-			"			.tg .tg-fymr{border-color:inherit;text-align:left;vertical-align:top;word-wrap: break-word;}\n" + 
-			"			.tg  {border-collapse:collapse;border-spacing:0;}\n" + 
-			"			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg .tg-aoc1{border-color:#006EB6;text-align:center;vertical-align:top}\n" + 
-			"			.tg .tg-7qyp{border-color:#006EB6;text-align:left;vertical-align:top}\n" + 
-			"           .center{text-align:center !important;}\n" + 
-			"           .right{text-align:right !important;}\n" + 
-			"		</style>\n" + 
-			"	</head>\n" + 
-			"	<body>\n" + 
-			"	<table class=\"tg\" style=\"undefined;table-layout: fixed; width: 850px\">\n" + 
-			"	<colgroup>\n" + 
-			"	<col style=\"width: 850px\">\n" + 
-			"	</colgroup>\n" + 
-			"	  <tr>\n" + 
-			"	    <th class=\"tg-aoc1\">_rname_(_sabun_) ´Ô²² µµÂøÇÑ</th>\n" + 
-			"	  </tr>\n" + 
-			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\"><¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ> °áÀç ¿äÃ» °ÇÀº ¾Æ·¡¿Í °°½À´Ï´Ù.</td>\n" + 
-			"	  </tr>\n" + 
-			"	  <tr>\n" + 
-			"	    <td class=\"tg-7qyp\">\n" + 
-			"		<div style=\"overflow:auto;\">\n" +
-			"		<table class=\"tg\" style=\"undefined;table-layout: fixed; width: 983px\">\n" + 
-			"		<colgroup>\n" + 
-			"		<col style=\"width: 250px\">\n" + 
-			"		<col style=\"width: 100px\">\n" + 
-			"		<col style=\"width: 100px\">\n" + 
-			"		<col style=\"width: 150px\">\n" + 
-			"		<col style=\"width: 150px\">\n" + 
-			"		<col style=\"width: 100px\">\n" + 
-			"		<col style=\"width: 200px\">\n" + 
-			"		</colgroup>\n" + 
-			"		  <tr>\n" + 
-			"		    <th class=\"tg-qbec\">¹®¼­¸í</th>\n" + 
-			"		    <th class=\"tg-qbec\">±â¾ÈÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">¹®¼­±â¾ÈÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">»óÅÂ</th>\n" + 
-			"		    <th class=\"tg-qbec\">ºñ°í</th>\n" + 
-			"		  </tr>";
-	private String m1_end="</table>\n" + 
-			"		</div>\n" +
-			"	    </td>\n" + 
-			"	  </tr>\n" + 
-			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\">ÀÚ¼¼ÇÑ ³»¿ëÀº <a href=\"_url_\" style=\"font-weight:bold;\"><U>³óÇù ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ</U></a> ¿¡¼­ È®ÀÎ ¹Ù¶ø´Ï´Ù.</td>\n" + 
-			"	  </tr>\n" + 
-			"	</table>\n" + 
-			"\n" + 
-			"	</body>\n" + 
-			"</html>\n" + 
-			"";
+	private String m_header="<body style=\"font-family:'Noto Sans KR',sans-serif;padding:0;margin:0;\">\r\n" + 
+			"<table style=\"border: 1px solid #ccc;\" border=\"0\" width=\"700\" cellspacing=\"0\" align=\"center\">\r\n" + 
+			"<tbody>\r\n" + 
+			"<tr>\r\n" + 
+			"<td align=\"center\">\r\n" + 
+			"<table style=\"border-bottom: 2px solid #000;\" border=\"0\" width=\"620\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"<tbody>\r\n" + 
+			"<tr>\r\n" + 
+			"<td><img src=\"https://pimc.sktelecom.com/resources/assets/images/SKT_mail_title_1.png\" width=\"620\" height=\"91\" /></td>\r\n" + 
+			"</tr>\r\n" + 
+			"</tbody>\r\n" + 
+			"</table>\r\n" + 
+			"<table border=\"0\" width=\"620\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"<tbody>\r\n" + 
+			"<tr>\r\n" + 
+			"<td style=\"height: 90px;\" align=\"center\" valign=\"bottom\"><img src =\"https://pimc.sktelecom.com/resources/assets/images/SKT_mail_icon_2.png\" style=\"vertical-align: bottom;\" width=\"59\" height=\"60\" /></td>\r\n" + 
+			"</tr>\r\n" + 
+			"<tr>\r\n" + 
+			"<td style=\"font-size: 13px; color: #999; font-weight: bold; height: 22px; letter-spacing: -0.7px; line-height: 13px;\" align=\"center\" valign=\"bottom\">ê°œì¸ì •ë³´ ê²€ì¶œê´€ë¦¬ì„¼í„°(PIMC)ì—ì„œ ë°œì†¡ë˜ëŠ” ì•ˆë‚´ ë©”ì¼ì…ë‹ˆë‹¤.</td>\r\n" + 
+			"</tr>\r\n" + 
+			"<tr>\r\n" + 
+			"<td style=\"height: 28px;\">&nbsp;</td>\r\n" + 
+			"</tr>\r\n" + 
+			"</tbody>\r\n" + 
+			"</table>";
+	
+	private String m1_body="<table style=\"border: 1px solid #cccccc; padding-top: 30px; height: 239px;\" border=\"0\" width=\"620\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"<tbody>\r\n" + 
+			"<tr style=\"height: 84px;\">\r\n" + 
+			"<td style=\"padding-left: 30px; height: 84px; width: 0px;\">&nbsp;</td>\r\n" + 
+			"<td style=\"font-size: 13px; font-weight: bold; height: 84px; letter-spacing: -0.5px; width: 590px;\">\r\n" + 
+			"<div style=\"line-height: 15px;\">ì •ë³´ë³´í˜¸ë‹´ë‹¹ ITë³´ì•ˆíŒ€ì—ì„œ ì•ˆë‚´ ë“œë¦½ë‹ˆë‹¤.\r\n" + 
+			"<p>&nbsp;</p>\r\n" + 
+			"<br>ì•„ë˜ì™€ ê°™ì´ 2022ë…„ 01ì›” ì „ì‚¬ ê°œì¸ì •ë³´ ê²€ì¶œê´€ë¦¬ ëŒ€ìƒ ì‹œìŠ¤í…œ ì •ë³´ë¥¼ ì•ˆë‚´ë“œë¦¬ì˜¤ë‹ˆ</br>\r\n" + 
+			"<br>ë‹´ë‹¹ìê»˜ì„œëŠ” ì•„ë˜ ë§í¬ì— ì ‘ì† í•˜ì…”ì„œ ê²€ì¶œ ì¼ì • ìˆ˜ë¦½ ë° ê²€ì¶œ ì‘ì—…ì„ ìˆ˜í–‰í•´ ì£¼ì‹œê¸°</br>\r\n" + 
+			"<br>ë°”ëë‹ˆë‹¤.</br>\r\n" + 
+			"<p>ë‹´ë‹¹ì ë³€ê²½ ë“± ì •ë³´ ìˆ˜ì •ì´ í•„ìš”í•˜ì‹  ê²½ìš° ê°œì¸ì •ë³´ ê²€ì¶œê´€ë¦¬ì„¼í„° ë‚´ì˜ </p>\r\n" + 
+			"<p>[ëŒ€ìƒ ê´€ë¦¬ > ë‹´ë‹¹ì ê´€ë¦¬] ë©”ë‰´ë¥¼ í™œìš©í•˜ì—¬ ë³€ê²½ì‚¬í•­ì„ ë“±ë¡í•´ ì£¼ì‹œê¸° ë°”ëë‹ˆë‹¤.\r\n" + 
+			"<p>&nbsp;</p>\r\n" + 
+			"<div style=\"font-size: 14px; font-weight: bold;\"><SPAN STYLE=\"background-color:#e6e6e6;\">ê°œì¸ì •ë³´ ê²€ì¶œê´€ë¦¬ì„¼í„°(PIMC) ë°”ë¡œê°€ê¸°(<a href=\"https://pimc.sktelecom.com\">https://pimc.sktelecom.com</a>)</div>\r\n" + 
+			"<p>&nbsp;</p>\r\n" + 
+			"<p>ê¸°íƒ€ ë¬¸ì˜ì‚¬í•­ì€ ë³¸ ë©”ì¼ì— íšŒì‹  ë˜ëŠ” ì•„ë˜ ë¬¸ì˜ì²˜ë¡œ ì—°ë½ì£¼ì‹œê¸° ë°”ëë‹ˆë‹¤.</p>\r\n" + 
+			"<p>&nbsp;</p>\r\n" + 
+			"</div>\r\n" + 
+			"</td>\r\n" + 
+			"</tr>\r\n" + 
+			"<tr style=\"height: 51px;\">\r\n" + 
+			"<td style=\"padding-left: 30px; height: 51px; width: 0px;\">&nbsp;</td>\r\n" + 
+			"<td style=\"height: 51px; width: 590px;\">\r\n" + 
+			"<table style=\"height: 16px;\" border=\"0\" width=\"590\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"<tbody>\r\n" + 
+			"<td align=\"left\" width=\"80\" style=\"font-size:13px;color:#999;font-weight:700;line-height:15px;\">ìˆ˜ ì‹  ì :</td>\r\n" + 
+			"<td style=\"font-size: 13px; color: #222222; font-weight: bold; height: 16px; width: 586px;\" align=\"left\">í™ê¸¸ë™</td>\r\n" + 
+			"</tr>\r\n" + 
+			"</tbody>\r\n" + 
+			"</table>\r\n" + 
+			"<table style=\"padding-top: 10px;\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"<tbody>\r\n" + 
+			"<tr>\r\n" + 
+			"<td style=\"font-size: 13px; color: #999; font-weight: bold; line-height: 15px;\" align=\"left\" width=\"80\">ì†Œì†ë¶€ì„œ :</td>\r\n" + 
+			"<td style=\"font-size: 13px; color: #222; font-weight: bold;\" width=\"575\">PIMC ì‚¬ìš©ì</td>\r\n" + 
+			"</tr>\r\n" + 
+			"</tbody>\r\n" + 
+			"</table>\r\n" + 
+			"</td>\r\n" + 
+			"</tr>\r\n" + 
+			"<tr>\r\n" + 
+			"<td style=\"padding-left:30;\"></td>\r\n" + 
+			"<td style=\"height:40px;\"></td>\r\n" + 
+			"<tr style=\"height: 42px;\">\r\n" + 
+			"<td style=\"padding-left: 30px; height: 42px; width: 0px;\">&nbsp;</td>\r\n" + 
+			"<td style=\"height: 42px; font-size: 13px; color: #999999; font-weight: bold; line-height: 13px; width: 590px;\">ë³€ê²½ ë‚´ì—­</td>\r\n" + 
+			"</tr>\r\n" + 
+			"<tr style=\"height: 22px;\">\r\n" + 
+			"<td style=\"padding-left: 30px; height: 22px; width: 0px;\">&nbsp;</td>\r\n" + 
+			"<td style=\"height: 22px; width: 590px;\">\r\n" + 
+			"<table border=\"0\" width=\"590\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"<tbody>";
 	
 	
-	private String m2_header="<html>\n" + 
-			"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n"+	
-			"	<head>\n" + 
-			"		<title>½ÂÀÎ ¹İ·Á</title>\n" + 
-			"		<style type=\"text/css\">\n" + 
-			"			.tg  {border-collapse:collapse;border-spacing:0;}\n" + 
-			"			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg .tg-qbec{font-weight:bold;background-color:#cccccc;border-color:inherit;text-align:center;vertical-align:top}\n" + 
-			"			.tg .tg-fymr{border-color:inherit;text-align:left;vertical-align:top;word-wrap: break-word;}\n" + 
-			"			.tg  {border-collapse:collapse;border-spacing:0;}\n" + 
-			"			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg .tg-aoc1{border-color:#006EB6;text-align:center;vertical-align:top}\n" + 
-			"			.tg .tg-7qyp{border-color:#006EB6;text-align:left;vertical-align:top}\n" + 
-			"           .center{text-align:center !important;}\n" + 
-			"           .right{text-align:right !important;}\n" + 
-			"		</style>\n" + 
-			"	</head>\n" + 
-			"	<body>\n" + 
-			"	<table class=\"tg\" style=\"undefined;table-layout: fixed; width: 850px\">\n" + 
-			"	<colgroup>\n" + 
-			"	<col style=\"width: 850px\">\n" + 
-			"	</colgroup>\n" + 
-			"	  <tr>\n" + 
-			"	    <th class=\"tg-aoc1\">_rname_(_sabun_) ´Ô²² µµÂøÇÑ</th>\n" + 
-			"	  </tr>\n" + 
-			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\"><¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ> °áÀç ¹İ·Á °ÇÀº ¾Æ·¡¿Í °°½À´Ï´Ù.</td>\n" + 
-			"	  </tr>\n" + 
-			"	  <tr>\n" + 
-			"	    <td class=\"tg-7qyp\">\n" + 
-			"		<div style=\"overflow:auto;\">" +
-			"		<table class=\"tg\" style=\"undefined;table-layout: fixed; width: 983px\">\n" + 
-			"		<colgroup>\n" + 
-			"		<col style=\"width: 250px\">\n" + 
-			"		<col style=\"width: 100px\">\n" + 
-			"		<col style=\"width: 100px\">\n" + 
-			"		<col style=\"width: 150px\">\n" + 
-			"		<col style=\"width: 150px\">\n" + 
-			"		<col style=\"width: 100px\">\n" + 
-			"		<col style=\"width: 200px\">\n" + 
-			"		</colgroup>\n" + 
-			"		  <tr>\n" + 
-			"		    <th class=\"tg-qbec\">¹®¼­¸í</th>\n" + 
-			"		    <th class=\"tg-qbec\">±â¾ÈÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">¹®¼­±â¾ÈÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">»óÅÂ</th>\n" + 
-			"		    <th class=\"tg-qbec\">ºñ°í</th>\n" + 
-			"		  </tr>"; 
-	private String m2_end="		</table>\n" + 
-			"		</div>\n" +
-			"	    </td>\n" + 
-			"	  </tr>\n" + 
-			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\">ÀÚ¼¼ÇÑ ³»¿ëÀº <a href=\"_url_\" style=\"font-weight:bold;\"><U>³óÇù ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ</U></a> ¿¡¼­ È®ÀÎ ¹Ù¶ø´Ï´Ù.</td>\n" + 
-			"	  </tr>\n" + 
-			"	</table>\n" + 
-			"\n" + 
-			"	</body>\n" + 
-			"</html>"; 
+	private String m2_body="<table style=\"border: 1px solid #cccccc; padding-top: 30px; height: 239px;\" border=\"0\" width=\"620\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"<tbody>\r\n" + 
+			"<tr style=\"height: 84px;\">\r\n" + 
+			"<td style=\"padding-left: 30px; height: 84px; width: 0px;\">&nbsp;</td>\r\n" + 
+			"<td style=\"font-size: 13px; font-weight: bold; height: 84px; letter-spacing: -0.5px; width: 590px;\">\r\n" + 
+			"<div style=\"line-height: 15px;\">ì •ë³´ë³´í˜¸ë‹´ë‹¹ ITë³´ì•ˆíŒ€ì—ì„œ ì•ˆë‚´ ë“œë¦½ë‹ˆë‹¤.\r\n" + 
+			"<p>&nbsp;</p>\r\n" + 
+			"<br>ì•„ë˜ì™€ ê°™ì´ ê°œì¸ì •ë³´ ê²€ì¶œê´€ë¦¬ ëŒ€ìƒ ì‹œìŠ¤í…œì˜ ë‹´ë‹¹ì í˜„í™©ì„ ì•ˆë‚´ ë“œë¦¬ì˜¤ë‹ˆ</br>\r\n" + 
+			"<br>ì—…ë¬´ì— ì°¸ê³ í•˜ì—¬ ì£¼ì‹œê¸° ë°”ë¼ê³ , ìƒì„¸ ë‚´ì—­ì— ëŒ€í•œ í™•ì¸ ë˜ëŠ” ë‹´ë‹¹ì ì •ë³´ì˜</br>\r\n" + 
+			"<p>ë³€ê²½ì´ í•„ìš”í•œ ê²½ìš° ì•„ë˜ ë§í¬ë¡œ ì ‘ì†í•˜ì—¬ ì¡°ì¹˜í•´ ì£¼ì‹œê¸° ë°”ëë‹ˆë‹¤.</p>\r\n" + 
+			"<p>&nbsp;</p>\r\n" + 
+			"<div style=\"font-size: 14px; font-weight: bold;\"><SPAN STYLE=\"background-color:#e6e6e6;\">ê°œì¸ì •ë³´ ê²€ì¶œê´€ë¦¬ì„¼í„°(PIMC) ë°”ë¡œê°€ê¸°(<a href=\"https://pimc.sktelecom.com\">https://pimc.sktelecom.com</a>)</div>\r\n" + 
+			"<p>&nbsp;</p>\r\n" + 
+			"<p>ê¸°íƒ€ ë¬¸ì˜ì‚¬í•­ì€ ë³¸ ë©”ì¼ì— íšŒì‹  ë˜ëŠ” ì•„ë˜ ë¬¸ì˜ì²˜ë¡œ ì—°ë½ì£¼ì‹œê¸° ë°”ëë‹ˆë‹¤.</p>\r\n" + 
+			"<p>&nbsp;</p>\r\n" + 
+			"</div>\r\n" + 
+			"</td>\r\n" + 
+			"</tr>\r\n" + 
+			"<tr style=\"height: 51px;\">\r\n" + 
+			"<td style=\"padding-left: 30px; height: 51px; width: 0px;\">&nbsp;</td>\r\n" + 
+			"<td style=\"height: 51px; width: 590px;\">\r\n" + 
+			"<table style=\"height: 16px;\" border=\"0\" width=\"590\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"<tbody>";
 	
+	private String m3_body="<table style=\"border: 1px solid #cccccc; padding-top: 30px; height: 239px;\" border=\"0\" width=\"620\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"<tbody>\r\n" + 
+			"<tr style=\"height: 84px;\">\r\n" + 
+			"<td style=\"padding-left: 30px; height: 84px; width: 0px;\">&nbsp;</td>\r\n" + 
+			"<td style=\"font-size: 13px; font-weight: bold; height: 84px; letter-spacing: -0.5px; width: 590px;\">\r\n" + 
+			"<div style=\"line-height: 15px;\">ì •ë³´ë³´í˜¸ë‹´ë‹¹ ITë³´ì•ˆíŒ€ì—ì„œ ì•ˆë‚´ ë“œë¦½ë‹ˆë‹¤.\r\n" + 
+			"<p>&nbsp;</p>\r\n" + 
+			"<br>SKT_REGDATE ê¸ˆì¼ ì™„ë£Œëœ ê°œì¸ì •ë³´ ê²€ì¶œ ì‘ì—… ê²°ê³¼, ì•„ë˜ì™€ ê°™ì´</br>\r\n" + 
+			"<br>SKT_USER(SKT_USER_NO)ë‹˜ ê»˜ì„œ ë‹´ë‹¹í•˜ê³  ê³„ì‹œëŠ” ì‹œìŠ¤í…œì—ì„œ ê°œì¸ì •ë³´ê°€</br>\r\n" + 
+			"<br>ê²€ì¶œë˜ì—ˆìŒì„ ì•Œë‚´ ë“œë¦½ë‹ˆë‹¤.ê²€ì¶œê²°ê³¼ì— ëŒ€í•œ ìƒì„¸ì •ë³´ëŠ” ì•„ë˜ ë§í¬ì—</br>\r\n" + 
+			"<br>ì ‘ì†í•˜ì‹œì–´ í™•ì¸í•´ ì£¼ì‹œê³ , 7 ì˜ì—…ì¼ ì´ë‚´ ì¡°ì¹˜ ê³„íšì„ ë“±ë¡í•´ ì£¼ì‹œê¸° ë°”ëë‹ˆë‹¤.</br>\r\n" + 
+			"<p>&nbsp;</p>\r\n" + 
+			"<div style=\"font-size: 14px; font-weight: bold;\"><SPAN STYLE=\"background-color:#e6e6e6;\">ê°œì¸ì •ë³´ ê²€ì¶œê´€ë¦¬ì„¼í„°(PIMC) ë°”ë¡œê°€ê¸°(<a href=\"https://pimc.sktelecom.com\">https://pimc.sktelecom.com</a>)</div>\r\n" + 
+			"<p>&nbsp;</p>\r\n" + 
+			"<p>ê¸°íƒ€ ë¬¸ì˜ì‚¬í•­ì€ ë³¸ ë©”ì¼ì— íšŒì‹  ë˜ëŠ” ì•„ë˜ ë¬¸ì˜ì²˜ë¡œ ì—°ë½ì£¼ì‹œê¸° ë°”ëë‹ˆë‹¤.</p>\r\n" + 
+			"<p>&nbsp;</p>\r\n" + 
+			"</div>\r\n" + 
+			"</td>\r\n" + 
+			"</tr>\r\n" + 
+			"<tr style=\"height: 51px;\">\r\n" + 
+			"<td style=\"padding-left: 30px; height: 51px; width: 0px;\">&nbsp;</td>\r\n" + 
+			"<td style=\"height: 51px; width: 590px;\">\r\n" + 
+			"<table style=\"height: 16px;\" border=\"0\" width=\"590\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"<tbody>";
 	
-	private String m3_header="<html>\n" + 
-			"	<head>\n" + 
-			"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n"+			
-			"		<title>½ÂÀÎ ¿Ï·á</title>\n" + 
-			"		<style type=\"text/css\">\n" + 
-			"			.tg  {border-collapse:collapse;border-spacing:0;}\n" + 
-			"			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg .tg-qbec{font-weight:bold;background-color:#cccccc;border-color:inherit;text-align:center;vertical-align:top}\n" + 
-			"			.tg .tg-fymr{border-color:inherit;text-align:left;vertical-align:top;word-wrap: break-word;}\n" + 
-			"			.tg  {border-collapse:collapse;border-spacing:0;}\n" + 
-			"			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg .tg-aoc1{border-color:#006EB6;text-align:center;vertical-align:top}\n" + 
-			"			.tg .tg-7qyp{border-color:#006EB6;text-align:left;vertical-align:top}\n" + 
-			"           .center{text-align:center !important;}\n" + 
-			"           .right{text-align:right !important;}\n" + 
-			"		</style>\n" + 
-			"	</head>\n" + 
-			"	<body>\n" + 
-			"	<table class=\"tg\" style=\"undefined;table-layout: fixed; width: 850px\">\n" + 
-			"	<colgroup>\n" + 
-			"	<col style=\"width: 850px\">\n" + 
-			"	</colgroup>\n" + 
-			"	  <tr>\n" + 
-			"	    <th class=\"tg-aoc1\">_rname_(_sabun_) ´Ô²² µµÂøÇÑ</th>\n" + 
-			"	  </tr>\n" + 
-			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\"><¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ> °áÀç ¿Ï·á °ÇÀº ¾Æ·¡¿Í °°½À´Ï´Ù.</td>\n" + 
-			"	  </tr>\n" + 
-			"	  <tr>\n" + 
-			"	    <td class=\"tg-7qyp\">\n" + 
-			"		<div style=\"overflow:auto;\">\n" + 
-			"		<table class=\"tg\" style=\"undefined;table-layout: fixed; width: 983px\">\n" + 
-			"		<colgroup>\n" + 
-			"		<col style=\"width: 250px\">\n" + 
-			"		<col style=\"width: 100px\">\n" + 
-			"		<col style=\"width: 100px\">\n" + 
-			"		<col style=\"width: 150px\">\n" + 
-			"		<col style=\"width: 150px\">\n" + 
-			"		<col style=\"width: 100px\">\n" + 
-			"		<col style=\"width: 200px\">\n" + 
-			"		</colgroup>\n" + 
-			"		  <tr>\n" + 
-			"		    <th class=\"tg-qbec\">¹®¼­¸í</th>\n" + 
-			"		    <th class=\"tg-qbec\">±â¾ÈÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">¹®¼­±â¾ÈÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">»óÅÂ</th>\n" + 
-			"		    <th class=\"tg-qbec\">ºñ°í</th>\n" + 
-			"		  </tr>"; 
-	private String m3_end="		</table>\n" + 
-			"   	</div>\n" + 
-			"	    </td>\n" + 
-			"	  </tr>\n" + 
-			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\">ÀÚ¼¼ÇÑ ³»¿ëÀº <a href=\"_url_\" style=\"font-weight:bold;\"><U>³óÇù ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ</U></a> ¿¡¼­ È®ÀÎ ¹Ù¶ø´Ï´Ù.</td>\n" + 
-			"	  </tr>\n" + 
-			"	</table>\n" + 
-			"\n" + 
-			"	</body>\n" + 
-			"</html>";
+	private String m_receiver="<td align=\"left\" width=\"80\" style=\"font-size:13px;color:#999;font-weight:700;line-height:15px;\">ìˆ˜ ì‹  ì :</td>\r\n" + 
+			"<td style=\"font-size: 13px; color: #222222; font-weight: bold; height: 16px; width: 586px;\" align=\"left\">SKT_USER</td>\r\n" + 
+			"</tr>\r\n" + 
+			"</tbody>\r\n" + 
+			"</table>\r\n" + 
+			"<table style=\"padding-top: 10px;\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"<tbody>\r\n" + 
+			"<tr>\r\n" + 
+			"<td style=\"font-size: 13px; color: #999; font-weight: bold; line-height: 15px;\" align=\"left\" width=\"80\">ì†Œì†ë¶€ì„œ :</td>\r\n" + 
+			"<td style=\"font-size: 13px; color: #222; font-weight: bold;\" width=\"575\">SKT_SOSOK</td>\r\n" + 
+			"</tr>\r\n" + 
+			"</tbody>\r\n" + 
+			"</table>\r\n" + 
+			"</td>\r\n" + 
+			"</tr>\r\n" + 
+			"<tr>\r\n" + 
+			"<td style=\"padding-left:30;\"></td>\r\n" + 
+			"<td style=\"height:40px;\"></td>\r\n" + 
+			"<tr style=\"height: 42px;\">\r\n" + 
+			"<td style=\"padding-left: 30px; height: 42px; width: 0px;\">&nbsp;</td>\r\n" + 
+			"<td style=\"height: 42px; font-size: 13px; color: #999999; font-weight: bold; line-height: 13px; width: 590px;\">ë³€ê²½ ë‚´ì—­</td>\r\n" + 
+			"</tr>\r\n" + 
+			"<tr style=\"height: 22px;\">\r\n" + 
+			"<td style=\"padding-left: 30px; height: 22px; width: 0px;\">&nbsp;</td>\r\n" + 
+			"<td style=\"height: 22px; width: 590px;\">\r\n" + 
+			"<table border=\"0\" width=\"590\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"<tbody>";
 	
-	private String m4_header="<html>\n" + 
-			"	<head>\n" + 
-			"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n"+			
-			"		<title>´ã´çÀÚ º¯°æ ¿äÃ»</title>\n" + 
-			"		<style type=\"text/css\">\n" + 
-			"			.tg  {border-collapse:collapse;border-spacing:0;}\n" + 
-			"			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg .tg-qbec{font-weight:bold;background-color:#cccccc;border-color:inherit;text-align:center;vertical-align:top}\n" + 
-			"			.tg .tg-fymr{border-color:inherit;text-align:left;vertical-align:top;word-wrap: break-word;}\n" + 
-			"			.tg  {border-collapse:collapse;border-spacing:0;}\n" + 
-			"			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg .tg-aoc1{border-color:#006EB6;text-align:center;vertical-align:top}\n" + 
-			"			.tg .tg-7qyp{border-color:#006EB6;text-align:left;vertical-align:top}\n" + 
-			"           .center{text-align:center !important;}\n" + 
-			"           .right{text-align:right !important;}\n" + 
-			"		</style>\n" + 
-			"	</head>\n" + 
-			"	<body>\n" + 
-			"	<table class=\"tg\" style=\"undefined;table-layout: fixed; width: 850px\">\n" + 
-			"	<colgroup>\n" + 
-			"	<col style=\"width: 850px\">\n" + 
-			"	</colgroup>\n" + 
-			"	  <tr>\n" + 
-			"	    <th class=\"tg-aoc1\">_rname_(_sabun_) ´Ô²² µµÂøÇÑ</th>\n" + 
-			"	  </tr>\n" + 
-			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\"><¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ> ´ã´çÀÚ º¯°æ ½ÂÀÎ ¿äÃ» °ÇÀº ¾Æ·¡¿Í °°½À´Ï´Ù.</td>\n" + 
-			"	  </tr>\n" + 
-			"	  <tr>\n" + 
-			"	    <td class=\"tg-7qyp\" >\n" + 
-			"		<div style=\"overflow:auto;\">\n" + 
-			"		<table class=\"tg\" style=\"undefined;table-layout: fixed; width: 983px\">\n" + 
-			"		<colgroup>\n" + 
-			"		<col style=\"width: 120px\">\n" + 
-			"		<col style=\"width: 330px\">\n" + 
-			"		<col style=\"width: 80px\">\n" + 
-			"		<col style=\"width: 80px\">\n" + 
-			"		<col style=\"width: 150px\">\n" + 
-			"		<col style=\"width: 150px\">\n" + 
-			"		<col style=\"width: 100px\">\n" + 
-			"		<col style=\"width: 200px\">\n" + 
-			"		</colgroup>\n" + 
-			"		  <tr>\n" + 
-			"		    <th class=\"tg-qbec\">È£½ºÆ®</th>\n" + 
-			"		    <th class=\"tg-qbec\">°æ·Î</th>\n" + 
-			"		    <th class=\"tg-qbec\">±â¾ÈÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">½ÅÃ»ÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">»óÅÂ</th>\n" + 
-			"		    <th class=\"tg-qbec\">ºñ°í</th>\n" + 
-			"		  </tr>"; 
-	private String m4_end="			</table>\n" + 
-			"		</div>\n" + 
-			"	    </td>\n" + 
-			"	  </tr>\n" + 
-			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\">ÀÚ¼¼ÇÑ ³»¿ëÀº <a href=\"_url_\" style=\"font-weight:bold;\"><U>³óÇù ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ</U></a> ¿¡¼­ È®ÀÎ ¹Ù¶ø´Ï´Ù.</td>\n" + 
-			"	  </tr>\n" + 
-			"	</table>\n" +
-			"\n" + 
-			"	</body>\n" + 
-			"</html>";
-	
-	
-	private String m5_header="<html>\n" + 
-			"	<head>\n" + 
-			"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n"+			
-			"		<title>´ã´çÀÚ º¯°æ ¹İ·Á</title>\n" + 
-			"		<style type=\"text/css\">\n" + 
-			"			.tg  {border-collapse:collapse;border-spacing:0;}\n" + 
-			"			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg .tg-qbec{font-weight:bold;background-color:#cccccc;border-color:inherit;text-align:center;vertical-align:top}\n" + 
-			"			.tg .tg-fymr{border-color:inherit;text-align:left;vertical-align:top;word-wrap: break-word;}\n" + 
-			"			.tg  {border-collapse:collapse;border-spacing:0;}\n" + 
-			"			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg .tg-aoc1{border-color:#006EB6;text-align:center;vertical-align:top}\n" + 
-			"			.tg .tg-7qyp{border-color:#006EB6;text-align:left;vertical-align:top}\n" + 
-			"           .center{text-align:center !important;}\n" + 
-			"           .right{text-align:right !important;}\n" + 
-			"		</style>\n" + 
-			"	</head>\n" + 
-			"	<body>\n" + 
-			"	<table class=\"tg\" style=\"undefined;table-layout: fixed; width: 850px\">\n" + 
-			"	<colgroup>\n" + 
-			"	<col style=\"width: 850px\">\n" + 
-			"	</colgroup>\n" + 
-			"	  <tr>\n" + 
-			"	    <th class=\"tg-aoc1\">_rname_(_sabun_) ´Ô²² µµÂøÇÑ</th>\n" + 
-			"	  </tr>\n" + 
-			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\"><¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ> ´ã´çÀÚ º¯°æ ½ÂÀÎ ¹İ·Á °ÇÀº ¾Æ·¡¿Í °°½À´Ï´Ù.</td>\n" + 
-			"	  </tr>\n" + 
-			"	  <tr>\n" + 
-			"	    <td class=\"tg-7qyp\">\n" + 
-			"		<div style=\"overflow:auto;\">\n" +
-			"		<table class=\"tg\" style=\"undefined;table-layout: fixed; width: 983px\">\n" + 
-			"		<colgroup>\n" + 
-			"		<col style=\"width: 120px\">\n" + 
-			"		<col style=\"width: 330px\">\n" + 
-			"		<col style=\"width: 80px\">\n" + 
-			"		<col style=\"width: 80px\">\n" + 
-			"		<col style=\"width: 150px\">\n" + 
-			"		<col style=\"width: 150px\">\n" + 
-			"		<col style=\"width: 100px\">\n" + 
-			"		<col style=\"width: 200px\">\n" + 
-			"		</colgroup>\n" + 
-			"		  <tr>\n" + 
-			"		    <th class=\"tg-qbec\">È£½ºÆ®</th>\n" + 
-			"		    <th class=\"tg-qbec\">°æ·Î</th>\n" + 
-			"		    <th class=\"tg-qbec\">±â¾ÈÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">½ÅÃ»ÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">»óÅÂ</th>\n" + 
-			"		    <th class=\"tg-qbec\">ºñ°í</th>\n" + 
-			"		  </tr>"; 
-	private String m5_end="		</table>\n" + 
-			"		</div>\n" + 
-			"	    </td>\n" + 
-			"	  </tr>\n" + 
-			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\">ÀÚ¼¼ÇÑ ³»¿ëÀº <a href=\"_url_\" style=\"font-weight:bold;\"><U>³óÇù ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ</U></a> ¿¡¼­ È®ÀÎ ¹Ù¶ø´Ï´Ù.</td>\n" + 
-			"	  </tr>\n" + 
-			"	</table>\n" + 
-			"\n" + 
-			"	</body>\n" + 
-			"</html>\n" + 
-			"";
-	
-	
-	private String m6_header="<html>\n" + 
-			"	<head>\n" + 
-			"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n"+			
-			"		<title>´ã´çÀÚ º¯°æ ¿Ï·á</title>\n" + 
-			"		<style type=\"text/css\">\n" + 
-			"			.tg  {border-collapse:collapse;border-spacing:0;}\n" + 
-			"			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg .tg-qbec{font-weight:bold;background-color:#cccccc;border-color:inherit;text-align:center;vertical-align:top}\n" + 
-			"			.tg .tg-fymr{border-color:inherit;text-align:left;vertical-align:top; word-wrap: break-word;}\n" + 
-			"			.tg  {border-collapse:collapse;border-spacing:0;}\n" + 
-			"			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg .tg-aoc1{border-color:#006EB6;text-align:center;vertical-align:top}\n" + 
-			"			.tg .tg-7qyp{border-color:#006EB6;text-align:left;vertical-align:top}\n" + 
-			"           .center{text-align:center !important;}\n" + 
-			"           .right{text-align:right !important;}\n" + 
-			"		</style>\n" + 
-			"	</head>\n" + 
-			"	<body>\n" + 
-			"	<table class=\"tg\" style=\"undefined;table-layout: fixed; width: 850px\">\n" + 
-			"	<colgroup>\n" + 
-			"	<col style=\"width: 850px\">\n" + 
-			"	</colgroup>\n" + 
-			"	  <tr>\n" + 
-			"	    <th class=\"tg-aoc1\">_rname_(_sabun_) ´Ô²² µµÂøÇÑ</th>\n" + 
-			"	  </tr>\n" + 
-			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\"><¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ> ´ã´çÀÚ º¯°æ ½ÂÀÎ ¿Ï·á °ÇÀº ¾Æ·¡¿Í °°½À´Ï´Ù.</td>\n" + 
-			"	  </tr>\n" + 
-			"	  <tr>\n" + 
-			"	    <td class=\"tg-7qyp\">\n" + 
-			" 		<div style=\"overflow:auto;\">\n" +
-			"		<table class=\"tg\" style=\"undefined;table-layout: fixed; width: 983px\">\n" + 
-			"		<colgroup>\n" + 
-			"		<col style=\"width: 120px\">\n" + 
-			"		<col style=\"width: 300px\">\n" + 
-			"		<col style=\"width: 80px\">\n" + 
-			"		<col style=\"width: 80px\">\n" + 
-			"		<col style=\"width: 150px\">\n" + 
-			"		<col style=\"width: 150px\">\n" + 
-			"		<col style=\"width: 100px\">\n" + 
-			"		<col style=\"width: 200px\">\n" + 
-			"		</colgroup>\n" + 
-			"		  <tr>\n" + 
-			"		    <th class=\"tg-qbec\">È£½ºÆ®</th>\n" + 
-			"		    <th class=\"tg-qbec\">°æ·Î</th>\n" + 
-			"		    <th class=\"tg-qbec\">±â¾ÈÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">½ÅÃ»ÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">»óÅÂ</th>\n" + 
-			"		    <th class=\"tg-qbec\">ºñ°í</th>\n" + 
-			"		  </tr>"; 
-	private String m6_end="		</table>\n" + 
-			" 		</div>\n" +
-			"	    </td>\n" + 
-			"	  </tr>\n" + 
-			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\">ÀÚ¼¼ÇÑ ³»¿ëÀº <a href=\"_url_\" style=\"font-weight:bold;\"><U>³óÇù ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ</U></a> ¿¡¼­ È®ÀÎ ¹Ù¶ø´Ï´Ù.</td>\n" + 
-			"	  </tr>\n" + 
-			"	</table>\n" + 
-			"\n" + 
-			"	</body>\n" + 
-			"</html>\n" + 
-			"";
-	
-
-	private String m7_header="<html>\n" + 
-			"	<head>\n" + 
-			"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n"+			
-			"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n" + 
-			"		<title>°Ë»ö °á°ú ¾Ë¶÷</title>\n" + 
-			"		<style type=\"text/css\">\n" + 
-			"			.tg  {border-collapse:collapse;border-spacing:0;}\n" + 
-			"			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg .tg-qbec{font-weight:bold;background-color:#cccccc;border-color:inherit;text-align:center;vertical-align:top}\n" + 
-			"			.tg .tg-fymr{border-color:inherit;text-align:left;vertical-align:top;word-wrap: break-word;}\n" + 
-			"			.tg  {border-collapse:collapse;border-spacing:0;}\n" + 
-			"			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"			.tg .tg-aoc1{border-color:#006EB6;text-align:center;vertical-align:top}\n" + 
-			"			.tg .tg-7qyp{border-color:#006EB6;text-align:left;vertical-align:top}\n" + 
-			"           .center{text-align:center !important;}\n" + 
-			"           .right{text-align:right !important;}\n" + 
-			"		</style>\n" + 
-			"	</head>\n" + 
-			"	<body>\n" + 
-			"	<table class=\"tg\" style=\"undefined;table-layout: fixed; width: 850px; h\">\n" + 
-			"	<colgroup>\n" + 
-			"	<col style=\"width: 850px\">\n" + 
-			"	</colgroup>\n" + 
-			"	  <tr>\n" + 
-			"	    <th class=\"tg-aoc1\">_rname_(_sabun_) ´Ô²² µµÂøÇÑ</th>\n" + 
-			"	  </tr>\n" + 
-			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\"><¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ> °ËÃâ °á°ú °ÇÀº ¾Æ·¡¿Í °°½À´Ï´Ù.</td>\n" + 
-			"	  </tr>\n" + 
-			"	  <tr>\n" + 
-			"	    <td class=\"tg-7qyp\">\n" + 
-			"		<div style=\"overflow:auto;\">\n" +
-			"		<table class=\"tg\" style=\"undefined;table-layout: fixed; width: 983px\">\n" + 
-			"		<colgroup>\n" + 
-			"		<col style=\"width: 120px\">\n" + 
-			"		<col style=\"width: 320px\">\n" + 
-			"		<col style=\"width: 100px\">\n" + 
-			"		<col style=\"width: 80px\">\n" + 
-			"		<col style=\"width: 110px\">\n" + 
-			"		<col style=\"width: 80px\">\n" + 
-			"		<col style=\"width: 80px\">\n" +
-			"		<col style=\"width: 80px\">\n" +
-			"		<col style=\"width: 80px\">\n" +			
-			"		<col style=\"width: 120px\">\n" + 
-			"		<col style=\"width: 200px\">\n" + 
-			"		</colgroup>\n" + 
-			"		  <tr>\n" + 
-			"		    <th class=\"tg-qbec\">È£½ºÆ®</th>\n" + 
-			"		    <th class=\"tg-qbec\">°æ·Î</th>\n" + 
-			"		    <th class=\"tg-qbec\">¼ÒÀ¯ÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">ÁÖ¹Î¹øÈ£</th>\n" + 		
-			"		    <th class=\"tg-qbec\">¿Ü±¹ÀÎ¹øÈ£</th>\n" +
-			"		    <th class=\"tg-qbec\">¿©±Ç¹øÈ£</th>\n" +
-			"		    <th class=\"tg-qbec\">¿îÀü¹øÈ£</th>\n" +
-			"		    <th class=\"tg-qbec\">°èÁÂ¹øÈ£</th>\n" +
-			"		    <th class=\"tg-qbec\">Ä«µå¹øÈ£</th>\n" +			
-			"		    <th class=\"tg-qbec\">ÇÕ°è</th>\n" + 
-			"		    <th class=\"tg-qbec\">Ã³¸®»óÅÂ</th>\n" + 
-			"		  </tr>"; 
-	private String m7_end="		</table>\n" + 
-			"		</div>\n" +
-			"	    </td>\n" + 
-			"	  </tr>\n" + 
-			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\">ÀÚ¼¼ÇÑ ³»¿ëÀº <a href=\"_url_\" style=\"font-weight:bold;\"><U>³óÇù ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ</U></a> ¿¡¼­ È®ÀÎ ¹Ù¶ø´Ï´Ù.</td>\n" + 
-			"	  </tr>\n" + 
-			"	</table>\n" + 
-			"\n" + 
-			"	</body>\n" + 
-			"</html>\n" + 
-			"";
-
-	
-	private String m8_header="<html>\n" + 
-			"           <head>\n" + 
-			"                     <title>Á¢¼Ó ¿À·ù</title>\n" + 
-			"                     <style type=\"text/css\">\n" + 
-			"                                .tg  {border-collapse:collapse;border-spacing:0;}\n" + 
-			"                                .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"                                .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"                                .tg .tg-qbec{font-weight:bold;background-color:#cccccc;border-color:inherit;text-align:center;vertical-align:top}\n" + 
-			"                                .tg .tg-fymr{border-color:inherit;text-align:left;vertical-align:top;word-wrap: break-word;}\n" + 
-			"                                .tg  {border-collapse:collapse;border-spacing:0;}\n" + 
-			"                                .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"                                .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
-			"                                .tg .tg-aoc1{border-color:#006EB6;text-align:center;vertical-align:top}\n" + 
-			"                                .tg .tg-7qyp{border-color:#006EB6;text-align:left;vertical-align:top}\n" + 
-			"                                .center{text-align:center !important;}\n" + 
-			"                                .right{text-align:right !important;}\n" + 
-			"                     </style>\n" + 
-			"           </head>\n" + 
-			"           <body>\n" + 
-			"           <table class=\"tg\" style=\"undefined;table-layout: fixed; width: 850px\">\n" + 
-			"           <colgroup>\n" + 
-			"           <col style=\"width: 850px\">\n" + 
-			"           </colgroup>\n" + 
-			"             <tr>\n" + 
-			"	   			 <th class=\"tg-aoc1\">_rname_(_sabun_) ´Ô²² µµÂøÇÑ</th>\n" + 
-			"             </tr>\n" + 
-			"             <tr>\n" + 
-			"               <td class=\"tg-aoc1\"><¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ> Á¢¼Ó ¿À·ù °ÇÀº ¾Æ·¡¿Í °°½À´Ï´Ù.</td>\n" + 
-			"             </tr>\n" + 
-			"             <tr>\n" + 
-			"               <td class=\"tg-7qyp\">\n" + 
-			"					<div style=\"overflow:auto;\">\n" +
-			"                     <table class=\"tg\" style=\"undefined;table-layout: fixed; width: 100%\">\n" + 
-			"                     <colgroup>\n" + 
-			"                     <col style=\"width: 50%\">\n" + 
-			"                     <col style=\"width: 50%\">\n" + 
-			"                     </colgroup>\n" + 
-			"                       <tr>\n" + 
-			"                         <th class=\"tg-qbec\">È£½ºÆ®¸í</th>\n" + 
-			"                         <th class=\"tg-qbec\">IP</th>\n" + 
-			"                       </tr>";
-	private String m8_end="                    </table>\n" + 
-			"               </td>\n" + 
-			"             </tr>\n" + 
-			"             <tr>\n" + 
-			"	    			<td class=\"tg-aoc1\" >ÀÚ¼¼ÇÑ ³»¿ëÀº <a href=\"_url_\" style=\"font-weight:bold;\"><U>³óÇù ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ</U></a> ¿¡¼­ È®ÀÎ ¹Ù¶ø´Ï´Ù.</td>\n" + 
-			"             </tr>\n" + 
-			"           </table>\n" + 
-			"			</div>" +
-			"           </body>\n" + 
-			"\n" + 
-			"</html>";
+	private String m_end="</tbody>\r\n" + 
+			"</table>\r\n" + 
+			"</td>\r\n" + 
+			"</tr>\r\n" + 
+			"<tr style=\"height: 40px;\">\r\n" + 
+			"<td style=\"padding-left: 30px; height: 40px; width: 0px;\">&nbsp;</td>\r\n" + 
+			"<td style=\"height: 40px; width: 590px;\">&nbsp;</td>\r\n" + 
+			"</tr>\r\n" + 
+			"</tbody>\r\n" + 
+			"</table>\r\n" + 
+			"<table border=\"0\" width=\"700\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"<tbody>\r\n" + 
+			"<tr>\r\n" + 
+			"<td style=\"height: 80px;\">&nbsp;</td>\r\n" + 
+			"</tr>\r\n" + 
+			"</tbody>\r\n" + 
+			"</table>\r\n" + 
+			"<table style=\"border-top: 1px solid #ccc;\" border=\"0\" width=\"700\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"<tbody>\r\n" + 
+			"<tr>\r\n" + 
+			"<td bgcolor=\"#e6e6e6\" height=\"120\">\r\n" + 
+			"<table>\r\n" + 
+			"<tbody>\r\n" + 
+			"<tr>\r\n" + 
+			"<td style=\"padding-left: 40px;\" width=\"110\"><img src=\"https://pimc.sktelecom.com/resources/assets/images/SKT_mail_footer%20logo.png\" width=\"82\" height=\"32\" /></td>\r\n" + 
+			"<td style=\"letter-spacing: -0.2px;\">\r\n" + 
+			"<div style=\"font-size: 12px; color: #999; font-weight: bold; line-height: 13px; padding-top: 0; padding-bottom: 10px;\">- ê´€ë ¨ ë¬¸ì˜ì²˜: ITë³´ì•ˆ ìš´ì˜ì‹¤ ë‹´ë‹¹(02-6400-8842, kimcom96@partner.sktelecom.com) </div>\r\n" + 
+			"</td>\r\n" + 
+			"</tr>\r\n" + 
+			"</tbody>\r\n" + 
+			"</table>\r\n" + 
+			"</td>\r\n" + 
+			"</tr>\r\n" + 
+			"</tbody>\r\n" + 
+			"</table>\r\n" + 
+			"<table border=\"0\" width=\"700\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"<tbody>\r\n" + 
+			"<tr>\r\n" + 
+			"<td style=\"font-size: 11px; color: #aaa; font-weight: bold;\" align=\"center\" height=\"42\">Personal Information Management Center</td>\r\n" + 
+			"</tr>\r\n" + 
+			"</tbody>\r\n" + 
+			"</table>\r\n" + 
+			"</tr>\r\n" + 
+			"</tbody>\r\n" + 
+			"</table>\r\n" + 
+			"</body>";
+			
 	
 	public MailForm() {
 		
 	}
 
 
-	public String get_header(int i) {
-		if( i==1) {
-			return m1_header;	
-		}else if(i ==2) {
-			return m2_header;
-		}else if(i ==3) {
-			return m3_header;
-		}else if(i ==4) {
-			return m4_header;
-		}else if(i ==5) {
-			return m5_header;
-		}else if(i ==6) {
-			return m6_header;
-		}else if(i ==7) {
-			return m7_header;
-		}else if(i ==8) {
-			return m8_header;
-		}
-		return " ";
+	public String get_header() {
+		return m_header;
+	}
+	
+	public String get_body(int i) {
+		String body = "";
 		
+		if(i == 1) {
+			
+		} else if(i == 2) {
+			body = m2_body;
+		} else if(i == 3) {
+			body = m3_body;
+		}
+		
+		return body;
+	}
+	
+	public String get_receiver() {
+		return m_receiver;
 	}
 
-
-	public String get_end(int i) {
-		String sret="";
-		if( i==1) {
-			sret= m1_end;	
-		}else if(i ==2) {
-			sret= m2_end;
-		}else if(i ==3) {
-			sret= m3_end;
-		}else if(i ==4) {
-			sret= m4_end;
-		}else if(i ==5) {
-			sret= m5_end;
-		}else if(i ==6) {
-			sret= m6_end;
-		}else if(i ==7) {
-			sret= m7_end;
-		}else if(i ==8) {
-			sret= m8_end;
-		}
-		
-		sret=sret.replaceAll("_url_",AppConfig.getProperty("config.email.linkurl"));
-		
-		return sret;
+	public String get_end() {
+		return m_end;
 		
 	}
 

@@ -7,15 +7,15 @@ import com.skyun.app.util.config.AppConfig;
 
 public class EmailVo {
 	private String sender = AppConfig.getProperty("config.email.senderid");
-	private List<String>  receiver;
-	private List<String>  title_arg;
+	private List<String> receiver;
+	private List<String> title_arg;
 	private String contents = "";
-	
-	public EmailVo()  {
-		receiver=new ArrayList<String>();
-		title_arg =new ArrayList<String>();;
+
+	public EmailVo() {
+		receiver = new ArrayList<String>();
+		title_arg = new ArrayList<String>();
+		;
 	}
-	
 
 	public String getSender() {
 		return sender;
@@ -25,7 +25,6 @@ public class EmailVo {
 		this.sender = sender;
 	}
 
-
 	public List<String> getReceiver() {
 		return receiver;
 	}
@@ -33,7 +32,6 @@ public class EmailVo {
 	public void setReceiver(String receiver) {
 		this.receiver.add(receiver);
 	}
-
 
 	public List<String> getTitle_arg() {
 		return title_arg;
@@ -55,187 +53,138 @@ public class EmailVo {
 
 		this.contents = this.contents + contents;
 	}
-	
-	public void setTitle2() {
-		String title_init="";
-		
-		if(AppConfig.getProperty("config.email.title").equals("bank"))
-			title_init="["+ "ÀºÇà" + " - ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö] ";
-		else
-			title_init="["+ "Áß¾ÓÈ¸" + " - ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö] ";
 
-		title_arg.add(title_init+"¹ÌÁ¢¼Ó ¿¡ÀÌÀüÆ® ¾Ë¸²");
+	public void setTitle(int mail_id) {
+		String title_init = "";
 
-	}
-	
-
-	public void setTitle_(int mail_id, String doc) {
-		String title_init="";
-		
-		if(AppConfig.getProperty("config.email.title").equals("bank")) {
-			title_init="["+ "ÀºÇà" + " - ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö] ";
-		}else {
-			title_init="["+ "Áß¾ÓÈ¸" + " - ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö] ";
-		}
-
+		title_init = "[PIMC ê°œì¸ì •ë³´ ê²€ì¶œê´€ë¦¬] ";
 
 		if (mail_id == 1) {
-			title_init = title_init+"°Ë»ö °á°ú Á¶Ä¡ ¿¹Á¤ °áÀç ¿äÃ» ¾Ë¸²";
+			title_init = title_init + "ê²€ìƒ‰ ê²°ê³¼ ì¡°ì¹˜ ì˜ˆì • ê²°ì¬ ìš”ì²­ ì•Œë¦¼";
 		} else if (mail_id == 2) {
-			title_init = title_init+"°Ë»ö °á°ú Á¶Ä¡ ¿¹Á¤ °áÀç ¹İ·Á ¾Ë¸²";
+			title_init = title_init + "ë‹´ë‹¹ì ë³€ê²½ ì•Œë¦¼";
 		} else if (mail_id == 3) {
-			title_init = title_init+"°Ë»ö °á°ú Á¶Ä¡ ¿¹Á¤ °áÀç ¿Ï·á ¾Ë¸²";
-		} else if (mail_id == 4) {
-			title_init = title_init+"´ã´çÀÚ º¯°æ ¿äÃ» ¾Ë¸² ";
-		} else if (mail_id == 5) {
-			title_init = title_init+"´ã´çÀÚ º¯°æ ¹İ·Á ¾Ë¸²";
-		} else if (mail_id == 6) {
-			title_init = title_init+"´ã´çÀÚ º¯°æ ¿Ï·á ¾Ë¸² ";
-		} else if (mail_id == 7) {
-			title_init = title_init+"´ã´ç °èÁ¤ °³ÀÎÁ¤º¸ °ËÃâ ¾Ë¸²";
-		} else if (mail_id == 8) {
-			title_init = title_init+"°Ë»ö °á°ú Àå±â ¹ÌÁ¶Ä¡ ¾Ë¸²";
-		} else if (mail_id == 9) {
-			title_init = title_init+"¹ÌÁ¢¼Ó ¿¡ÀÌÀüÆ® ¾Ë¸²";
+			title_init = title_init + "ë‹´ë‹¹ ì‹œìŠ¤í…œ ê°œì¸ì •ë³´ ê²€ì¶œ ì•Œë¦¼";
 		}
 
 		title_arg.add(title_init);
-
 	}
 
-	public boolean setContents(int i, List<?> detail, MailForm m, String rname,String rid) {
-		
-		boolean ret=false;
-		
-		contents = m.get_header(i).replaceAll("_rname_", rname).replaceAll("_sabun_",rid);
+	public void setContents(int i, List<?> detail, MailForm m, updateUserVo userVo) {
 
+		contents = m.get_header();
+		
 		if (i == 1) {
+			contents += m.get_body(i);
+			contents += m.get_receiver().replaceAll("SKT_USER", userVo.getUPDATE_USER_NM()).replaceAll("SKT_SOSOK", userVo.getSOSOK());
 			for (Object v : detail) {
-				eDetail1Vo re = (eDetail1Vo)v;
-
-				contents=contents+"<tr> \n";
-				contents=contents+"<td class=\"tg-fymr\">"+re.getPATH()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getREQ_USER_NAME()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getOK_USER_NAME()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getREGDATE() +"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getOKDATE()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getSTATUS_NAME()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr\">"+re.getREASON()+"</td>\n";
-				ret=true;
-			}			
-
+				eDetail1Vo re = (eDetail1Vo) v;
+				
+				contents +="<tr>\r\n" + 
+				"<td style=\"font-size: 13px; color: #222; font-weight: bold;\" width=\"575\">Host_A : ì¸í”„ë¼ ë‹´ë‹¹ì(í™ê¸¸ë™), ì„œë¹„ìŠ¤ ë‹´ë‹¹ì(ê¹€ìœ ì‹ ), ì„œë¹„ìŠ¤ ê´€ë¦¬ì(ì´ìˆœì‹ )</td>\r\n" + 
+				"</tr>";
+			}
+			
+			contents += m.get_end();
 		} else if (i == 2) {
+			contents += m.get_body(i);
+			contents += m.get_receiver().replaceAll("SKT_USER", userVo.getUPDATE_USER_NM()).replaceAll("SKT_SOSOK", userVo.getSOSOK());
+			
 			for (Object v : detail) {
-				eDetail2Vo re = (eDetail2Vo)v;
+				eDetail2Vo re = (eDetail2Vo) v;
+				receiver.add(re.getMAIL());
+				contents += "<tr>\r\n" + 
+						"<td style=\"font-size: 13px; color: #222; font-weight: bold;\" width=\"575\">"+re.getNAME()+" : " + 
+						(re.getTYPE() == 1 ? "ì¸í”„ë¼ ë‹´ë‹¹ì" : re.getTYPE() == 2 ? "ì„œë¹„ìŠ¤ ë‹´ë‹¹ì" : "ì„œë¹„ìŠ¤ ê´€ë¦¬ì") +
+						"</tr>";
+			}
 
-				contents=contents+"<tr> \n";
-				contents=contents+"<td class=\"tg-fymr\">"+re.getPATH()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getREQ_USER_NAME()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getOK_USER_NAME()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getREGDATE() +"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getOKDATE()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getSTATUS_NAME()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getREASON()+"</td>\n";
-				ret=true;
-			}			
-
+			contents += m.get_end();
+			
 		} else if (i == 3) {
+			contents += m.get_body(i).replaceAll("SKT_REGDATE", userVo.getREGDATE()).replaceAll("SKT_USER_NO", userVo.getUPDATE_USER_NO()).replaceAll("SKT_USER", userVo.getUPDATE_USER_NM());
+			contents += m.get_receiver().replaceAll("SKT_USER", userVo.getUPDATE_USER_NM()).replaceAll("SKT_SOSOK", userVo.getSOSOK());
+			
 			for (Object v : detail) {
 				eDetail3Vo re = (eDetail3Vo)v;
-
-				contents=contents+"<tr> \n";
-				contents=contents+"<td class=\"tg-fymr\">"+re.getPATH()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getREQ_USER_NAME()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getOK_USER_NAME()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getREGDATE() +"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getOKDATE()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getSTATUS_NAME()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr\">"+re.getREASON()+"</td>\n";
-				ret=true;
-			}			
+				receiver.add(userVo.getEMAIL());
+				contents+="<tr>\r\n" + 
+						"<td style=\"font-size: 13px; color: #222; font-weight: bold;\" width=\"575\">"+re.getNAME()+" : "+re.getPATH_CNT()+"ê°œ íŒŒì¼ì—ì„œ "+ re.getTOTAL()+"ê±´ ê²€ì¶œ</td>\r\n" + 
+						"</tr>";
+			}		
+			
+			contents += m.get_end();
 
 		} else if (i == 4) {
 			for (Object v : detail) {
-				eDetail4Vo re = (eDetail4Vo)v;
+				eDetail4Vo re = (eDetail4Vo) v;
 
-				contents=contents+"<tr> \n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getHOST()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr\">"+re.getPATH()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getREG_USER_NAME()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getOK_USER_NAME()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getREGDATE()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getOKDATE()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getSTATUS_NAME()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr\">"+re.getREASON()+"</td>\n";
-				ret=true;
-			}						
+				contents = contents + "<tr> \n";
+				contents = contents + "<td class=\"tg-fymr center\">" + re.getHOST() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr\">" + re.getPATH() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr center\">" + re.getREG_USER_NAME() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr center\">" + re.getOK_USER_NAME() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr center\">" + re.getREGDATE() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr center\">" + re.getOKDATE() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr center\">" + re.getSTATUS_NAME() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr\">" + re.getREASON() + "</td>\n";
+			}
 
 		} else if (i == 5) {
 			for (Object v : detail) {
-				eDetail5Vo re = (eDetail5Vo)v;
+				eDetail5Vo re = (eDetail5Vo) v;
 
-				contents=contents+"<tr> \n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getHOST()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr\">"+re.getPATH()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getREG_USER_NAME()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getOK_USER_NAME()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getREGDATE()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getOKDATE()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getSTATUS_NAME()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr\">"+re.getREASON()+"</td>\n";
-				ret=true;
-			}						
+				contents = contents + "<tr> \n";
+				contents = contents + "<td class=\"tg-fymr center\">" + re.getHOST() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr\">" + re.getPATH() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr center\">" + re.getREG_USER_NAME() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr center\">" + re.getOK_USER_NAME() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr center\">" + re.getREGDATE() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr center\">" + re.getOKDATE() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr center\">" + re.getSTATUS_NAME() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr\">" + re.getREASON() + "</td>\n";
+			}
 
 		} else if (i == 6) {
 			for (Object v : detail) {
-				eDetail6Vo re = (eDetail6Vo)v;
+				eDetail6Vo re = (eDetail6Vo) v;
 
-				contents=contents+"<tr> \n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getHOST()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr\">"+re.getPATH()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getREG_USER_NAME()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getOK_USER_NAME()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getREGDATE()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getOKDATE()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getSTATUS_NAME()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr\">"+re.getREASON()+"</td>\n";
-				ret=true;
-			}						
-			
+				contents = contents + "<tr> \n";
+				contents = contents + "<td class=\"tg-fymr center\">" + re.getHOST() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr\">" + re.getPATH() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr center\">" + re.getREG_USER_NAME() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr center\">" + re.getOK_USER_NAME() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr center\">" + re.getREGDATE() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr center\">" + re.getOKDATE() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr center\">" + re.getSTATUS_NAME() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr\">" + re.getREASON() + "</td>\n";
+			}
 
 		} else if (i == 7) {
-			
+
 			for (Object v : detail) {
-				eDetail7Vo re = (eDetail7Vo)v;
+				eDetail7Vo re = (eDetail7Vo) v;
 
-				contents=contents+"<tr> \n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getHOST()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr\">"+re.getSHORTNAME()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getOWNER()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr right\">"+re.getTYPE1()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr right\">"+re.getTYPE2()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr right\">"+re.getTYPE3()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr right\">"+re.getTYPE4()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr right\">"+re.getTYPE5()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr right\">"+re.getTYPE6()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr right\">"+re.getTYPE()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr center\">"+re.getAPPROVAL_STATUS_PRINT_NAME()+"</td>\n";
-				ret=true;
-			}					
+				contents = contents + "<tr> \n";
+				contents = contents + "<td class=\"tg-fymr center\">" + re.getHOST() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr\">" + re.getSHORTNAME() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr center\">" + re.getOWNER() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr right\">" + re.getTYPE1() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr right\">" + re.getTYPE2() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr right\">" + re.getTYPE3() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr right\">" + re.getTYPE4() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr right\">" + re.getTYPE5() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr right\">" + re.getTYPE6() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr right\">" + re.getTYPE() + "</td>\n";
+				contents = contents + "<td class=\"tg-fymr center\">" + re.getAPPROVAL_STATUS_PRINT_NAME() + "</td>\n";
+			}
 
 		}
-		
-		contents = contents+m.get_end(i);
-		
+
 		/*
-		if(i==7) {
-			if(ret)
-				System.out.println(contents);
-		}
-		*/	
-		
-		return ret;
-		
+		 * if(i==7) { if(ret) System.out.println(contents); }
+		 */
+
 	}
 
 }

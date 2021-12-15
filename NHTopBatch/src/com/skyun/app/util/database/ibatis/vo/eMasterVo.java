@@ -5,6 +5,7 @@ public class eMasterVo {
 	private String receiver_name;
 	private String sender;
 	private String sender_name;
+	private String email;
 	
 	public String getReceiver() {
 		return receiver;
@@ -30,8 +31,11 @@ public class eMasterVo {
 	public void setSender_name(String sender_name) {
 		this.sender_name = sender_name;
 	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	
-	
-	
-
 }

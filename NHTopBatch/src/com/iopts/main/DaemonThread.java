@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,23 +14,31 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import org.apache.http.ParseException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.config.Configurator;
 import org.apache.logging.log4j.core.config.DefaultConfiguration;
+import org.jdom2.Document;
+import org.jdom2.Element;
 
 import com.google.gson.Gson;
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.skyun.app.util.config.AppConfig;
 import com.skyun.app.util.database.ibatis.SqlMapInstanceBATCH;
-import com.skyun.app.util.database.ibatis.vo.EmailItemVo;
 import com.skyun.app.util.database.ibatis.vo.EmailVo;
 import com.skyun.app.util.database.ibatis.vo.MailForm;
 import com.skyun.app.util.database.ibatis.vo.PersonalVo;
-import com.skyun.app.util.database.ibatis.vo.eMasterVo;
 import com.skyun.app.util.database.ibatis.vo.pi_topcompVo;
 import com.skyun.app.util.database.ibatis.vo.pifindVo;
+import com.skyun.app.util.database.ibatis.vo.updateUserVo;
+
+import csp.api.cbh.scbh000001.vo.GetSmsInfoVo;
+import csp.comm.Config;
+import csp.comm.CspUtil;
+import csp.comm.vo.HeaderVo;
+import csp.comm.vo.ResultVo;
 
 public class DaemonThread implements Runnable {
 	private static SqlMapClient sqlMapPIC = null;
@@ -40,194 +47,125 @@ public class DaemonThread implements Runnable {
 	private String tgt_zip = "";
 	private String tgt = "";
 	private MailForm M = new MailForm();
+	private String URL = Config.domain + "/rest/SCBH000005/" + Config.apiKey;
+	private static String title = "";
+	private static String content = "";
+	private static String sendmail = "";
+	private static String receivermail = "";
+
+	private static String[][] paramLt = {{"SENDEREMAIL",sendmail},{"RECEIVEREMAIL", receivermail},{"SUBJECT", title},{"CONTENT",content}};
+
 	private static Logger logger = LogManager.getLogger(DaemonThread.class);
 
 	public DaemonThread() {
 		Configurator.initialize(new DefaultConfiguration());
-	    Configurator.setRootLevel(Level.INFO);
-		//int seq = getFileNo(AppConfig.getProperty("config.email.path"));
-		
-		// tgt = AppConfig.getProperty("config.email.path") + "/" +
-		// String.format("%s_%s_%s_%06d.txt",
-		// AppConfig.getProperty("config.email.init"), getCDate(),
-		// AppConfig.getProperty("config.email.division"), seq);
-		/*tgt = AppConfig.getProperty("config.email.path") + "/" + String.format("BODY.mail");
-		tgt_zip = AppConfig.getProperty("config.email.path") + "/"
-				+ String.format("%s_%s_%s_%06d.zip", AppConfig.getProperty("config.email.init"), getCDate(), AppConfig.getProperty("config.email.division"), seq);*/
+		Configurator.setRootLevel(Level.INFO);
 
+		sendmail = AppConfig.getProperty("config.email.senderid");
+		paramLt[0][0] = "SENDEREMAIL";
+		paramLt[0][1] = sendmail;
+		paramLt[1][0] = "RECEIVEREMAIL";
+		paramLt[1][1] = receivermail;
+		paramLt[2][0] = "SUBJECT";
+		paramLt[2][1] = title;
+		paramLt[3][0] = "CONTENT";
+		paramLt[3][1] = content;
+		
 		this.sqlMapPIC = SqlMapInstanceBATCH.getSqlMapInstance();
-		System.out.println("Batch work of information in the ti_topcomp table");
-		System.out.println("Agent connection failure send to mail ");
 	}
 
 	@Override
 	public void run() {
-
 		try {
-			predata = this.sqlMapPIC.openSession().queryForList("query.getPreCount");
-			getNowData();
-//			UpdateDelDate();
-//			sendMail();
+			for (int i = 2; i < 4; i++) {
+				sendMailLoop(i);
+			}
 
-//			for (int i = 1; i < 8; i++) {
-//				sendMailLoop(i);
-//			}
-
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getLocalizedMessage());
 		}
 
 	}
-
-	private void sendMail() {
-		String strDisconnect = "\n\nAGENT_NAME AGENT_CONNECTED_IP AGENT_CONNECTED\n";
-		try {
-			List<EmailItemVo> email = this.sqlMapPIC.openSession().queryForList("query.getAgentDisconnectList");
-			
-
-			EmailVo emailobj = new EmailVo();
-
-			emailobj.setTitle2();
-
-			String originalStr = AppConfig.getProperty("config.security.chargename");
-			String nmae = new String(originalStr.getBytes("iso-8859-1"), "utf-8");
-
-			String imsi = M.get_header(8).replaceAll("_rname_", nmae).replaceAll("_sabun_", AppConfig.getProperty("config.security.charge"));
-			
-			
-
-			for (EmailItemVo evo : email) {
-				imsi = imsi + "<tr> \n";
-				imsi = imsi + "<td class=\"tg-fymr\">" + evo.getAgent_name() + "</td>\n";
-				imsi = imsi + "<td class=\"tg-fymr\">" + evo.getAgent_connected_ip() + "</td>\n";
-				imsi = imsi + "</tr>\n";
-
-			}
-
-			imsi = imsi + M.get_end(8);
-			emailobj.setContents(imsi);
-
-			emailobj.setSender(AppConfig.getProperty("config.email.senderid"));
-			emailobj.setReceiver(AppConfig.getProperty("config.email.receiverid"));
-
-			String tmp = jsonfile(emailobj);
-			ZipFile(tmp);
-
-			File deletefile = new File(tmp);
-			if (deletefile.exists()) {
-				if (deletefile.delete()) {
-					System.out.println("임시 메일 파일삭제 성공");
-				} else {
-					System.out.println("임시 메일 파일삭제 실패");
-				}
-			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getLocalizedMessage());
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getLocalizedMessage());
-		}
-
-	}
-
 	// HTML Tag 문서 임다.
 	private void sendMailLoop(int i) {
+		List<updateUserVo> master = null;
+
+		logger.info("Mail Data Count >>>>> " + i );
 		try {
-			List<eMasterVo> master = this.sqlMapPIC.openSession().queryForList("query.getEmailMaster" + i);
-			for (eMasterVo evo : master) {
-				RealSendMail(evo, i);
-			}
-
-		} catch (SQLException e) {
-			System.out.println(e.getLocalizedMessage());
-		}
-	}
-
-	private void RealSendMail(eMasterVo evo, int i) {
-		int seq = getFileNo(AppConfig.getProperty("config.email.path"));
-
-		// tgt = AppConfig.getProperty("config.email.path") + "/"+
-		// String.format("%s_%s_%s_%06d.txt",
-		// AppConfig.getProperty("config.email.init"), getCDate(),
-		// AppConfig.getProperty("config.email.division"), seq);
-		tgt = AppConfig.getProperty("config.email.path") + "/" + String.format("BODY.mail");
-
-		tgt_zip = AppConfig.getProperty("config.email.path") + "/"
-				+ String.format("%s_%s_%s_%06d.zip", AppConfig.getProperty("config.email.init"), getCDate(), AppConfig.getProperty("config.email.division"), seq);
-
-		try {
-			List<?> detail = this.sqlMapPIC.openSession().queryForList("query.getEmailDetail" + i, evo);
-
-			if (detail.size() > 0) {
-				EmailVo emailobj = new EmailVo();
-
-				// 보안 담당자
-
-				// 1 승인 대기
-				// 2 승인 반려
-				// 3 승인 완료
-				// 4 담당자 변경요청
-				// 5 담당자 변경반려
-				// 6 담당자 변경완료
-
-				if (i == 1 || i == 4 || i == 5 || i == 6) {
-					emailobj.setSender(evo.getSender());
-				} else {
-					emailobj.setSender(AppConfig.getProperty("config.security.charge"));
+			if(i == 1) {
+				master = this.sqlMapPIC.openSession().queryForList("query.getEmailMaster" + i);
+				
+				for (updateUserVo vo : master) {
+					if(vo.getEMAIL().equals("") || vo.getEMAIL().isEmpty()) {
+						continue;
+					}
+					UpdateUserSendMail(vo, i);
 				}
 				
-				emailobj.setTitle_(i, String.format("%s_%s_%s_%06d.txt", AppConfig.getProperty("config.email.init"), getCDate(), AppConfig.getProperty("config.email.division"), seq));
-				System.out.println(">>>" +i +"  :::: "+emailobj.getTitle_arg().get(0));
+			}else if(i == 2) {
+				master = this.sqlMapPIC.openSession().queryForList("query.getEmailMaster" + i);
+				logger.info("Mail " + i + " Data Size :: " + master.size());
 
-
-				String tmp = "";
-				if (i == 7) {
-					emailobj.setReceiver(evo.getSender());
-					
-					if (emailobj.setContents(i, detail, M, evo.getSender_name(), evo.getSender()) == true) {
-						tmp = jsonfile(emailobj);
-						ZipFile(tmp);
-
+				for (updateUserVo vo : master) {
+					logger.info("Mail :: " + vo.getEMAIL());
+					if(vo.getEMAIL().equals("") || vo.getEMAIL().isEmpty()) {
+						continue;
 					}
-
-				} else {
-					emailobj.setReceiver(evo.getReceiver());
-					if (emailobj.setContents(i, detail, M, evo.getReceiver_name(), evo.getReceiver()) == true) {
-						tmp = jsonfile(emailobj);
-						ZipFile(tmp);
-
+					UpdateUserSendMail(vo, i);
+					logger.info("content  > " + content);
+				}
+				
+			}else if(i == 3) {
+				master = this.sqlMapPIC.openSession().queryForList("query.getEmailMaster" + i);
+				for (updateUserVo vo : master) {
+					if(vo.getEMAIL().equals("") || vo.getEMAIL().isEmpty()) {
+						continue;
 					}
+					UpdateUserSendMail(vo, i);
 
+					logger.info("content  > " + content);
 				}
-
-
-
-				File deletefile = new File(tmp);
-				if (deletefile.exists()) {
-					if (deletefile.delete()) {
-						System.out.println("임시 메일 파일삭제 성공 :" + i + " 번째 멜폼작성");
-					} else {
-						System.out.println("임시 메일 파일삭제 실패 :" + i + " 번째 멜폼작성");
-					}
-				}
-
-				if (i == 9) {
-					System.out.println(emailobj.getSender());
-					System.out.println(emailobj.getReceiver());
-					System.out.println(emailobj.getTitle_arg());
-					System.out.println(emailobj.getContents());
-				}
-
+				
 			}
 
 		} catch (SQLException e) {
 			System.out.println(e.getLocalizedMessage());
 		}
+	}
+
+	private void UpdateUserSendMail(updateUserVo vo, int i) {
+
+		try {
+			List<?> detail = this.sqlMapPIC.openSession().queryForList("query.getEmailDetail" + i, vo);
+
+			EmailVo emailobj = new EmailVo();
+			emailobj.setTitle(i);
+			emailobj.setContents(i, detail, M, vo);
+
+			title = emailobj.getTitle_arg().get(0);
+			receivermail = vo.getEMAIL();
+			content = emailobj.getContents();
+			
+			paramLt[1][0] = "RECEIVEREMAIL";
+			paramLt[1][1] = receivermail;
+			paramLt[2][0] = "SUBJECT";
+			paramLt[2][1] = title;
+			paramLt[3][0] = "CONTENT";
+			paramLt[3][1] = content;
+
+			if (receivermail != null && !receivermail.equals("")) {
+				logger.info("paramLt Sender : " + paramLt[0][1] + " , Receiver : " + paramLt[1][1] + ", subject : " + paramLt[2][1]);
+				getVo();
+			}
+		} catch (SQLException e) {
+			logger.error(e.getLocalizedMessage());
+		} catch (Exception e) {
+			logger.error(e.getLocalizedMessage());
+		}
 
 	}
+
 
 	private int getFileNo(String path) {
 		int ret = 1;
@@ -242,16 +180,15 @@ public class DaemonThread implements Runnable {
 
 		String fname = tgt;
 
-
 		Gson g = new Gson();
-		String json = "["+g.toJson(v)  +"]";
+		String json = "[" + g.toJson(v) + "]";
 
 		try {
 			FileWriter fw = new FileWriter(fname);
 			fw.write(json);
 			fw.close();
 		} catch (IOException e) {
-			System.out.println(e.getLocalizedMessage() );
+			System.out.println(e.getLocalizedMessage());
 		}
 
 		return fname;
@@ -466,5 +403,72 @@ public class DaemonThread implements Runnable {
 
 		return builder.toString();
 	}
+
+
+	// XML 내부에서 Body 정보를 담아옴 - 서비스별 상의함
+	private Object getBody(HeaderVo hvo, Element body) {
+		GetSmsInfoVo vo = new GetSmsInfoVo();
+
+		if(body==null) return vo;
+
+		String[] contLt	= {"RETURN", "UUID"};
+
+		for(int i=0; i<contLt.length; i++) {
+			CspUtil.setData(vo, hvo, body, contLt[i]);
+		}
+		return vo;
+	}
+
+	public ResultVo getVoData(String URL, String[][] paramLt, String METHOD, int timeout) {
+		ResultVo	vo = new ResultVo();
+
+		Document doc = CspUtil.getDocument(URL, paramLt, METHOD, timeout);
+
+		Element root	= doc.getRootElement();
+		Element head	= root.getChild("HEADER");
+		Element body	= root.getChild("BODY");
+
+		if(head!=null) {
+			vo.setHEADER(CspUtil.getHeader(head));
+		}
+
+		if(body!=null) {
+			vo.setBODY(getBody(vo.getHEADER(), body));
+		}
+
+		return vo;
+	}
+
+
+	// XML 문자열 데이터
+//	@Test
+	public void getXmlData() {
+		try {
+			int timeout = 5000;
+			System.out.println(CspUtil.GET(URL, paramLt, timeout).getRtnText());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Value Object형 데이터
+//	@Test
+	public void getVo() {
+		int timeout = 5000;
+		System.out.println(getVoData(URL, paramLt, "POST", timeout));
+	}
+
+	// JSON형 데이터
+//	@Test
+	public void getJSONData() {
+		Gson gson = new Gson();
+		int timeout = 5000;
+		System.out.println(gson.toJson(getVoData(URL, paramLt, "POST", timeout)).toString() );
+	}
+
 
 }

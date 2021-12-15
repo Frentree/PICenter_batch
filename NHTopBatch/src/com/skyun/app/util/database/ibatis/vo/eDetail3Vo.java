@@ -1,59 +1,48 @@
 package com.skyun.app.util.database.ibatis.vo;
 
 public class eDetail3Vo {
-	private String PATH;
-	private String REQ_USER_NAME;
-	private String OK_USER_NAME;
-	private String REGDATE; 
-	private String OKDATE;
-	private String STATUS_NAME;
-	private String REASON;
+	private String TARGET_ID;
+	private String AP_NO;
+	private String NAME;
+	private int PATH_CNT; 
+	private String RECEIVER;
+	private int TOTAL;
 	
-	public String getPATH() {
-		return PATH;
+	public String getTARGET_ID() {
+		return TARGET_ID;
 	}
-	public void setPATH(String pATH) {
-		PATH = pATH;
+	public void setTARGET_ID(String tARGET_ID) {
+		TARGET_ID = tARGET_ID;
 	}
-	public String getREQ_USER_NAME() {
-		return REQ_USER_NAME;
+	public String getAP_NO() {
+		return AP_NO;
 	}
-	public void setREQ_USER_NAME(String rEQ_USER_NAME) {
-		REQ_USER_NAME = rEQ_USER_NAME;
+	public void setAP_NO(String aP_NO) {
+		AP_NO = aP_NO;
 	}
-	public String getOK_USER_NAME() {
-		return OK_USER_NAME;
+	public String getNAME() {
+		return NAME;
 	}
-	public void setOK_USER_NAME(String oK_USER_NAME) {
-		OK_USER_NAME = oK_USER_NAME;
+	public void setNAME(String nAME) {
+		NAME = nAME;
 	}
-	public String getREGDATE() {
-		return REGDATE;
+	public int getPATH_CNT() {
+		return PATH_CNT;
 	}
-	public void setREGDATE(String rEGDATE) {
-		REGDATE = rEGDATE;
+	public void setPATH_CNT(int pATH_CNT) {
+		PATH_CNT = pATH_CNT;
 	}
-	public String getOKDATE() {
-		return OKDATE;
+	public String getRECEIVER() {
+		return RECEIVER;
 	}
-	public void setOKDATE(String oKDATE) {
-		OKDATE = oKDATE;
+	public void setRECEIVER(String rECEIVER) {
+		RECEIVER = rECEIVER;
 	}
-	public String getSTATUS_NAME() {
-		return STATUS_NAME;
+	public int getTOTAL() {
+		return TOTAL;
 	}
-	public void setSTATUS_NAME(String sTATUS_NAME) {
-		STATUS_NAME = sTATUS_NAME;
+	public void setTOTAL(int tOTAL) {
+		TOTAL = tOTAL;
 	}
-	public String getREASON() {
-		return REASON;
-	}
-	public void setREASON(String rEASON) {
-		REASON = rEASON;
-	}
-	
-	
-	
-	
 
 }

@@ -15,14 +15,14 @@
  */
 package com.ibatis.common.jdbc.logging;
 
-import com.ibatis.common.beans.ClassInfo;
-import com.ibatis.common.logging.Log;
-import com.ibatis.common.logging.LogFactory;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.sql.ResultSet;
+
+import com.ibatis.common.beans.ClassInfo;
+import com.ibatis.common.logging.Log;
+import com.ibatis.common.logging.LogFactory;
 
 /**
  * ResultSet proxy to add logging
