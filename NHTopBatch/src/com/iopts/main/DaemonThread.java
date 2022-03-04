@@ -15,13 +15,10 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import org.apache.http.ParseException;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.config.Configurator;
-import org.apache.logging.log4j.core.config.DefaultConfiguration;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.ibatis.sqlmap.client.SqlMapClient;
@@ -47,20 +44,19 @@ public class DaemonThread implements Runnable {
 	private String tgt_zip = "";
 	private String tgt = "";
 	private MailForm M = new MailForm();
-	private String URL = Config.domain + "/rest/SCBH000005/" + Config.apiKey;
+
+	/*CBH 메일 전송*/
+	private	String URL	= Config.domain + "/rest/SCBH000005/" + Config.apiKey;
 	private static String title = "";
 	private static String content = "";
-	private static String sendmail = "";
+	private static String sendmail = AppConfig.getProperty("config.email.senderid");
 	private static String receivermail = "";
+	
+	private static String[][] paramLt	= {{"SENDEREMAIL",sendmail},{"RECEIVEREMAIL", receivermail},{"SUBJECT", title},{"CONTENT",content}};
 
-	private static String[][] paramLt = {{"SENDEREMAIL",sendmail},{"RECEIVEREMAIL", receivermail},{"SUBJECT", title},{"CONTENT",content}};
-
-	private static Logger logger = LogManager.getLogger(DaemonThread.class);
+	private static Logger logger = LoggerFactory.getLogger(DaemonThread.class);
 
 	public DaemonThread() {
-		Configurator.initialize(new DefaultConfiguration());
-		Configurator.setRootLevel(Level.INFO);
-
 		sendmail = AppConfig.getProperty("config.email.senderid");
 		paramLt[0][0] = "SENDEREMAIL";
 		paramLt[0][1] = sendmail;
@@ -87,7 +83,7 @@ public class DaemonThread implements Runnable {
 		}
 
 	}
-	// HTML Tag 문서 임다.
+
 	private void sendMailLoop(int i) {
 		List<updateUserVo> master = null;
 
