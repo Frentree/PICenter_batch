@@ -27,7 +27,7 @@ public class MailForm {
 			"</tbody>" + 
 			"</table>";
 	
-	private String m1_body="<table style=\"border: 1px solid #cccccc; padding-top: 30px; height: 239px;\" border=\"0\" width=\"620\" cellspacing=\"0\" cellpadding=\"0\">" + 
+	/*private String m1_body="<table style=\"border: 1px solid #cccccc; padding-top: 30px; height: 239px;\" border=\"0\" width=\"620\" cellspacing=\"0\" cellpadding=\"0\">" + 
 			"<tbody>" + 
 			"<tr style=\"height: 84px;\">" + 
 			"<td style=\"padding-left: 30px; height: 84px; width: 0px;\">&nbsp;</td>" + 
@@ -73,6 +73,31 @@ public class MailForm {
 			"<tr style=\"height: 42px;\">" + 
 			"<td style=\"padding-left: 30px; height: 42px; width: 0px;\">&nbsp;</td>" + 
 			"<td style=\"height: 42px; font-size: 13px; color: #999999; font-weight: bold; line-height: 13px; width: 590px;\">변경 내역</td>" + 
+			"</tr>" + 
+			"<tr style=\"height: 22px;\">" + 
+			"<td style=\"padding-left: 30px; height: 22px; width: 0px;\">&nbsp;</td>" + 
+			"<td style=\"height: 22px; width: 590px;\">" + 
+			"<table border=\"0\" width=\"590\" cellspacing=\"0\" cellpadding=\"0\">" + 
+			"<tbody>";*/
+	
+	private String m1_body="<table style=\"border: 1px solid #cccccc; padding-top: 30px; height: 239px;\" border=\"0\" width=\"620\" cellspacing=\"0\" cellpadding=\"0\">" + 
+			"<tbody>" + 
+			"<tr style=\"height: 84px;\">" + 
+			"<td style=\"padding-left: 30px; height: 84px; width: 0px;\">&nbsp;</td>" + 
+			"<td style=\"font-size: 13px; font-weight: bold; height: 84px; letter-spacing: -0.5px; width: 590px;\">" + 
+			"<div style=\"line-height: 15px;\">정보보호담당 IT보안팀에서 안내 드립니다." + 
+			"<p>&nbsp;</p>" + 
+			"<br>아래와 같이 개인정보 검출관리 대상 정/오탐 결재 현황을 안내드리오니 </br>" + 
+			"<br>담당자께서는 아래 링크에 접속 하셔서 결재 내역을 확인해주십시오.</br>" + 
+			"<br>바랍니다.</br>" + 
+			"<p>[결과 관리 > 결재 관리] 메뉴를 활용하여 결재 내역을 확인 바랍니다." + 
+			"<p>&nbsp;</p>" + 
+			"<div style=\"font-size: 14px; font-weight: bold;\"><SPAN STYLE=\"background-color:#e6e6e6;\">개인정보 검출관리센터(PIMC) 바로가기(<a href=\"https://pimc.sktelecom.com\">https://pimc.sktelecom.com</a>)</div>" + 
+			"<p>&nbsp;</p>" + 
+			"<p>기타 문의사항은 본 메일에 회신 또는 아래 문의처로 연락주시기 바랍니다.</p>" + 
+			"<p>&nbsp;</p>" + 
+			"</div>" + 
+			"</td>" + 
 			"</tr>" + 
 			"<tr style=\"height: 22px;\">" + 
 			"<td style=\"padding-left: 30px; height: 22px; width: 0px;\">&nbsp;</td>" + 
@@ -130,6 +155,34 @@ public class MailForm {
 			"<table style=\"height: 16px;\" border=\"0\" width=\"590\" cellspacing=\"0\" cellpadding=\"0\">" + 
 			"<tbody>";
 	
+	private String m_receiver1="<td align=\"left\" width=\"80\" style=\"font-size:13px;color:#999;font-weight:700;line-height:15px;\">수 신 자 :</td>" + 
+			"<td style=\"font-size: 13px; color: #222222; font-weight: bold; height: 16px; width: 586px;\" align=\"left\">SKT_USER</td>" + 
+			"</tr>" + 
+			"</tbody>" + 
+			"</table>" + 
+			"<table style=\"padding-top: 10px;\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">" + 
+			"<tbody>" + 
+			"<tr>" + 
+			"<td style=\"font-size: 13px; color: #999; font-weight: bold; line-height: 15px;\" align=\"left\" width=\"80\">소속부서 :</td>" + 
+			"<td style=\"font-size: 13px; color: #222; font-weight: bold;\" width=\"575\">SKT_SOSOK</td>" + 
+			"</tr>" + 
+			"</tbody>" + 
+			"</table>" + 
+			"</td>" + 
+			"</tr>" + 
+			"<tr>" + 
+			"<td style=\"padding-left:30;\"></td>" + 
+			"<td style=\"height:40px;\"></td>" + 
+			"<tr style=\"height: 42px;\">" + 
+			"<td style=\"padding-left: 30px; height: 42px; width: 0px;\">&nbsp;</td>" + 
+			"<td style=\"height: 42px; font-size: 13px; color: #999999; font-weight: bold; line-height: 13px; width: 590px;\">결재 내역</td>" + 
+			"</tr>" + 
+			"<tr style=\"height: 22px;\">" + 
+			"<td style=\"padding-left: 30px; height: 22px; width: 0px;\">&nbsp;</td>" + 
+			"<td style=\"height: 22px; width: 590px;\">" + 
+			"<table border=\"0\" width=\"590\" cellspacing=\"0\" cellpadding=\"0\">" + 
+			"<tbody>";
+	
 	private String m_receiver="<td align=\"left\" width=\"80\" style=\"font-size:13px;color:#999;font-weight:700;line-height:15px;\">수 신 자 :</td>" + 
 			"<td style=\"font-size: 13px; color: #222222; font-weight: bold; height: 16px; width: 586px;\" align=\"left\">SKT_USER</td>" + 
 			"</tr>" + 
@@ -151,6 +204,34 @@ public class MailForm {
 			"<tr style=\"height: 42px;\">" + 
 			"<td style=\"padding-left: 30px; height: 42px; width: 0px;\">&nbsp;</td>" + 
 			"<td style=\"height: 42px; font-size: 13px; color: #999999; font-weight: bold; line-height: 13px; width: 590px;\">변경 내역</td>" + 
+			"</tr>" + 
+			"<tr style=\"height: 22px;\">" + 
+			"<td style=\"padding-left: 30px; height: 22px; width: 0px;\">&nbsp;</td>" + 
+			"<td style=\"height: 22px; width: 590px;\">" + 
+			"<table border=\"0\" width=\"590\" cellspacing=\"0\" cellpadding=\"0\">" + 
+			"<tbody>";
+	
+	private String m_receiver3="<td align=\"left\" width=\"80\" style=\"font-size:13px;color:#999;font-weight:700;line-height:15px;\">수 신 자 :</td>" + 
+			"<td style=\"font-size: 13px; color: #222222; font-weight: bold; height: 16px; width: 586px;\" align=\"left\">SKT_USER</td>" + 
+			"</tr>" + 
+			"</tbody>" + 
+			"</table>" + 
+			"<table style=\"padding-top: 10px;\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">" + 
+			"<tbody>" + 
+			"<tr>" + 
+			"<td style=\"font-size: 13px; color: #999; font-weight: bold; line-height: 15px;\" align=\"left\" width=\"80\">소속부서 :</td>" + 
+			"<td style=\"font-size: 13px; color: #222; font-weight: bold;\" width=\"575\">SKT_SOSOK</td>" + 
+			"</tr>" + 
+			"</tbody>" + 
+			"</table>" + 
+			"</td>" + 
+			"</tr>" + 
+			"<tr>" + 
+			"<td style=\"padding-left:30;\"></td>" + 
+			"<td style=\"height:40px;\"></td>" + 
+			"<tr style=\"height: 42px;\">" + 
+			"<td style=\"padding-left: 30px; height: 42px; width: 0px;\">&nbsp;</td>" + 
+			"<td style=\"height: 42px; font-size: 13px; color: #999999; font-weight: bold; line-height: 13px; width: 590px;\">검출 내역</td>" + 
 			"</tr>" + 
 			"<tr style=\"height: 22px;\">" + 
 			"<td style=\"padding-left: 30px; height: 22px; width: 0px;\">&nbsp;</td>" + 
@@ -219,7 +300,7 @@ public class MailForm {
 		String body = "";
 		
 		if(i == 1) {
-			
+			body = m1_body;
 		} else if(i == 2) {
 			body = m2_body;
 		} else if(i == 3) {
@@ -229,7 +310,15 @@ public class MailForm {
 		return body;
 	}
 	
-	public String get_receiver() {
+	public String get_receiver(int i) {
+		if(i == 1) {
+			return m_receiver1;
+		} else if(i == 2) {
+			return m_receiver;
+		} else if(i == 3) {
+			return m_receiver3;
+		}
+		
 		return m_receiver;
 	}
 

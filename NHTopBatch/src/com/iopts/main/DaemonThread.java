@@ -73,7 +73,7 @@ public class DaemonThread implements Runnable {
 	@Override
 	public void run() {
 		try {
-			for (int i = 2; i < 4; i++) {
+			for (int i = 1; i < 4; i++) {
 				sendMailLoop(i);
 			}
 
@@ -93,34 +93,21 @@ public class DaemonThread implements Runnable {
 				master = this.sqlMapPIC.openSession().queryForList("query.getEmailMaster" + i);
 				
 				for (updateUserVo vo : master) {
-					if(vo.getEMAIL().equals("") || vo.getEMAIL().isEmpty()) {
-						continue;
-					}
 					UpdateUserSendMail(vo, i);
 				}
 				
 			}else if(i == 2) {
 				master = this.sqlMapPIC.openSession().queryForList("query.getEmailMaster" + i);
-				logger.info("Mail " + i + " Data Size :: " + master.size());
 
 				for (updateUserVo vo : master) {
 					logger.info("Mail :: " + vo.getEMAIL());
-					if(vo.getEMAIL().equals("") || vo.getEMAIL().isEmpty()) {
-						continue;
-					}
 					UpdateUserSendMail(vo, i);
-					logger.info("content  > " + content);
 				}
 				
 			}else if(i == 3) {
 				master = this.sqlMapPIC.openSession().queryForList("query.getEmailMaster" + i);
 				for (updateUserVo vo : master) {
-					if(vo.getEMAIL().equals("") || vo.getEMAIL().isEmpty()) {
-						continue;
-					}
 					UpdateUserSendMail(vo, i);
-
-					logger.info("content  > " + content);
 				}
 				
 			}
