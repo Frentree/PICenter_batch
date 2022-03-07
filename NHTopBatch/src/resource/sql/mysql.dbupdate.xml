@@ -2,7 +2,16 @@
 
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
-<sqlMap namespace="query">
-
+<sqlMap namespace="update">
+	<update id="setNetIp" parameterClass="com.skyun.app.util.database.ibatis.vo.agentIpVo">
+		UPDATE pi_targets T SET
+		   T.NET_TYPE = #type#
+		WHERE 1=1
+		   AND T.NAME = (SELECT A.AGENT_NAME
+						  FROM pi_agents A
+						  WHERE A.AGENT_CONNECTED_IP = #ip#)
+		   AND T.AP_NO != 0
+		   AND T.NET_TYPE IS NULL
+	</update>
 	
 </sqlMap>
