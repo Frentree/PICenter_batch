@@ -73,9 +73,10 @@ public class DaemonThread implements Runnable {
 	@Override
 	public void run() {
 		try {
-			for (int i = 1; i < 4; i++) {
+			sendMailLoop(1);
+			/*for (int i = 2; i < 4; i++) {
 				sendMailLoop(i);
-			}
+			}*/
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -136,7 +137,8 @@ public class DaemonThread implements Runnable {
 			paramLt[2][1] = title;
 			paramLt[3][0] = "CONTENT";
 			paramLt[3][1] = content;
-
+			
+			
 			if (receivermail != null && !receivermail.equals("")) {
 				logger.info("paramLt Sender : " + paramLt[0][1] + " , Receiver : " + paramLt[1][1] + ", subject : " + paramLt[2][1]);
 				getVo();
@@ -149,152 +151,6 @@ public class DaemonThread implements Runnable {
 
 	}
 
-
-	private int getFileNo(String path) {
-		int ret = 1;
-
-		File dir = new File(path);
-		ret = dir.list().length + 1;
-
-		return ret;
-	}
-
-	private String jsonfile(EmailVo v) {
-
-		String fname = tgt;
-
-		Gson g = new Gson();
-		String json = "[" + g.toJson(v) + "]";
-
-		try {
-			FileWriter fw = new FileWriter(fname);
-			fw.write(json);
-			fw.close();
-		} catch (IOException e) {
-			System.out.println(e.getLocalizedMessage());
-		}
-
-		return fname;
-
-	}
-
-	private void ZipFile(String src) {
-
-		try {
-			FileOutputStream fos = new FileOutputStream(tgt_zip);
-			ZipOutputStream zipOut = new ZipOutputStream(fos);
-
-			File fileToZip = new File(src);
-			FileInputStream fis = new FileInputStream(fileToZip);
-			ZipEntry zipEntry = new ZipEntry(fileToZip.getName());
-			zipOut.putNextEntry(zipEntry);
-
-			byte[] bytes = new byte[1024];
-			int length;
-			while ((length = fis.read(bytes)) >= 0) {
-				zipOut.write(bytes, 0, length);
-			}
-
-			fis.close();
-			zipOut.close();
-			fos.close();
-
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			System.out.println("ZipFile FileNotFoundException Error :" + e.getLocalizedMessage());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("ZipFile IOException Error :" + e.getLocalizedMessage());
-		}
-
-	}
-
-	private String getCDate() {
-
-		SimpleDateFormat format1 = new SimpleDateFormat(AppConfig.getProperty("config.email.dateformat"));
-
-		Date time = new Date();
-		String time1 = format1.format(time);
-
-		return time1;
-	}
-
-	private void getNowData() {
-
-		try {
-
-			// 오늘의 전체 내역역을 가져온다.
-			List<PersonalVo> acct = this.sqlMapPIC.openSession().queryForList("query.getPersonCount");
-			System.out.println("오늘 데이타 Size :" + acct.size());
-
-			for (PersonalVo v : acct) {
-
-				pi_topcompVo p = new pi_topcompVo();
-				p.setPersol(v);
-
-				// 어제 데이타를 sum 한다.
-				pi_topcompVo r = predataSum(p);
-				System.out.println(r.toString());
-				this.sqlMapPIC.openSession().insert("insert.settopcomp", r);
-				logger.info(">>> DB pi_topcomp Data Insert :" + v.getTarget_id() + " ,," + r.getTotal());
-
-			}
-		} catch (SQLException e) {
-			System.err.println("File readError: " + e.getLocalizedMessage());
-			System.exit(1);
-		}
-
-	}
-
-	private void UpdateDelDate() {
-		System.out.println(">>> Deldate Update ____________________________getDelDataList");
-		List<pifindVo> del = null;
-		try {
-			del = this.sqlMapPIC.openSession().queryForList("query.getDelDataList");
-			System.out.println("Deldate Update Size :" + del.size());
-		} catch (SQLException e) {
-			System.err.println("SQLException setUpdatedelDate: " + e.getLocalizedMessage());
-		}
-
-		for (pifindVo v : del) {
-			try {
-				this.sqlMapPIC.openSession().insert("insert.setDelUpdate", v);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				System.err.println("SQLException setDelUpdate: " + e.getLocalizedMessage());
-			}
-		}
-
-	}
-
-	private pi_topcompVo predataSum(pi_topcompVo p) {
-
-		pi_topcompVo r = p;
-
-		for (int i = 0; i < predata.size(); i++) {
-
-			if (predata.get(i).getTarget_id().equals(p.getTarget_id())) {
-				System.out.println("Target ID :" + predata.get(i).getTarget_id());
-				r.setRrn_pre(predata.get(i).getRrn());
-				r.setForeigner_pre(predata.get(i).getForeigner());
-				r.setDriver_pre(predata.get(i).getDriver());
-				r.setPassport_pre(predata.get(i).getForeigner());
-				r.setAccount_num_pre(predata.get(i).getAccount_num());
-				r.setCard_num_pre(predata.get(i).getCard_num());
-				r.setPhone_pre(predata.get(i).getPhone_num());
-				r.setPhone_num_pre(predata.get(i).getPhone_num_pre());
-				r.setMobile_phone_pre(predata.get(i).getMobile_phone());
-				r.setNew_rrn_pre(predata.get(i).getNew_rrn());
-				r.setEmail_pre(predata.get(i).getEmail());
-				r.setCarnum_pre(predata.get(i).getCarnum());
-				r.setVehicleid_pre(predata.get(i).getVehicleid());
-				r.setTotal_pre(predata.get(i).getTotal1());
-				r.setTotal_gap(r.getTotal() - predata.get(i).getTotal());
-			}
-		}
-
-		return r;
-	}
 
 	public static String escape(String input) {
 		StringBuilder output = new StringBuilder();

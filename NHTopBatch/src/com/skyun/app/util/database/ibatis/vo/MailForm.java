@@ -89,13 +89,13 @@ public class MailForm {
 			"<p>&nbsp;</p>" + 
 			"<br>아래와 같이 개인정보 검출관리 대상 정/오탐 결재 현황을 안내드리오니 </br>" + 
 			"<br>담당자께서는 아래 링크에 접속 하셔서 결재 내역을 확인해주십시오.</br>" + 
-			"<br>바랍니다.</br>" + 
+			/*"<br>바랍니다.</br>" + */
 			"<p>[결과 관리 > 결재 관리] 메뉴를 활용하여 결재 내역을 확인 바랍니다." + 
 			"<p>&nbsp;</p>" + 
-			"<div style=\"font-size: 14px; font-weight: bold;\"><SPAN STYLE=\"background-color:#e6e6e6;\">개인정보 검출관리센터(PIMC) 바로가기(<a href=\"https://pimc.sktelecom.com\">https://pimc.sktelecom.com</a>)</div>" + 
-			"<p>&nbsp;</p>" + 
+			"<div style=\"font-size: 14px; font-weight: bold;\"><span style=\"background-color:#e6e6e6;\">개인정보 검출관리센터(PIMC) 바로가기(<a href=\"https://pimc.sktelecom.com\">https://pimc.sktelecom.com</a>)</span></div>" + 
+			"<p></p>" + 
 			"<p>기타 문의사항은 본 메일에 회신 또는 아래 문의처로 연락주시기 바랍니다.</p>" + 
-			"<p>&nbsp;</p>" + 
+			"<p></p>" + 
 			"</div>" + 
 			"</td>" + 
 			"</tr>" + 
@@ -117,7 +117,7 @@ public class MailForm {
 			"<br>업무에 참고하여 주시기 바라고, 상세 내역에 대한 확인 또는 담당자 정보의</br>" + 
 			"<p>변경이 필요한 경우 아래 링크로 접속하여 조치해 주시기 바랍니다.</p>" + 
 			"<p>&nbsp;</p>" + 
-			"<div style=\"font-size: 14px; font-weight: bold;\"><SPAN STYLE=\"background-color:#e6e6e6;\">개인정보 검출관리센터(PIMC) 바로가기(<a href=\"https://pimc.sktelecom.com\">https://pimc.sktelecom.com</a>)</div>" + 
+			"<div style=\"font-size: 14px; font-weight: bold;\"><SPAN STYLE=\"background-color:#e6e6e6;\">개인정보 검출관리센터(PIMC) 바로가기(<a href=\"https://pimc.sktelecom.com\">https://pimc.sktelecom.com</a>)</span></div>" + 
 			"<p>&nbsp;</p>" + 
 			"<p>기타 문의사항은 본 메일에 회신 또는 아래 문의처로 연락주시기 바랍니다.</p>" + 
 			"<p>&nbsp;</p>" + 
@@ -142,7 +142,7 @@ public class MailForm {
 			"<br>검출되었음을 알내 드립니다.검출결과에 대한 상세정보는 아래 링크에</br>" + 
 			"<br>접속하시어 확인해 주시고, 7 영업일 이내 조치 계획을 등록해 주시기 바랍니다.</br>" + 
 			"<p>&nbsp;</p>" + 
-			"<div style=\"font-size: 14px; font-weight: bold;\"><SPAN STYLE=\"background-color:#e6e6e6;\">개인정보 검출관리센터(PIMC) 바로가기(<a href=\"https://pimc.sktelecom.com\">https://pimc.sktelecom.com</a>)</div>" + 
+			"<div style=\"font-size: 14px; font-weight: bold;\"><SPAN STYLE=\"background-color:#e6e6e6;\">개인정보 검출관리센터(PIMC) 바로가기(<a href=\"https://pimc.sktelecom.com\">https://pimc.sktelecom.com</a>)</span></div>" + 
 			"<p>&nbsp;</p>" + 
 			"<p>기타 문의사항은 본 메일에 회신 또는 아래 문의처로 연락주시기 바랍니다.</p>" + 
 			"<p>&nbsp;</p>" + 
@@ -172,7 +172,7 @@ public class MailForm {
 			"</tr>" + 
 			"<tr>" + 
 			"<td style=\"padding-left:30;\"></td>" + 
-			"<td style=\"height:40px;\"></td>" + 
+			"<td style=\"height:15px;\"></td>" + 
 			"<tr style=\"height: 42px;\">" + 
 			"<td style=\"padding-left: 30px; height: 42px; width: 0px;\">&nbsp;</td>" + 
 			"<td style=\"height: 42px; font-size: 13px; color: #999999; font-weight: bold; line-height: 13px; width: 590px;\">결재 내역</td>" + 

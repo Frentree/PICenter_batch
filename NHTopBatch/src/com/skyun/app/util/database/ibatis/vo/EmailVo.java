@@ -84,7 +84,7 @@ public class EmailVo {
 				sb.append("<tr>");
 				sb.append("<td style='font-size: 13px; color: #222; font-weight: bold;' width='575'>");
 				sb.append(re.getDOC_NAME()+ "을 "+re.getUSER_NAME()+"("+re.getTEAM_NAME()+") 님이 " + (re.getAPPROVAL_STATUS().equals("E") ? "승인완료" : "승인반려") + " 하였습니다.");
-				sb.append("</td");
+				sb.append("</td>");
 				sb.append("</tr>");
 			}
 			
@@ -101,7 +101,7 @@ public class EmailVo {
 				contents += "<tr>\r\n" + 
 						"<td style=\"font-size: 13px; color: #222; font-weight: bold;\" width=\"575\">"+re.getNAME()+" : " + 
 						(re.getTYPE() == 1 ? "인프라 담당자" : re.getTYPE() == 2 ? "서비스 담당자" : "서비스 관리자") +
-						"</tr>";
+						"</td></tr>";
 			}
 
 			contents += m.get_end();
