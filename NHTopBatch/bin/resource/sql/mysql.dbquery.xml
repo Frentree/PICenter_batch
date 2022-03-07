@@ -4,18 +4,19 @@
 
 <sqlMap namespace="query">
 	<!--  -->
-	<select id="getAentIp" resultClass="com.skyun.app.util.database.ibatis.vo.agentIpVo">
-		SELECT A.AGENT_CONNECTED_IP AS IP
-		FROM pi_targets T
-		LEFT OUTER JOIN pi_agents A ON T.NAME = A.AGENT_NAME
+	<select id="getAgentIp" resultClass="com.skyun.app.util.database.ibatis.vo.agentIpVo">
+		SELECT A.AGENT_CONNECTED_IP AS IP, T.TARGET_ID, T.AP_NO
+		FROM pi_targets T,pi_agents A 
 		WHERE 1=1
-		AND A.AGENT_CONNECTED_IP IS NOT NULL
-		AND T.AP_NO != 0
-		AND T.NET_TYPE IS NULL OR T.NET_TYPE = ''
+		 AND A.AGENT_CONNECTED_IP IS NOT NULL
+		 AND T.AP_NO != 0
+		 AND (T.NET_TYPE IS NULL OR T.NET_TYPE = '')
+		 AND T.NAME = A.AGENT_NAME
+		 AND T.AP_NO = A.AP_NO
 	</select>
 	
-	<select id="getNetIp" resultClass="com.skyun.app.util.database.ibatis.vo.agentIpVo">
-		SELECT NI.TYPE, NI.IP, 
+	<select id="getNetIp" resultClass="com.skyun.app.util.database.ibatis.vo.netIpVo">
+		SELECT NI.TYPE, NI.IP, NI.MASK,
 		 CONCAT(NI.IP ,'/', NI.MASK) AS MASK_IP
 		FROM skt_net_ip NI
 	</select>
