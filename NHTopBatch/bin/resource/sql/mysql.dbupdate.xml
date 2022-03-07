@@ -10,8 +10,6 @@
 		   AND T.NAME = (SELECT A.AGENT_NAME
 						  FROM pi_agents A
 						  WHERE A.AGENT_CONNECTED_IP = #ip#)
-		   AND T.AP_NO != 0
-		   AND T.NET_TYPE IS NULL
 	</update>
 	
 </sqlMap>
