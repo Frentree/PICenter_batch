@@ -4,11 +4,19 @@ public class NetTargetVo {
 	private String type;
 	private String target_id;
 	private int ap_no;
+	private int net_id;
 	
 	public NetTargetVo() {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public NetTargetVo(String target_id, int ap_no, int net_id) {
+		super();
+		this.target_id = target_id;
+		this.ap_no = ap_no;
+		this.net_id = net_id;
+	}
+
 	public NetTargetVo(String type, String target_id, int ap_no) {
 		super();
 		this.type = type;
@@ -53,10 +61,19 @@ public class NetTargetVo {
 	}
 
 
+	public int getNet_id() {
+		return net_id;
+	}
+
+	public void setNet_id(int net_id) {
+		this.net_id = net_id;
+	}
 
 	@Override
 	public String toString() {
-		return "netTargetVo [type=" + type + ", target_id=" + target_id + ", ap_no=" + ap_no + "]";
+		return "NetTargetVo [type=" + type + ", target_id=" + target_id + ", ap_no=" + ap_no + ", net_id=" + net_id
+				+ "]";
 	}
+
 
 }

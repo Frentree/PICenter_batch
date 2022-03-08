@@ -11,4 +11,12 @@
 		   AND T.AP_NO = #ap_no#
 	</update>
 	
+	<update id="setTarget" parameterClass="com.skyun.app.util.database.ibatis.vo.NetTargetVo" >
+		UPDATE pi_targets T 
+		   SET T.NET_ID = #net_id#
+		WHERE 1=1
+		   AND T.TARGET_ID = #target_id#
+		   AND T.AP_NO = #ap_no#
+	</update>
+	
 </sqlMap>

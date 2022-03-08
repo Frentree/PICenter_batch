@@ -5,7 +5,7 @@
 <sqlMap namespace="query">
 	<!--  -->
 	<select id="getAgentIp" resultClass="com.skyun.app.util.database.ibatis.vo.agentIpVo">
-		SELECT A.AGENT_CONNECTED_IP AS IP, T.TARGET_ID, T.AP_NO
+		SELECT A.AGENT_CONNECTED_IP AS IP, T.TARGET_ID, T.AP_NO, IFNULL(T.NET_ID, -1) AS NET_ID
 		FROM pi_targets T,pi_agents A 
 		WHERE 1=1
 		 AND A.AGENT_CONNECTED_IP IS NOT NULL
@@ -21,5 +21,11 @@
 		FROM skt_net_ip NI
 	</select>
 
+	<select id="getAgentList" resultClass="int">
+		SELECT NS.NET_ID
+		FROM skt_net_schedule NS
+		WHERE NS.NET_TYPE = 0
+		 AND NS.NET_TYPE_ID = #net_type_id#
+	</select>
 
 </sqlMap>

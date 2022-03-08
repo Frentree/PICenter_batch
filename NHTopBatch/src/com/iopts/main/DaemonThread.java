@@ -68,27 +68,55 @@ public class DaemonThread implements Runnable {
 						
 						logger.info("---------------------------------------------");
 						
-						updateTargets(net.getType(), target.getTarget_id(), target.getAp_no());
+						updateTargets(net.getType(), target.getTarget_id(), target.getAp_no(), target.getNet_id());
 						
 						break;
 					}
 				}
-				
 			}
+			
 		
 		} catch (SQLException e) {
 			System.out.println(e.getLocalizedMessage());
 		}
 	}
 	
-	
-	private void updateTargets(String type, String target_id, int ap_no) {
+	// pi_targets net_type update && skt_net_schedule select
+	private void updateTargets(String type, String target_id, int ap_no, int net_id) {
 		NetTargetVo vo = new NetTargetVo(type, target_id, ap_no);
 		
 		try {
 			this.sqlMapPIC.openSession().update("update.setNetIp", vo);
+			
+			//pi_targets (net_id) >> null 값에 대해 if(true)
+			if(net_id == -1) {
+				
+				String net_type_id = "TYPE"+type;
+				
+				// skt_net_schedule Select(조건  net_type 0이고, net_type_id (TYPE + type) )
+				int target_net_id = 0;
+				target_net_id = (int) this.sqlMapPIC.openSession().queryForObject("query.getAgentList", net_type_id);
+				
+				if(net_id != 0) {	// skt_net_schedule 값이 있으면  
+					// pi_target update (net_id)		
+					updateTargetsType(target_id, ap_no, target_net_id);
+				}
+			}
+			
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println(e.getLocalizedMessage());
+		}
+	}
+	
+	// pi_targets net_id update
+	private void updateTargetsType(String target_id, int ap_no, int net_id) {
+		NetTargetVo vo = new NetTargetVo(target_id, ap_no, net_id);
+		
+		try {
+			this.sqlMapPIC.openSession().update("update.setTarget", vo);
+			
+		} catch (Exception e) {
+			System.out.println(e.getLocalizedMessage());
 		}
 	}
 

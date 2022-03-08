@@ -4,6 +4,8 @@ public class agentIpVo {
 	private String ip;
 	private String target_id;
 	private int ap_no;
+	private int net_id;
+	private String type;
 	
 	public agentIpVo() {
 		// TODO Auto-generated constructor stub
@@ -37,5 +39,23 @@ public class agentIpVo {
 	public void setAp_no(int ap_no) {
 		this.ap_no = ap_no;
 	}
+
+	public int getNet_id() {
+		return net_id;
+	}
+
+	public void setNet_id(int net_id) {
+		this.net_id = net_id;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	
 	
 }
