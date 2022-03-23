@@ -8,7 +8,7 @@
 		SELECT 
 			TARGET_ID, (SELECT NAME FROM PI_TARGETS WHERE TARGET_ID = DATA.TARGET_ID LIMIT 1) NAME, REGDATE, DRIVER, FOREIGNER, 
 			PASSPORT, RRN, ACCOUNT_NUM, CARD_NUM, PHONE, PHONE_NUM, MOBILE_PHONE, EMAIL, TOTALS,
-			(DRIVER+FOREIGNER+PASSPORT+RRN+ACCOUNT_NUM+CARD_NUM+PHONE+PHONE_NUM+MOBILE_PHONE+EMAIL) TOTAL
+			(DRIVER+FOREIGNER+PASSPORT+RRN+ACCOUNT_NUM+CARD_NUM) TOTAL
 		FROM (SELECT
 		A.TARGET_ID as target_id,
 		MAX(DATE_FORMAT(A.REGDATE, '%Y.%m/%d' )) AS REGDATE,
@@ -57,10 +57,6 @@
 		SUM(passport) AS passport,
 		SUM(account_num) AS account_num,
 		SUM(card_num) AS card_num,
-		SUM(phone) AS phone,
-		SUM(phone_num) AS phone_num,
-		SUM(mobile_phone) AS mobile_phone,
-		SUM(email) AS email,
 		SUM(total) AS total
 		FROM pi_topcomp
 		WHERE date(regdate)=CURDATE()- INTERVAL 1 DAY

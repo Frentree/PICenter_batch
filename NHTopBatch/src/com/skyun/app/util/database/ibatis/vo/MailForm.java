@@ -7,7 +7,7 @@ public class MailForm {
 	private String m1_header="<html>\n" + 
 			"	<head>\n" + 
 			"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n"+			
-			"		<title>Å×½ºÆ®</title>\n" + 
+			"		<title>í…ŒìŠ¤íŠ¸</title>\n" + 
 			"		<style type=\"text/css\">\n" + 
 			"			.tg  {border-collapse:collapse;border-spacing:0;}\n" + 
 			"			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
@@ -29,10 +29,10 @@ public class MailForm {
 			"	<col style=\"width: 850px\">\n" + 
 			"	</colgroup>\n" + 
 			"	  <tr>\n" + 
-			"	    <th class=\"tg-aoc1\">_rname_(_sabun_) ´Ô²² µµÂøÇÑ</th>\n" + 
+			"	    <th class=\"tg-aoc1\">_rname_(_sabun_) ë‹˜ê»˜ ë„ì°©í•œ</th>\n" + 
 			"	  </tr>\n" + 
 			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\"><¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ> °áÀç ¿äÃ» °ÇÀº ¾Æ·¡¿Í °°½À´Ï´Ù.</td>\n" + 
+			"	    <td class=\"tg-aoc1\"><ì„œë²„ë‚´ ê°œì¸ì •ë³´ ê²€ìƒ‰ ì‹œìŠ¤í…œ> ê²°ì¬ ìš”ì²­ ê±´ì€ ì•„ë˜ì™€ ê°™ìŠµë‹ˆë‹¤.</td>\n" + 
 			"	  </tr>\n" + 
 			"	  <tr>\n" + 
 			"	    <td class=\"tg-7qyp\">\n" + 
@@ -48,20 +48,20 @@ public class MailForm {
 			"		<col style=\"width: 200px\">\n" + 
 			"		</colgroup>\n" + 
 			"		  <tr>\n" + 
-			"		    <th class=\"tg-qbec\">¹®¼­¸í</th>\n" + 
-			"		    <th class=\"tg-qbec\">±â¾ÈÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">¹®¼­±â¾ÈÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">»óÅÂ</th>\n" + 
-			"		    <th class=\"tg-qbec\">ºñ°í</th>\n" + 
+			"		    <th class=\"tg-qbec\">ë¬¸ì„œëª…</th>\n" + 
+			"		    <th class=\"tg-qbec\">ê¸°ì•ˆì</th>\n" + 
+			"		    <th class=\"tg-qbec\">ê²°ì¬ì</th>\n" + 
+			"		    <th class=\"tg-qbec\">ë¬¸ì„œê¸°ì•ˆì¼</th>\n" + 
+			"		    <th class=\"tg-qbec\">ê²°ì¬ì¼</th>\n" + 
+			"		    <th class=\"tg-qbec\">ìƒíƒœ</th>\n" + 
+			"		    <th class=\"tg-qbec\">ë¹„ê³ </th>\n" + 
 			"		  </tr>";
 	private String m1_end="</table>\n" + 
 			"		</div>\n" +
 			"	    </td>\n" + 
 			"	  </tr>\n" + 
 			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\">ÀÚ¼¼ÇÑ ³»¿ëÀº <a href=\"_url_\" style=\"font-weight:bold;\"><U>³óÇù ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ</U></a> ¿¡¼­ È®ÀÎ ¹Ù¶ø´Ï´Ù.</td>\n" + 
+			"	    <td class=\"tg-aoc1\">ìì„¸í•œ ë‚´ìš©ì€ <a href=\"_url_\" target=\"_blank\" style=\"font-weight:bold;\"><U>ë†í˜‘ ì„œë²„ë‚´ ê°œì¸ì •ë³´ ê²€ìƒ‰ ì‹œìŠ¤í…œ</U></a> ì—ì„œ í™•ì¸ ë°”ëë‹ˆë‹¤.</td>\n" + 
 			"	  </tr>\n" + 
 			"	</table>\n" + 
 			"\n" + 
@@ -73,7 +73,7 @@ public class MailForm {
 	private String m2_header="<html>\n" + 
 			"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n"+	
 			"	<head>\n" + 
-			"		<title>½ÂÀÎ ¹İ·Á</title>\n" + 
+			"		<title>ìŠ¹ì¸ ë°˜ë ¤</title>\n" + 
 			"		<style type=\"text/css\">\n" + 
 			"			.tg  {border-collapse:collapse;border-spacing:0;}\n" + 
 			"			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
@@ -95,10 +95,10 @@ public class MailForm {
 			"	<col style=\"width: 850px\">\n" + 
 			"	</colgroup>\n" + 
 			"	  <tr>\n" + 
-			"	    <th class=\"tg-aoc1\">_rname_(_sabun_) ´Ô²² µµÂøÇÑ</th>\n" + 
+			"	    <th class=\"tg-aoc1\">_rname_(_sabun_) ë‹˜ê»˜ ë„ì°©í•œ</th>\n" + 
 			"	  </tr>\n" + 
 			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\"><¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ> °áÀç ¹İ·Á °ÇÀº ¾Æ·¡¿Í °°½À´Ï´Ù.</td>\n" + 
+			"	    <td class=\"tg-aoc1\"><ì„œë²„ë‚´ ê°œì¸ì •ë³´ ê²€ìƒ‰ ì‹œìŠ¤í…œ> ê²°ì¬ ë°˜ë ¤ ê±´ì€ ì•„ë˜ì™€ ê°™ìŠµë‹ˆë‹¤.</td>\n" + 
 			"	  </tr>\n" + 
 			"	  <tr>\n" + 
 			"	    <td class=\"tg-7qyp\">\n" + 
@@ -114,20 +114,20 @@ public class MailForm {
 			"		<col style=\"width: 200px\">\n" + 
 			"		</colgroup>\n" + 
 			"		  <tr>\n" + 
-			"		    <th class=\"tg-qbec\">¹®¼­¸í</th>\n" + 
-			"		    <th class=\"tg-qbec\">±â¾ÈÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">¹®¼­±â¾ÈÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">»óÅÂ</th>\n" + 
-			"		    <th class=\"tg-qbec\">ºñ°í</th>\n" + 
+			"		    <th class=\"tg-qbec\">ë¬¸ì„œëª…</th>\n" + 
+			"		    <th class=\"tg-qbec\">ê¸°ì•ˆì</th>\n" + 
+			"		    <th class=\"tg-qbec\">ê²°ì¬ì</th>\n" + 
+			"		    <th class=\"tg-qbec\">ë¬¸ì„œê¸°ì•ˆì¼</th>\n" + 
+			"		    <th class=\"tg-qbec\">ê²°ì¬ì¼</th>\n" + 
+			"		    <th class=\"tg-qbec\">ìƒíƒœ</th>\n" + 
+			"		    <th class=\"tg-qbec\">ë¹„ê³ </th>\n" + 
 			"		  </tr>"; 
 	private String m2_end="		</table>\n" + 
 			"		</div>\n" +
 			"	    </td>\n" + 
 			"	  </tr>\n" + 
 			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\">ÀÚ¼¼ÇÑ ³»¿ëÀº <a href=\"_url_\" style=\"font-weight:bold;\"><U>³óÇù ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ</U></a> ¿¡¼­ È®ÀÎ ¹Ù¶ø´Ï´Ù.</td>\n" + 
+			"	    <td class=\"tg-aoc1\">ìì„¸í•œ ë‚´ìš©ì€ <a href=\"_url_\" target=\"_blank\" style=\"font-weight:bold;\"><U>ë†í˜‘ ì„œë²„ë‚´ ê°œì¸ì •ë³´ ê²€ìƒ‰ ì‹œìŠ¤í…œ</U></a> ì—ì„œ í™•ì¸ ë°”ëë‹ˆë‹¤.</td>\n" + 
 			"	  </tr>\n" + 
 			"	</table>\n" + 
 			"\n" + 
@@ -138,7 +138,7 @@ public class MailForm {
 	private String m3_header="<html>\n" + 
 			"	<head>\n" + 
 			"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n"+			
-			"		<title>½ÂÀÎ ¿Ï·á</title>\n" + 
+			"		<title>ìŠ¹ì¸ ì™„ë£Œ</title>\n" + 
 			"		<style type=\"text/css\">\n" + 
 			"			.tg  {border-collapse:collapse;border-spacing:0;}\n" + 
 			"			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
@@ -160,10 +160,10 @@ public class MailForm {
 			"	<col style=\"width: 850px\">\n" + 
 			"	</colgroup>\n" + 
 			"	  <tr>\n" + 
-			"	    <th class=\"tg-aoc1\">_rname_(_sabun_) ´Ô²² µµÂøÇÑ</th>\n" + 
+			"	    <th class=\"tg-aoc1\">_rname_(_sabun_) ë‹˜ê»˜ ë„ì°©í•œ</th>\n" + 
 			"	  </tr>\n" + 
 			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\"><¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ> °áÀç ¿Ï·á °ÇÀº ¾Æ·¡¿Í °°½À´Ï´Ù.</td>\n" + 
+			"	    <td class=\"tg-aoc1\"><ì„œë²„ë‚´ ê°œì¸ì •ë³´ ê²€ìƒ‰ ì‹œìŠ¤í…œ> ê²°ì¬ ì™„ë£Œ ê±´ì€ ì•„ë˜ì™€ ê°™ìŠµë‹ˆë‹¤.</td>\n" + 
 			"	  </tr>\n" + 
 			"	  <tr>\n" + 
 			"	    <td class=\"tg-7qyp\">\n" + 
@@ -179,20 +179,20 @@ public class MailForm {
 			"		<col style=\"width: 200px\">\n" + 
 			"		</colgroup>\n" + 
 			"		  <tr>\n" + 
-			"		    <th class=\"tg-qbec\">¹®¼­¸í</th>\n" + 
-			"		    <th class=\"tg-qbec\">±â¾ÈÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">¹®¼­±â¾ÈÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">»óÅÂ</th>\n" + 
-			"		    <th class=\"tg-qbec\">ºñ°í</th>\n" + 
+			"		    <th class=\"tg-qbec\">ë¬¸ì„œëª…</th>\n" + 
+			"		    <th class=\"tg-qbec\">ê¸°ì•ˆì</th>\n" + 
+			"		    <th class=\"tg-qbec\">ê²°ì¬ì</th>\n" + 
+			"		    <th class=\"tg-qbec\">ë¬¸ì„œê¸°ì•ˆì¼</th>\n" + 
+			"		    <th class=\"tg-qbec\">ê²°ì¬ì¼</th>\n" + 
+			"		    <th class=\"tg-qbec\">ìƒíƒœ</th>\n" + 
+			"		    <th class=\"tg-qbec\">ë¹„ê³ </th>\n" + 
 			"		  </tr>"; 
 	private String m3_end="		</table>\n" + 
 			"   	</div>\n" + 
 			"	    </td>\n" + 
 			"	  </tr>\n" + 
 			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\">ÀÚ¼¼ÇÑ ³»¿ëÀº <a href=\"_url_\" style=\"font-weight:bold;\"><U>³óÇù ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ</U></a> ¿¡¼­ È®ÀÎ ¹Ù¶ø´Ï´Ù.</td>\n" + 
+			"	    <td class=\"tg-aoc1\">ìì„¸í•œ ë‚´ìš©ì€ <a href=\"_url_\" target=\"_blank\" style=\"font-weight:bold;\"><U>ë†í˜‘ ì„œë²„ë‚´ ê°œì¸ì •ë³´ ê²€ìƒ‰ ì‹œìŠ¤í…œ</U></a> ì—ì„œ í™•ì¸ ë°”ëë‹ˆë‹¤.</td>\n" + 
 			"	  </tr>\n" + 
 			"	</table>\n" + 
 			"\n" + 
@@ -202,7 +202,7 @@ public class MailForm {
 	private String m4_header="<html>\n" + 
 			"	<head>\n" + 
 			"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n"+			
-			"		<title>´ã´çÀÚ º¯°æ ¿äÃ»</title>\n" + 
+			"		<title>ë‹´ë‹¹ì ë³€ê²½ ìš”ì²­</title>\n" + 
 			"		<style type=\"text/css\">\n" + 
 			"			.tg  {border-collapse:collapse;border-spacing:0;}\n" + 
 			"			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
@@ -224,10 +224,10 @@ public class MailForm {
 			"	<col style=\"width: 850px\">\n" + 
 			"	</colgroup>\n" + 
 			"	  <tr>\n" + 
-			"	    <th class=\"tg-aoc1\">_rname_(_sabun_) ´Ô²² µµÂøÇÑ</th>\n" + 
+			"	    <th class=\"tg-aoc1\">_rname_(_sabun_) ë‹˜ê»˜ ë„ì°©í•œ</th>\n" + 
 			"	  </tr>\n" + 
 			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\"><¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ> ´ã´çÀÚ º¯°æ ½ÂÀÎ ¿äÃ» °ÇÀº ¾Æ·¡¿Í °°½À´Ï´Ù.</td>\n" + 
+			"	    <td class=\"tg-aoc1\"><ì„œë²„ë‚´ ê°œì¸ì •ë³´ ê²€ìƒ‰ ì‹œìŠ¤í…œ> ë‹´ë‹¹ì ë³€ê²½ ìŠ¹ì¸ ìš”ì²­ ê±´ì€ ì•„ë˜ì™€ ê°™ìŠµë‹ˆë‹¤.</td>\n" + 
 			"	  </tr>\n" + 
 			"	  <tr>\n" + 
 			"	    <td class=\"tg-7qyp\" >\n" + 
@@ -244,21 +244,21 @@ public class MailForm {
 			"		<col style=\"width: 200px\">\n" + 
 			"		</colgroup>\n" + 
 			"		  <tr>\n" + 
-			"		    <th class=\"tg-qbec\">È£½ºÆ®</th>\n" + 
-			"		    <th class=\"tg-qbec\">°æ·Î</th>\n" + 
-			"		    <th class=\"tg-qbec\">±â¾ÈÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">½ÅÃ»ÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">»óÅÂ</th>\n" + 
-			"		    <th class=\"tg-qbec\">ºñ°í</th>\n" + 
+			"		    <th class=\"tg-qbec\">í˜¸ìŠ¤íŠ¸</th>\n" + 
+			"		    <th class=\"tg-qbec\">ê²½ë¡œ</th>\n" + 
+			"		    <th class=\"tg-qbec\">ê¸°ì•ˆì</th>\n" + 
+			"		    <th class=\"tg-qbec\">ê²°ì¬ì</th>\n" + 
+			"		    <th class=\"tg-qbec\">ì‹ ì²­ì¼</th>\n" + 
+			"		    <th class=\"tg-qbec\">ê²°ì¬ì¼</th>\n" + 
+			"		    <th class=\"tg-qbec\">ìƒíƒœ</th>\n" + 
+			"		    <th class=\"tg-qbec\">ë¹„ê³ </th>\n" + 
 			"		  </tr>"; 
 	private String m4_end="			</table>\n" + 
 			"		</div>\n" + 
 			"	    </td>\n" + 
 			"	  </tr>\n" + 
 			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\">ÀÚ¼¼ÇÑ ³»¿ëÀº <a href=\"_url_\" style=\"font-weight:bold;\"><U>³óÇù ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ</U></a> ¿¡¼­ È®ÀÎ ¹Ù¶ø´Ï´Ù.</td>\n" + 
+			"	    <td class=\"tg-aoc1\">ìì„¸í•œ ë‚´ìš©ì€ <a href=\"_url_\" target=\"_blank\" style=\"font-weight:bold;\"><U>ë†í˜‘ ì„œë²„ë‚´ ê°œì¸ì •ë³´ ê²€ìƒ‰ ì‹œìŠ¤í…œ</U></a> ì—ì„œ í™•ì¸ ë°”ëë‹ˆë‹¤.</td>\n" + 
 			"	  </tr>\n" + 
 			"	</table>\n" +
 			"\n" + 
@@ -269,7 +269,7 @@ public class MailForm {
 	private String m5_header="<html>\n" + 
 			"	<head>\n" + 
 			"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n"+			
-			"		<title>´ã´çÀÚ º¯°æ ¹İ·Á</title>\n" + 
+			"		<title>ë‹´ë‹¹ì ë³€ê²½ ë°˜ë ¤</title>\n" + 
 			"		<style type=\"text/css\">\n" + 
 			"			.tg  {border-collapse:collapse;border-spacing:0;}\n" + 
 			"			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
@@ -291,10 +291,10 @@ public class MailForm {
 			"	<col style=\"width: 850px\">\n" + 
 			"	</colgroup>\n" + 
 			"	  <tr>\n" + 
-			"	    <th class=\"tg-aoc1\">_rname_(_sabun_) ´Ô²² µµÂøÇÑ</th>\n" + 
+			"	    <th class=\"tg-aoc1\">_rname_(_sabun_) ë‹˜ê»˜ ë„ì°©í•œ</th>\n" + 
 			"	  </tr>\n" + 
 			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\"><¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ> ´ã´çÀÚ º¯°æ ½ÂÀÎ ¹İ·Á °ÇÀº ¾Æ·¡¿Í °°½À´Ï´Ù.</td>\n" + 
+			"	    <td class=\"tg-aoc1\"><ì„œë²„ë‚´ ê°œì¸ì •ë³´ ê²€ìƒ‰ ì‹œìŠ¤í…œ> ë‹´ë‹¹ì ë³€ê²½ ìŠ¹ì¸ ë°˜ë ¤ ê±´ì€ ì•„ë˜ì™€ ê°™ìŠµë‹ˆë‹¤.</td>\n" + 
 			"	  </tr>\n" + 
 			"	  <tr>\n" + 
 			"	    <td class=\"tg-7qyp\">\n" + 
@@ -311,21 +311,21 @@ public class MailForm {
 			"		<col style=\"width: 200px\">\n" + 
 			"		</colgroup>\n" + 
 			"		  <tr>\n" + 
-			"		    <th class=\"tg-qbec\">È£½ºÆ®</th>\n" + 
-			"		    <th class=\"tg-qbec\">°æ·Î</th>\n" + 
-			"		    <th class=\"tg-qbec\">±â¾ÈÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">½ÅÃ»ÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">»óÅÂ</th>\n" + 
-			"		    <th class=\"tg-qbec\">ºñ°í</th>\n" + 
+			"		    <th class=\"tg-qbec\">í˜¸ìŠ¤íŠ¸</th>\n" + 
+			"		    <th class=\"tg-qbec\">ê²½ë¡œ</th>\n" + 
+			"		    <th class=\"tg-qbec\">ê¸°ì•ˆì</th>\n" + 
+			"		    <th class=\"tg-qbec\">ê²°ì¬ì</th>\n" + 
+			"		    <th class=\"tg-qbec\">ì‹ ì²­ì¼</th>\n" + 
+			"		    <th class=\"tg-qbec\">ê²°ì¬ì¼</th>\n" + 
+			"		    <th class=\"tg-qbec\">ìƒíƒœ</th>\n" + 
+			"		    <th class=\"tg-qbec\">ë¹„ê³ </th>\n" + 
 			"		  </tr>"; 
 	private String m5_end="		</table>\n" + 
 			"		</div>\n" + 
 			"	    </td>\n" + 
 			"	  </tr>\n" + 
 			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\">ÀÚ¼¼ÇÑ ³»¿ëÀº <a href=\"_url_\" style=\"font-weight:bold;\"><U>³óÇù ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ</U></a> ¿¡¼­ È®ÀÎ ¹Ù¶ø´Ï´Ù.</td>\n" + 
+			"	    <td class=\"tg-aoc1\">ìì„¸í•œ ë‚´ìš©ì€ <a href=\"_url_\" target=\"_blank\" style=\"font-weight:bold;\"><U>ë†í˜‘ ì„œë²„ë‚´ ê°œì¸ì •ë³´ ê²€ìƒ‰ ì‹œìŠ¤í…œ</U></a> ì—ì„œ í™•ì¸ ë°”ëë‹ˆë‹¤.</td>\n" + 
 			"	  </tr>\n" + 
 			"	</table>\n" + 
 			"\n" + 
@@ -337,7 +337,7 @@ public class MailForm {
 	private String m6_header="<html>\n" + 
 			"	<head>\n" + 
 			"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n"+			
-			"		<title>´ã´çÀÚ º¯°æ ¿Ï·á</title>\n" + 
+			"		<title>ë‹´ë‹¹ì ë³€ê²½ ì™„ë£Œ</title>\n" + 
 			"		<style type=\"text/css\">\n" + 
 			"			.tg  {border-collapse:collapse;border-spacing:0;}\n" + 
 			"			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
@@ -359,10 +359,10 @@ public class MailForm {
 			"	<col style=\"width: 850px\">\n" + 
 			"	</colgroup>\n" + 
 			"	  <tr>\n" + 
-			"	    <th class=\"tg-aoc1\">_rname_(_sabun_) ´Ô²² µµÂøÇÑ</th>\n" + 
+			"	    <th class=\"tg-aoc1\">_rname_(_sabun_) ë‹˜ê»˜ ë„ì°©í•œ</th>\n" + 
 			"	  </tr>\n" + 
 			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\"><¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ> ´ã´çÀÚ º¯°æ ½ÂÀÎ ¿Ï·á °ÇÀº ¾Æ·¡¿Í °°½À´Ï´Ù.</td>\n" + 
+			"	    <td class=\"tg-aoc1\"><ì„œë²„ë‚´ ê°œì¸ì •ë³´ ê²€ìƒ‰ ì‹œìŠ¤í…œ> ë‹´ë‹¹ì ë³€ê²½ ìŠ¹ì¸ ì™„ë£Œ ê±´ì€ ì•„ë˜ì™€ ê°™ìŠµë‹ˆë‹¤.</td>\n" + 
 			"	  </tr>\n" + 
 			"	  <tr>\n" + 
 			"	    <td class=\"tg-7qyp\">\n" + 
@@ -379,21 +379,21 @@ public class MailForm {
 			"		<col style=\"width: 200px\">\n" + 
 			"		</colgroup>\n" + 
 			"		  <tr>\n" + 
-			"		    <th class=\"tg-qbec\">È£½ºÆ®</th>\n" + 
-			"		    <th class=\"tg-qbec\">°æ·Î</th>\n" + 
-			"		    <th class=\"tg-qbec\">±â¾ÈÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">½ÅÃ»ÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">°áÀçÀÏ</th>\n" + 
-			"		    <th class=\"tg-qbec\">»óÅÂ</th>\n" + 
-			"		    <th class=\"tg-qbec\">ºñ°í</th>\n" + 
+			"		    <th class=\"tg-qbec\">í˜¸ìŠ¤íŠ¸</th>\n" + 
+			"		    <th class=\"tg-qbec\">ê²½ë¡œ</th>\n" + 
+			"		    <th class=\"tg-qbec\">ê¸°ì•ˆì</th>\n" + 
+			"		    <th class=\"tg-qbec\">ê²°ì¬ì</th>\n" + 
+			"		    <th class=\"tg-qbec\">ì‹ ì²­ì¼</th>\n" + 
+			"		    <th class=\"tg-qbec\">ê²°ì¬ì¼</th>\n" + 
+			"		    <th class=\"tg-qbec\">ìƒíƒœ</th>\n" + 
+			"		    <th class=\"tg-qbec\">ë¹„ê³ </th>\n" + 
 			"		  </tr>"; 
 	private String m6_end="		</table>\n" + 
 			" 		</div>\n" +
 			"	    </td>\n" + 
 			"	  </tr>\n" + 
 			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\">ÀÚ¼¼ÇÑ ³»¿ëÀº <a href=\"_url_\" style=\"font-weight:bold;\"><U>³óÇù ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ</U></a> ¿¡¼­ È®ÀÎ ¹Ù¶ø´Ï´Ù.</td>\n" + 
+			"	    <td class=\"tg-aoc1\">ìì„¸í•œ ë‚´ìš©ì€ <a href=\"_url_\" target=\"_blank\" style=\"font-weight:bold;\"><U>ë†í˜‘ ì„œë²„ë‚´ ê°œì¸ì •ë³´ ê²€ìƒ‰ ì‹œìŠ¤í…œ</U></a> ì—ì„œ í™•ì¸ ë°”ëë‹ˆë‹¤.</td>\n" + 
 			"	  </tr>\n" + 
 			"	</table>\n" + 
 			"\n" + 
@@ -406,7 +406,7 @@ public class MailForm {
 			"	<head>\n" + 
 			"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n"+			
 			"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n" + 
-			"		<title>°Ë»ö °á°ú ¾Ë¶÷</title>\n" + 
+			"		<title>ê²€ìƒ‰ ê²°ê³¼ ì•ŒëŒ</title>\n" + 
 			"		<style type=\"text/css\">\n" + 
 			"			.tg  {border-collapse:collapse;border-spacing:0;}\n" + 
 			"			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
@@ -428,10 +428,10 @@ public class MailForm {
 			"	<col style=\"width: 850px\">\n" + 
 			"	</colgroup>\n" + 
 			"	  <tr>\n" + 
-			"	    <th class=\"tg-aoc1\">_rname_(_sabun_) ´Ô²² µµÂøÇÑ</th>\n" + 
+			"	    <th class=\"tg-aoc1\">_rname_(_sabun_) ë‹˜ê»˜ ë„ì°©í•œ</th>\n" + 
 			"	  </tr>\n" + 
 			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\"><¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ> °ËÃâ °á°ú °ÇÀº ¾Æ·¡¿Í °°½À´Ï´Ù.</td>\n" + 
+			"	    <td class=\"tg-aoc1\"><ì„œë²„ë‚´ ê°œì¸ì •ë³´ ê²€ìƒ‰ ì‹œìŠ¤í…œ> ê²€ì¶œ ê²°ê³¼ ê±´ì€ ì•„ë˜ì™€ ê°™ìŠµë‹ˆë‹¤.</td>\n" + 
 			"	  </tr>\n" + 
 			"	  <tr>\n" + 
 			"	    <td class=\"tg-7qyp\">\n" + 
@@ -451,24 +451,24 @@ public class MailForm {
 			"		<col style=\"width: 200px\">\n" + 
 			"		</colgroup>\n" + 
 			"		  <tr>\n" + 
-			"		    <th class=\"tg-qbec\">È£½ºÆ®</th>\n" + 
-			"		    <th class=\"tg-qbec\">°æ·Î</th>\n" + 
-			"		    <th class=\"tg-qbec\">¼ÒÀ¯ÀÚ</th>\n" + 
-			"		    <th class=\"tg-qbec\">ÁÖ¹Î¹øÈ£</th>\n" + 		
-			"		    <th class=\"tg-qbec\">¿Ü±¹ÀÎ¹øÈ£</th>\n" +
-			"		    <th class=\"tg-qbec\">¿©±Ç¹øÈ£</th>\n" +
-			"		    <th class=\"tg-qbec\">¿îÀü¹øÈ£</th>\n" +
-			"		    <th class=\"tg-qbec\">°èÁÂ¹øÈ£</th>\n" +
-			"		    <th class=\"tg-qbec\">Ä«µå¹øÈ£</th>\n" +			
-			"		    <th class=\"tg-qbec\">ÇÕ°è</th>\n" + 
-			"		    <th class=\"tg-qbec\">Ã³¸®»óÅÂ</th>\n" + 
+			"		    <th class=\"tg-qbec\">í˜¸ìŠ¤íŠ¸</th>\n" + 
+			"		    <th class=\"tg-qbec\">ê²½ë¡œ</th>\n" + 
+			"		    <th class=\"tg-qbec\">ì†Œìœ ì</th>\n" + 
+			"		    <th class=\"tg-qbec\">ì£¼ë¯¼ë²ˆí˜¸</th>\n" + 		
+			"		    <th class=\"tg-qbec\">ì™¸êµ­ì¸ë²ˆí˜¸</th>\n" +
+			"		    <th class=\"tg-qbec\">ì—¬ê¶Œë²ˆí˜¸</th>\n" +
+			"		    <th class=\"tg-qbec\">ìš´ì „ë²ˆí˜¸</th>\n" +
+			"		    <th class=\"tg-qbec\">ê³„ì¢Œë²ˆí˜¸</th>\n" +
+			"		    <th class=\"tg-qbec\">ì¹´ë“œë²ˆí˜¸</th>\n" +			
+			"		    <th class=\"tg-qbec\">í•©ê³„</th>\n" + 
+			"		    <th class=\"tg-qbec\">ì²˜ë¦¬ìƒíƒœ</th>\n" + 
 			"		  </tr>"; 
 	private String m7_end="		</table>\n" + 
 			"		</div>\n" +
 			"	    </td>\n" + 
 			"	  </tr>\n" + 
 			"	  <tr>\n" + 
-			"	    <td class=\"tg-aoc1\">ÀÚ¼¼ÇÑ ³»¿ëÀº <a href=\"_url_\" style=\"font-weight:bold;\"><U>³óÇù ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ</U></a> ¿¡¼­ È®ÀÎ ¹Ù¶ø´Ï´Ù.</td>\n" + 
+			"	    <td class=\"tg-aoc1\">ìì„¸í•œ ë‚´ìš©ì€ <a href=\"_url_\" target=\"_blank\"  style=\"font-weight:bold;\"><U>ë†í˜‘ ì„œë²„ë‚´ ê°œì¸ì •ë³´ ê²€ìƒ‰ ì‹œìŠ¤í…œ</U></a> ì—ì„œ í™•ì¸ ë°”ëë‹ˆë‹¤.</td>\n" + 
 			"	  </tr>\n" + 
 			"	</table>\n" + 
 			"\n" + 
@@ -479,7 +479,7 @@ public class MailForm {
 	
 	private String m8_header="<html>\n" + 
 			"           <head>\n" + 
-			"                     <title>Á¢¼Ó ¿À·ù</title>\n" + 
+			"                     <title>ì ‘ì† ì˜¤ë¥˜</title>\n" + 
 			"                     <style type=\"text/css\">\n" + 
 			"                                .tg  {border-collapse:collapse;border-spacing:0;}\n" + 
 			"                                .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}\n" + 
@@ -501,10 +501,10 @@ public class MailForm {
 			"           <col style=\"width: 850px\">\n" + 
 			"           </colgroup>\n" + 
 			"             <tr>\n" + 
-			"	   			 <th class=\"tg-aoc1\">_rname_(_sabun_) ´Ô²² µµÂøÇÑ</th>\n" + 
+			"	   			 <th class=\"tg-aoc1\">_rname_(_sabun_) ë‹˜ê»˜ ë„ì°©í•œ</th>\n" + 
 			"             </tr>\n" + 
 			"             <tr>\n" + 
-			"               <td class=\"tg-aoc1\"><¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ> Á¢¼Ó ¿À·ù °ÇÀº ¾Æ·¡¿Í °°½À´Ï´Ù.</td>\n" + 
+			"               <td class=\"tg-aoc1\"><ì„œë²„ë‚´ ê°œì¸ì •ë³´ ê²€ìƒ‰ ì‹œìŠ¤í…œ> ì ‘ì† ì˜¤ë¥˜ ê±´ì€ ì•„ë˜ì™€ ê°™ìŠµë‹ˆë‹¤.</td>\n" + 
 			"             </tr>\n" + 
 			"             <tr>\n" + 
 			"               <td class=\"tg-7qyp\">\n" + 
@@ -515,14 +515,14 @@ public class MailForm {
 			"                     <col style=\"width: 50%\">\n" + 
 			"                     </colgroup>\n" + 
 			"                       <tr>\n" + 
-			"                         <th class=\"tg-qbec\">È£½ºÆ®¸í</th>\n" + 
+			"                         <th class=\"tg-qbec\">í˜¸ìŠ¤íŠ¸ëª…</th>\n" + 
 			"                         <th class=\"tg-qbec\">IP</th>\n" + 
 			"                       </tr>";
 	private String m8_end="                    </table>\n" + 
 			"               </td>\n" + 
 			"             </tr>\n" + 
 			"             <tr>\n" + 
-			"	    			<td class=\"tg-aoc1\" >ÀÚ¼¼ÇÑ ³»¿ëÀº <a href=\"_url_\" style=\"font-weight:bold;\"><U>³óÇù ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö ½Ã½ºÅÛ</U></a> ¿¡¼­ È®ÀÎ ¹Ù¶ø´Ï´Ù.</td>\n" + 
+			"	    			<td class=\"tg-aoc1\" >ìì„¸í•œ ë‚´ìš©ì€ <a href=\"_url_\" target=\"_blank\" style=\"font-weight:bold;\"><U>ë†í˜‘ ì„œë²„ë‚´ ê°œì¸ì •ë³´ ê²€ìƒ‰ ì‹œìŠ¤í…œ</U></a> ì—ì„œ í™•ì¸ ë°”ëë‹ˆë‹¤.</td>\n" + 
 			"             </tr>\n" + 
 			"           </table>\n" + 
 			"			</div>" +
@@ -583,6 +583,5 @@ public class MailForm {
 		return sret;
 		
 	}
-
 
 }

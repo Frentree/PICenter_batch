@@ -7,21 +7,18 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import org.apache.log4j.BasicConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
-import com.ibatis.common.logging.Log;
-import com.ibatis.common.logging.LogFactory;
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.skyun.app.util.config.AppConfig;
 import com.skyun.app.util.database.ibatis.SqlMapInstanceBATCH;
@@ -37,12 +34,13 @@ public class DaemonThread implements Runnable {
 	private static SqlMapClient sqlMapPIC = null;
 	List<pi_topcompVo> predata = new ArrayList<pi_topcompVo>();
 
+	private static Logger logger = LoggerFactory.getLogger(DaemonThread.class);
+
 	private String tgt_zip = "";
 	private String tgt = "";
 	private MailForm M = new MailForm();
 
 	public DaemonThread() {
-		BasicConfigurator.configure();
 		int seq = getFileNo(AppConfig.getProperty("config.email.path"));
 		
 		// tgt = AppConfig.getProperty("config.email.path") + "/" +
@@ -54,7 +52,7 @@ public class DaemonThread implements Runnable {
 				+ String.format("%s_%s_%s_%06d.zip", AppConfig.getProperty("config.email.init"), getCDate(), AppConfig.getProperty("config.email.division"), seq);
 
 		this.sqlMapPIC = SqlMapInstanceBATCH.getSqlMapInstance();
-		System.out.println("Batch work of information in the ti_topcomp table");
+		System.out.println("Batch work of information in the pi_topcomp table");
 		System.out.println("Agent connection failure send to mail ");
 	}
 
@@ -65,11 +63,11 @@ public class DaemonThread implements Runnable {
 			predata = this.sqlMapPIC.openSession().queryForList("query.getPreCount");
 			getNowData();
 //			UpdateDelDate();
-//			sendMail();
+			sendMail();
 
-//			for (int i = 1; i < 8; i++) {
-//				sendMailLoop(i);
-//			}
+			for (int i = 1; i < 8; i++) {
+				sendMailLoop(i);
+			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
