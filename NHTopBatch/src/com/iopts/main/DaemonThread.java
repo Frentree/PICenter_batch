@@ -15,11 +15,8 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.config.Configurator;
-import org.apache.logging.log4j.core.config.DefaultConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.ibatis.sqlmap.client.SqlMapClient;
@@ -40,11 +37,9 @@ public class DaemonThread implements Runnable {
 	private String tgt_zip = "";
 	private String tgt = "";
 	private MailForm M = new MailForm();
-	private static Logger logger = LogManager.getLogger(DaemonThread.class);
+	private static Logger logger = LoggerFactory.getLogger(DaemonThread.class);
 
 	public DaemonThread() {
-		Configurator.initialize(new DefaultConfiguration());
-	    Configurator.setRootLevel(Level.INFO);
 		//int seq = getFileNo(AppConfig.getProperty("config.email.path"));
 		
 		// tgt = AppConfig.getProperty("config.email.path") + "/" +
