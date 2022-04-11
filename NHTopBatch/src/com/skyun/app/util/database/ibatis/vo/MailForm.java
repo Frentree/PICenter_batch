@@ -117,7 +117,7 @@ public class MailForm {
 			"<br>업무에 참고하여 주시기 바라고, 상세 내역에 대한 확인 또는 담당자 정보의</br>" + 
 			"<p>변경이 필요한 경우 아래 링크로 접속하여 조치해 주시기 바랍니다.</p>" + 
 			"<p>&nbsp;</p>" + 
-			"<div style=\"font-size: 14px; font-weight: bold;\"><SPAN STYLE=\"background-color:#e6e6e6;\">개인정보 검출관리센터(PIMC) 바로가기(<a href=\"https://pimc.sktelecom.com\">https://pimc.sktelecom.com</a>)</span></div>" + 
+			"<SPAN STYLE=\"background-color:#e6e6e6; font-size: 14px; font-weight: bold;\">개인정보 검출관리센터(PIMC) 바로가기(<a href=\"https://pimc.sktelecom.com\">https://pimc.sktelecom.com</a>)</span>" + 
 			"<p>&nbsp;</p>" + 
 			"<p>기타 문의사항은 본 메일에 회신 또는 아래 문의처로 연락주시기 바랍니다.</p>" + 
 			"<p>&nbsp;</p>" + 
