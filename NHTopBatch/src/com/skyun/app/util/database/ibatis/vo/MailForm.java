@@ -1,5 +1,5 @@
 package com.skyun.app.util.database.ibatis.vo;
-
+ 
 public class MailForm {
 	private String m_header="<body style=\"font-family:'Noto Sans KR',sans-serif;padding:0;margin:0;\">" + 
 			"<table style=\"border: 1px solid #ccc;\" border=\"0\" width=\"700\" cellspacing=\"0\" align=\"center\">" + 
