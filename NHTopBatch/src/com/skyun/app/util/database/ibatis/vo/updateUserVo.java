@@ -6,6 +6,8 @@ public class updateUserVo {
 	private String SOSOK;
 	private String REGDATE;
 	private String EMAIL;
+	private String SNS;
+	
 	
 	public String getUPDATE_USER_NO() {
 		return UPDATE_USER_NO;
@@ -19,7 +21,6 @@ public class updateUserVo {
 	public void setUPDATE_USER_NM(String uPDATE_USER_NM) {
 		UPDATE_USER_NM = uPDATE_USER_NM;
 	}
-	
 	public String getSOSOK() {
 		return SOSOK;
 	}
@@ -38,5 +39,13 @@ public class updateUserVo {
 	public void setEMAIL(String eMAIL) {
 		EMAIL = eMAIL;
 	}
+	public String getSNS() {
+		return SNS;
+	}
+	public void setSNS(String sNS) {
+		SNS = sNS;
+	}
+	
+	
 	
 }

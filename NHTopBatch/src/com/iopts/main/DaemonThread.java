@@ -4,15 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 import org.apache.http.ParseException;
 import org.jdom2.Document;
@@ -24,12 +18,7 @@ import com.google.gson.Gson;
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.skyun.app.util.config.AppConfig;
 import com.skyun.app.util.database.ibatis.SqlMapInstanceBATCH;
-import com.skyun.app.util.database.ibatis.vo.EmailVo;
-import com.skyun.app.util.database.ibatis.vo.MailForm;
-import com.skyun.app.util.database.ibatis.vo.PersonalVo;
-import com.skyun.app.util.database.ibatis.vo.pi_topcompVo;
-import com.skyun.app.util.database.ibatis.vo.pifindVo;
-import com.skyun.app.util.database.ibatis.vo.updateUserVo;
+import com.skyun.app.util.database.ibatis.vo.piLockMember;
 
 import csp.api.cbh.scbh000001.vo.GetSmsInfoVo;
 import csp.comm.Config;
@@ -39,33 +28,30 @@ import csp.comm.vo.ResultVo;
 
 public class DaemonThread implements Runnable {
 	private static SqlMapClient sqlMapPIC = null;
-	List<pi_topcompVo> predata = new ArrayList<pi_topcompVo>();
 
-	private String tgt_zip = "";
-	private String tgt = "";
-	private MailForm M = new MailForm();
-
-	/*CBH 메일 전송*/
+	/*CBH 문자 전송*/
 	private	String URL	= Config.domain + "/rest/SCBH000005/" + Config.apiKey;
-	private static String title = "";
-	private static String content = "";
-	private static String sendmail = AppConfig.getProperty("config.email.senderid");
-	private static String receivermail = "";
+/*	private static String sendmail = AppConfig.getProperty("config.email.senderid");*/	
+	private static String consumerId = "C00561";
+	private static String rplyPhonNum = AppConfig.getProperty("config.sns.rplyPhonNum");
+/*	private static String rplyPhonNum = "0264008842";
+*/	private static String title = "";
+	private static String phone = "";
 	
-	private static String[][] paramLt	= {{"SENDEREMAIL",sendmail},{"RECEIVEREMAIL", receivermail},{"SUBJECT", title},{"CONTENT",content}};
+	// private static String[][] paramLt	= {{"SENDEREMAIL",sendmail},{"RECEIVEREMAIL", receivermail},{"SUBJECT", title},{"CONTENT",content}};
+	private static String[][] paramLt = {{"CONSUMER_ID",consumerId},{"RPLY_PHON_NUM",rplyPhonNum},{"TITLE",title},{"PHONE",phone}}; 
 
 	private static Logger logger = LoggerFactory.getLogger(DaemonThread.class);
 
 	public DaemonThread() {
-		sendmail = AppConfig.getProperty("config.email.senderid");
-		paramLt[0][0] = "SENDEREMAIL";
-		paramLt[0][1] = sendmail;
-		paramLt[1][0] = "RECEIVEREMAIL";
-		paramLt[1][1] = receivermail;
-		paramLt[2][0] = "SUBJECT";
+		paramLt[0][0] = "CONSUMER_ID";
+		paramLt[0][1] = consumerId;
+		paramLt[1][0] = "RPLY_PHON_NUM";
+		paramLt[1][1] = rplyPhonNum;
+		paramLt[2][0] = "TITLE";
 		paramLt[2][1] = title;
-		paramLt[3][0] = "CONTENT";
-		paramLt[3][1] = content;
+		paramLt[3][0] = "PHONE";
+		paramLt[3][1] = phone;
 		
 		this.sqlMapPIC = SqlMapInstanceBATCH.getSqlMapInstance();
 	}
@@ -73,7 +59,7 @@ public class DaemonThread implements Runnable {
 	@Override
 	public void run() {
 		try {
-			sendMailLoop(1);
+			sendMailLoop();
 			/*for (int i = 2; i < 4; i++) {
 				sendMailLoop(i);
 			}*/
@@ -85,72 +71,55 @@ public class DaemonThread implements Runnable {
 
 	}
 
-	private void sendMailLoop(int i) {
-		List<updateUserVo> master = null;
+	private void sendMailLoop() {
+		List<piLockMember> master = null;
 
-		logger.info("Mail Data Count >>>>> " + i );
 		try {
-			if(i == 1) {
-				master = this.sqlMapPIC.openSession().queryForList("query.getEmailMaster" + i);
+				master = this.sqlMapPIC.openSession().queryForList("query.getAccountLockMember");
 				
-				for (updateUserVo vo : master) {
-					UpdateUserSendMail(vo, i);
+				for (piLockMember vo : master) {
+					UpdateUserSendSNS(vo);
 				}
-				
-			}else if(i == 2) {
-				master = this.sqlMapPIC.openSession().queryForList("query.getEmailMaster" + i);
-
-				for (updateUserVo vo : master) {
-					logger.info("Mail :: " + vo.getEMAIL());
-					UpdateUserSendMail(vo, i);
-				}
-				
-			}else if(i == 3) {
-				master = this.sqlMapPIC.openSession().queryForList("query.getEmailMaster" + i);
-				for (updateUserVo vo : master) {
-					UpdateUserSendMail(vo, i);
-				}
-				
-			}
 
 		} catch (SQLException e) {
 			System.out.println(e.getLocalizedMessage());
 		}
 	}
 
-	private void UpdateUserSendMail(updateUserVo vo, int i) {
-
+	private void UpdateUserSendSNS(piLockMember vo) {
+		
 		try {
-			List<?> detail = this.sqlMapPIC.openSession().queryForList("query.getEmailDetail" + i, vo);
-
-			EmailVo emailobj = new EmailVo();
+			// dpquery - getEmailDetail
+			/*List<?> detail = this.sqlMapPIC.openSession().queryForList("query.getAccountLockMember" + i, vo);*/			
+			/*EmailVo emailobj = new EmailVo();
 			emailobj.setTitle(i);
 			emailobj.setContents(i, detail, M, vo);
-
-			title = emailobj.getTitle_arg().get(0);
-			receivermail = vo.getEMAIL();
-			content = emailobj.getContents();
 			
-			paramLt[1][0] = "RECEIVEREMAIL";
-			paramLt[1][1] = receivermail;
-			paramLt[2][0] = "SUBJECT";
+			title = emailobj.getTitle_arg().get(0);*/
+			/*receivermail = vo.getEMAIL();*/
+			/*sendsns = vo.getSNS();
+			phone = emailobj.getContents();*/
+			title = "[PIMC] 계정 권한만료 공지 \n" + vo.getUser_name()+"님의 계정이 " + vo.getLoginDate()+"에 만료됩니다.";
+			phone = vo.getUser_phone();
+			
+			paramLt[1][0] = "RPLY_PHON_NUM";
+			paramLt[1][1] = rplyPhonNum;
+			paramLt[2][0] = "TITLE";
 			paramLt[2][1] = title;
-			paramLt[3][0] = "CONTENT";
-			paramLt[3][1] = content;
+			paramLt[3][0] = "PHONE";
+			paramLt[3][1] = phone;
 			
-			
-			if (receivermail != null && !receivermail.equals("")) {
-				logger.info("paramLt Sender : " + paramLt[0][1] + " , Receiver : " + paramLt[1][1] + ", subject : " + paramLt[2][1]);
-				getVo();
+			logger.info("paramLt Sender : " + paramLt[0][1] + " , Rply_phon_num : " + paramLt[1][1] + ", title : " + paramLt[2][1]);
+			if (rplyPhonNum != null && !rplyPhonNum.equals("")) {
+				logger.info("paramLt Sender : " + paramLt[0][1] + " , Rply_phon_num : " + paramLt[1][1] + ", title : " + paramLt[2][1]);
+				getVo(paramLt);
+				
 			}
-		} catch (SQLException e) {
-			logger.error(e.getLocalizedMessage());
-		} catch (Exception e) {
+		}catch (Exception e) {
 			logger.error(e.getLocalizedMessage());
 		}
-
+		
 	}
-
 
 	public static String escape(String input) {
 		StringBuilder output = new StringBuilder();
@@ -296,7 +265,7 @@ public class DaemonThread implements Runnable {
 
 	// Value Object형 데이터
 //	@Test
-	public void getVo() {
+	public void getVo(String[][] paramLt) {
 		int timeout = 5000;
 		System.out.println(getVoData(URL, paramLt, "POST", timeout));
 	}
