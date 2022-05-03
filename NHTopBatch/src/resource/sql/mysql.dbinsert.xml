@@ -3,6 +3,16 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="insert">
+	
+	<insert id="insertTopcomp">
+		INSERT INTO pi_topcomp (
+		SELECT T.TARGET_ID, DATE_FORMAT(now(), '%Y%m%d'), T.AP_NO, T.PATH_CNT, T.RRN, T.RRN_PRE, T.FOREIGNER, T.FOREIGNER_PRE, T.DRIVER, T.DRIVER_PRE, T.PASSPORT, T.PASSPORT_PRE, 
+			T.ACCOUNT_NUM, T.ACCOUNT_NUM_PRE, T.CARD_NUM, T.CARD_NUM_PRE, T.PHONE, T.PHONE_PRE, T.PHONE_NUM, T.PHONE_NUM_PRE, T.MOBILE_PHONE, T.MOBILE_PHONE_PRE,
+			T.NEW_RRN, T.NEW_RRN_PRE, T.EMAIL, T.EMAIL_PRE, T.CARNUM, T.CARNUM_PRE, T.VEHICLEID, T.VEHICLEID_PRE, T.TOTAL, T.TOTAL_PRE, T.TOTAL_GAP 
+		FROM pi_topcomp T
+		WHERE date(regdate) = CURDATE() - INTERVAL 1 DAY
+		  AND NOT EXISTS (SELECT * FROM pi_topcomp T2 WHERE T2.TARGET_ID = T.TARGET_ID AND T.AP_NO = T2.AP_NO AND date(regdate) = CURDATE()))
+	</insert>
 
 	<insert id="settopcomp" parameterClass="com.skyun.app.util.database.ibatis.vo.pi_topcompVo">
 		<!-- INSERT INTO pi_topcomp
