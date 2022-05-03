@@ -30,7 +30,7 @@ public class DaemonThread implements Runnable {
 	private static SqlMapClient sqlMapPIC = null;
 
 	/*CBH 문자 전송*/
-	private	String URL	= Config.domain + "/rest/SCBH000005/" + Config.apiKey;
+	private	String URL	= Config.domain + "/rest/SCBH000001/" + Config.apiKey;
 /*	private static String sendmail = AppConfig.getProperty("config.email.senderid");*/	
 	private static String consumerId = "C00561";
 	private static String rplyPhonNum = AppConfig.getProperty("config.sns.rplyPhonNum");
@@ -76,10 +76,16 @@ public class DaemonThread implements Runnable {
 
 		try {
 				master = this.sqlMapPIC.openSession().queryForList("query.getAccountLockMember");
-				
-				for (piLockMember vo : master) {
-					UpdateUserSendSNS(vo);
+
+				if(master.size() < 100) {
+					for (piLockMember vo : master) {
+						UpdateUserSendSNS(vo);
+					}
+				}else {
+					logger.info("계정 만료 문자 전송 오류 : 너무 많은 사용자에게 전송 됨.");
 				}
+				
+				
 
 		} catch (SQLException e) {
 			System.out.println(e.getLocalizedMessage());
@@ -99,8 +105,9 @@ public class DaemonThread implements Runnable {
 			/*receivermail = vo.getEMAIL();*/
 			/*sendsns = vo.getSNS();
 			phone = emailobj.getContents();*/
-			title = "[PIMC] 계정 권한만료 공지 \n" + vo.getUser_name()+"님의 계정이 " + vo.getLoginDate()+"에 만료됩니다.";
-			phone = vo.getUser_phone();
+			title = "[PIMC] 계정 권한만료 공지 \n" + vo.getUser_name()+"님의 계정이 " + vo.getLoginDate()+" 에 만료됩니다.";
+			String user_phone = vo.getUser_phone();
+			String phone = user_phone.replaceAll("-", "");
 			
 			paramLt[1][0] = "RPLY_PHON_NUM";
 			paramLt[1][1] = rplyPhonNum;
@@ -109,9 +116,8 @@ public class DaemonThread implements Runnable {
 			paramLt[3][0] = "PHONE";
 			paramLt[3][1] = phone;
 			
-			logger.info("paramLt Sender : " + paramLt[0][1] + " , Rply_phon_num : " + paramLt[1][1] + ", title : " + paramLt[2][1]);
 			if (rplyPhonNum != null && !rplyPhonNum.equals("")) {
-				logger.info("paramLt Sender : " + paramLt[0][1] + " , Rply_phon_num : " + paramLt[1][1] + ", title : " + paramLt[2][1]);
+				logger.info("paramLt Sender : " + paramLt[0][1] + " , Rply_phon_num : " + paramLt[1][1] + ", title : " + paramLt[2][1]  );
 				getVo(paramLt);
 				
 			}

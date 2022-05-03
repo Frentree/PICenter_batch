@@ -27,6 +27,7 @@ public class SqlMapInstanceBATCH {
 			per.setProperty("config.pic.db.username",udecode );
 			
 			sqlMap = SqlMapClientBuilder.buildSqlMapClient(reader, per) ;
+			
 			reader.close();
 			
 		} catch (Exception e) {

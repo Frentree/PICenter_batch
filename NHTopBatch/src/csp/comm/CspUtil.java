@@ -40,7 +40,7 @@ public class CspUtil {
 		Element	RESULT_MESSAGE	= head.getChild("RESULT_MESSAGE");
 		Element	PLATFORM_MODUS	= head.getChild("PLATFORM_MODUS");
 		Element	TEMP_ENCRYPT_KEY= head.getChild("TEMP_ENCRYPT_KEY");
-
+		
 		if(RESULT!=null) vo.setRESULT(RESULT.getValue());
 		if(RESULT_CODE!=null) vo.setRESULT_CODE(RESULT_CODE.getValue());
 		if(RESULT_MESSAGE!=null) vo.setRESULT_MESSAGE(RESULT_MESSAGE.getValue());
