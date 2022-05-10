@@ -11,7 +11,6 @@
 			AND DATE_FORMAT(U.LOGINDATE, '%Y-%m-%d') = DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 7 DAY), '%Y-%m-%d')
 			AND U.LOGINDATE IS NOT NULL
 			AND U.USER_GRADE IN (2,3)
-			AND DATE_FORMAT(U.ENDDATE, '%Y-%m-%d') &gt; DATE_FORMAT(NOW(), '%Y-%m-%d')
 	</select>
 
 </sqlMap>
