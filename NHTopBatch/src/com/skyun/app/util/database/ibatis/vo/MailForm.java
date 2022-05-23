@@ -265,7 +265,7 @@ public class MailForm {
 			"<tr>" + 
 			"<td style=\"padding-left: 40px;\" width=\"110\"><img src=\"https://pimc.sktelecom.com/resources/assets/images/SKT_mail_footer%20logo.png\" width=\"82\" height=\"32\" /></td>" + 
 			"<td style=\"letter-spacing: -0.2px;\">" + 
-			"<div style=\"font-size: 12px; color: #999; font-weight: bold; line-height: 13px; padding-top: 0; padding-bottom: 10px;\">- 관련 문의처: IT보안 운영실 담당(02-6400-8842, kimcom96@partner.sktelecom.com) </div>" + 
+			"<div style=\"font-size: 12px; color: #999; font-weight: bold; line-height: 13px; padding-top: 0; padding-bottom: 10px;\">- 관련 문의처: IT보안 운영실 담당(02-6400-8842, kicom96@partner.sk.com) </div>" + 
 			"</td>" + 
 			"</tr>" + 
 			"</tbody>" + 
