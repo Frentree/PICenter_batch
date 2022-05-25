@@ -105,7 +105,8 @@ public class DaemonThread implements Runnable {
 			/*receivermail = vo.getEMAIL();*/
 			/*sendsns = vo.getSNS();
 			phone = emailobj.getContents();*/
-			title = "[PIMC] 계정 권한만료 공지 \n" + vo.getUser_name()+"님의 계정이 " + vo.getLoginDate()+" 에 만료됩니다.";
+			/*title = "[PIMC] 계정 권한만료 공지 \n" + vo.getUser_name()+"님의 계정이 " + vo.getLoginDate()+" 에 만료됩니다.";*/
+			title = "[PIMC] "+vo.getUser_name()+"("+vo.getUser_no()+")님의 계정 권한 만료 예정일은 ["+vo.getLoginDate()+"] 입니다. ";
 			String user_phone = vo.getUser_phone();
 			String phone = user_phone.replaceAll("-", "");
 			
