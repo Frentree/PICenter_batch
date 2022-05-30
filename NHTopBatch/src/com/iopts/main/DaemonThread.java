@@ -73,7 +73,7 @@ public class DaemonThread implements Runnable {
 	@Override
 	public void run() {
 		try {
-			sendMailLoop(3);
+			sendMailLoop(1);
 			/*for (int i = 2; i < 4; i++) {
 				sendMailLoop(i);
 			}*/
@@ -141,8 +141,8 @@ public class DaemonThread implements Runnable {
 			
 			if (receivermail != null && !receivermail.equals("")) {
 				logger.info("paramLt Sender : " + paramLt[0][1] + " , Receiver : " + paramLt[1][1] + ", subject : " + paramLt[2][1]);
-				logger.info("paramLt Sender : " + paramLt[3][1]);
-				/*getVo();*/
+				/*logger.info("paramLt Sender : " + paramLt[3][1]);*/
+				getVo();
 			}
 		} catch (SQLException e) {
 			logger.error(e.getLocalizedMessage());
