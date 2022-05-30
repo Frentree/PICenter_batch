@@ -7,6 +7,12 @@ public class updateUserVo {
 	private String REGDATE;
 	private String EMAIL;
 	
+	private String REQUEST_DATE;
+	private String APPROVAL_STATUS;
+	
+	private String SERVICE_NM;
+	private String ACTION_DATE;
+	
 	public String getUPDATE_USER_NO() {
 		return UPDATE_USER_NO;
 	}
@@ -38,5 +44,33 @@ public class updateUserVo {
 	public void setEMAIL(String eMAIL) {
 		EMAIL = eMAIL;
 	}
+	
+	public String getREQUEST_DATE() {
+		return REQUEST_DATE;
+	}
+	public void setREQUEST_DATE(String rEQUEST_DATE) {
+		REQUEST_DATE = rEQUEST_DATE;
+	}
+	public String getAPPROVAL_STATUS() {
+		return APPROVAL_STATUS;
+	}
+	public void setAPPROVAL_STATUS(String aPPROVAL_STATUS) {
+		APPROVAL_STATUS = aPPROVAL_STATUS;
+	}
+	public String getSERVICE_NM() {
+		return SERVICE_NM;
+	}
+	public void setSERVICE_NM(String sERVICE_NM) {
+		SERVICE_NM = sERVICE_NM;
+	}
+	
+	public String getACTION_DATE() {
+		return ACTION_DATE;
+	}
+	public void setACTION_DATE(String aCTION_DATE) {
+		ACTION_DATE = aCTION_DATE;
+	}
+	
+	
 	
 }

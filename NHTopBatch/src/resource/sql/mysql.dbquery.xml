@@ -1,15 +1,17 @@
-<?xml version="1.0" encoding="EUC-KR"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="query">
-	<!-- ∞·¿Á øœ∑· -->
+	<!-- Í≤∞Ïû¨ ÏôÑÎ£å -->
 	<select id="getEmailMaster1" resultClass="com.skyun.app.util.database.ibatis.vo.updateUserVo">
 		SELECT PD.USER_NO AS UPDATE_USER_NO,
 			U.USER_NAME AS UPDATE_USER_NM,
 			G.TEAM_NAME AS SOSOK,
 			PD.OKDATE AS REGDATE,
-			U.USER_EMAIL AS EMAIL
+			U.USER_EMAIL AS EMAIL,
+			DATE_FORMAT(PD.REGDATE, '%YÎÖÑ %mÏõî %dÏùº') AS REQUEST_DATE,
+			PD.APPROVAL_STATUS
 		FROM pi_data_processing_charge_group PD, pi_user U, pi_group G
 		WHERE 1 = 1
 		  AND PD.USER_NO = U.USER_NO
@@ -20,7 +22,7 @@
 		GROUP BY PD.USER_NO
 	</select>
 
-	<!-- ¥„¥Á¿⁄ ∫Ø∞Ê -->
+	<!-- Îã¥ÎãπÏûê Î≥ÄÍ≤Ω -->
 	<select id="getEmailMaster2" resultClass="com.skyun.app.util.database.ibatis.vo.updateUserVo">
 		SELECT 
 			TUL.NAME,
@@ -28,17 +30,19 @@
 			TUL.UPDATE_USER_NM,
 			U.USER_EMAIL AS EMAIL,
 			IFNULL((SELECT G.TEAM_NAME FROM PI_GROUP G WHERE U.INSA_CODE = G.INSA_CODE),'') AS SOSOK,
-			DATE_FORMAT(TUL.REGDATE, '%Y-%m-%d') AS REGDATE
-		FROM pi_target_user_log TUL, pi_user U
+			DATE_FORMAT(TUL.REGDATE, '%YÎÖÑ %mÏõî %dÏùº') AS REGDATE,
+			IFNULL(TU.SERVICE_NM, 'ÏóÜÏùå') AS SERVICE_NM
+		FROM pi_target_user_log TUL, pi_user U, pi_target_user TU
 		WHERE DATE_FORMAT(TUL.REGDATE, '%Y-%m-%d 00:00:00') = DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -1 DAY), '%Y-%m-%d 00:00:00')
-		  AND TUL.UPDATE_USER_NO = U.USER_NO
-		  AND U.USER_EMAIL IS NOT NULL
+			AND TUL.TARGET_ID = TU.TARGET_ID
+		   AND TUL.UPDATE_USER_NO = U.USER_NO
+		   AND U.USER_EMAIL IS NOT NULL
 		GROUP BY TUL.UPDATE_USER_NO
 		ORDER BY TUL.UPDATE_USER_NO, TUL.TARGET_ID
 	</select>
 
 
-	<!-- ∞À√‚ ∞·∞˙ -->
+	<!-- Í≤ÄÏ∂ú Í≤∞Í≥º -->
 	<select id="getEmailMaster3" resultClass="com.skyun.app.util.database.ibatis.vo.updateUserVo">
 		<!-- SELECT TU.USER_NO AS UPDATE_USER_NO, 
 			U.USER_NAME AS UPDATE_USER_NM, 
@@ -60,7 +64,8 @@
 			U.USER_NAME AS UPDATE_USER_NM, 
 			U.USER_EMAIL AS EMAIL,
 			G.TEAM_NAME AS SOSOK,
-			DATE_FORMAT(F.REGDATE, '%Y-%m-%d') AS REGDATE
+			DATE_FORMAT(F.REGDATE, '%Y-%m-%d') AS REGDATE,
+			DATE_FORMAT(DATE_ADD(NOW(),INTERVAL 9 DAY), '%YÎÖÑ %mÏõî %dÏùº') AS ACTION_DATE
 		FROM pi_find F, pi_target_user TU, pi_user U, pi_group G
 		WHERE F.TARGET_ID = TU.TARGET_ID
 		  AND F.AP_NO = TU.AP_NO
@@ -97,10 +102,12 @@
 			TUL.UPDATE_USER_NO,
 			TUL.UPDATE_USER_NM,
 			(SELECT U.USER_EMAIL FROM pi_user U WHERE TUL.UPDATE_USER_NO = U.USER_NO) AS MAIL,
-			TUL.REGDATE
-		FROM pi_target_user_log TUL
+			TUL.REGDATE,
+			TU.SERVICE_NM
+		FROM pi_target_user_log TUL, pi_target_user TU
 		WHERE DATE_FORMAT(TUL.REGDATE, '%Y-%m-%d 00:00:00') = DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -1 DAY), '%Y-%m-%d 00:00:00')
-		  AND TUL.UPDATE_USER_NO = #UPDATE_USER_NO#
+			AND TUL.TARGET_ID = TU.TARGET_ID
+		   AND TUL.UPDATE_USER_NO = #UPDATE_USER_NO#
 		GROUP BY TUL.TARGET_ID, TUL.AP_NO, TUL.TYPE
 		ORDER BY TUL.TARGET_ID, TUL.TYPE
 	</select>
@@ -152,17 +159,24 @@
 		
 		SELECT DAT.TARGET_ID, 
 			DAT.AP_NO, T.NAME, 
-			COUNT(DAT.TARGET_ID) AS PATH_CNT, 
-			DAT.USER_NO AS RECEIVER
+			FORMAT(COUNT(DAT.TARGET_ID) , 0) AS PATH_CNT, 
+			DAT.USER_NO AS RECEIVER,
+			FORMAT(SUM(DAT.FILE) , 0) AS FILE,
+			DAT.SERVICE_NM
 		FROM (
 			SELECT F.HASH_ID, 
 			   F.TARGET_ID, 
 			   F.AP_NO, 
-			   TU.USER_NO
-			FROM pi_find F, pi_target_user TU
+			   TU.USER_NO,
+			   S.MATCH_COUNT AS FILE,
+			   TU.SERVICE_NM
+			FROM pi_find F, pi_target_user TU, pi_summary S
 			WHERE 1 = 1
 			  AND DATE_FORMAT(F.REGDATE, '%Y-%m-%d 00:00:00') >= DATE_FORMAT(DATE_ADD(NOW(),INTERVAL -1 DAY), '%Y-%m-%d 00:00:00')
 			  AND F.TARGET_ID = TU.TARGET_ID
+			  AND F.HASH_ID = S.OBJECT_ID
+			  AND F.AP_NO = S.AP_NO
+			  AND F.TARGET_ID = S.TARGET_ID
 			  AND F.AP_NO = TU.AP_NO
 			  AND F.AP_NO = 0
 			  AND TU.USER_NO = #UPDATE_USER_NO#

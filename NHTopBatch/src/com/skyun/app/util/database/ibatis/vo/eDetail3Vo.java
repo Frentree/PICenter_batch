@@ -8,6 +8,9 @@ public class eDetail3Vo {
 	private String RECEIVER;
 	private int TOTAL;
 	
+	private String SERVICE_NM;
+	private String FILE;
+	
 	public String getTARGET_ID() {
 		return TARGET_ID;
 	}
@@ -44,5 +47,20 @@ public class eDetail3Vo {
 	public void setTOTAL(int tOTAL) {
 		TOTAL = tOTAL;
 	}
+	
+	public String getSERVICE_NM() {
+		return SERVICE_NM;
+	}
+	public void setSERVICE_NM(String sERVICE_NM) {
+		SERVICE_NM = sERVICE_NM;
+	}
+	public String getFILE() {
+		return FILE;
+	}
+	public void setFILE(String fILE) {
+		FILE = fILE;
+	}
+	
+	
 
 }

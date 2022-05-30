@@ -10,6 +10,8 @@ public class eDetail2Vo {
 	private String MAIL;
 	private String REGDATE;
 	
+	private String SERVICE_NM;
+	
 	public String getTARGET_ID() {
 		return TARGET_ID;
 	}
@@ -58,5 +60,14 @@ public class eDetail2Vo {
 	public void setREGDATE(String rEGDATE) {
 		REGDATE = rEGDATE;
 	}
+	
+	public String getSERVICE_NM() {
+		return SERVICE_NM;
+	}
+	public void setSERVICE_NM(String sERVICE_NM) {
+		SERVICE_NM = sERVICE_NM;
+	}
+	
+	
 	
 }

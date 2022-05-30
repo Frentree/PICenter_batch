@@ -57,14 +57,14 @@ public class EmailVo {
 	public void setTitle(int mail_id) {
 		String title_init = "";
 
-		title_init = "[PIMC 개인정보 검출관리] ";
+		title_init = "[PIMC] ";
 
-		if (mail_id == 1) {
-			title_init = title_init + "정/오탐 결재 현황 알림";
-		} else if (mail_id == 2) {
-			title_init = title_init + "담당자 변경 알림";
-		} else if (mail_id == 3) {
-			title_init = title_init + "담당 시스템 개인정보 검출 알림";
+		if (mail_id == 1) { // 결재 완료 안내
+			title_init = title_init + "개인정보 조치계획 승인결과 알림";
+		} else if (mail_id == 2) { // 담당자 변경내역 알림
+			title_init = title_init + "시스템 담당자 변경내역 알림";
+		} else if (mail_id == 3) { // 검출결과 알림
+			title_init = title_init + "개인정보 검출결과 확인 요청";
 		}
 
 		title_arg.add(title_init);
@@ -75,10 +75,27 @@ public class EmailVo {
 		contents = m.get_header();
 		StringBuffer sb = new StringBuffer();
 		
+		String menu = "";
+		String link = "";
+		
+		String detailCon = "";
+		
 		if (i == 1) {
-			contents += m.get_body(i);
-			contents += m.get_receiver(i).replaceAll("SKT_USER", userVo.getUPDATE_USER_NM()).replaceAll("SKT_SOSOK", userVo.getSOSOK());
-			for (Object v : detail) {
+			/*contents += m.get_body(i);*/
+			
+			if(userVo.getAPPROVAL_STATUS().equals("E")) {
+				menu = "[결과 관리 > 결재 진행현황] 메뉴를 활용하여 결재 내역을 확인 바랍니다.";
+				link = "<a href=\"https://pimc.sktelecom.com/approval/pi_search_approval_list_skt\">";
+			}else {
+				menu = "[결과 관리 > 결과조회/조치계획] 메뉴를 활용하여 결재 내역을 확인 바랍니다.";
+				link = "<a href=\"https://pimc.sktelecom.com/manage/pi_detection_list_skt\">";
+			}
+			
+			contents += m.get_body(i).replaceAll("REQUEST_DATE", userVo.getREQUEST_DATE())
+						.replaceAll("STATUS", (userVo.getAPPROVAL_STATUS().equals("E") ? "승인" : "반려")).replaceAll("MENU", menu).replaceAll("LINK", link);
+			
+			//contents += m.get_receiver(i).replaceAll("SKT_USER", userVo.getUPDATE_USER_NM()).replaceAll("SKT_SOSOK", userVo.getSOSOK());
+			/*for (Object v : detail) {
 				eDetail1Vo re = (eDetail1Vo) v;
 				
 				sb.append("<tr>");
@@ -86,14 +103,28 @@ public class EmailVo {
 				sb.append(re.getDOC_NAME()+ "을 "+re.getUSER_NAME()+"("+re.getTEAM_NAME()+") 님이 " + (re.getAPPROVAL_STATUS().equals("E") ? "승인완료" : "승인반려") + " 하였습니다.");
 				sb.append("</td>");
 				sb.append("</tr>");
-			}
+			}*/
 			
 			contents += sb.toString();
 			
 			contents += m.get_end();
 		} else if (i == 2) {
-			contents += m.get_body(i);
-			contents += m.get_receiver(i).replaceAll("SKT_USER", userVo.getUPDATE_USER_NM()).replaceAll("SKT_SOSOK", userVo.getSOSOK());
+			contents += m.get_body(i).replaceAll("SKT_USER", userVo.getUPDATE_USER_NM()).replaceAll("SKT_SOSOK", userVo.getSOSOK());
+			
+			for (Object v : detail) {
+				eDetail2Vo re = (eDetail2Vo) v;
+				receiver.add(re.getMAIL());
+				detailCon += "<tr>" + 
+							"<td style=\"width: 30%; border: 1px solid #cccccc;\">"+re.getNAME()+"</td>" + 
+							"<td style=\"width: 30%; border: 1px solid #cccccc;\">"+
+							(re.getSERVICE_NM().equals("") ? "없음" : re.getSERVICE_NM() == null ? "없음" : re.getSERVICE_NM())+"</td>" + 
+							"<td style=\"width: 30%; border: 1px solid #cccccc;\">"+
+							(re.getTYPE() == 1 ? "인프라 담당자" : re.getTYPE() == 2 ? "서비스 담당자" : "서비스 관리자")+"</td> " + 
+							"</tr>";
+			}
+			contents += m.get_receiver(i).replace("REGDATE", userVo.getREGDATE()).replace("DETAILCON", detailCon);
+			
+/*			contents += m.get_receiver(i).replaceAll("SKT_USER", userVo.getUPDATE_USER_NM()).replaceAll("SKT_SOSOK", userVo.getSOSOK());
 			
 			for (Object v : detail) {
 				eDetail2Vo re = (eDetail2Vo) v;
@@ -103,11 +134,26 @@ public class EmailVo {
 						(re.getTYPE() == 1 ? "인프라 담당자" : re.getTYPE() == 2 ? "서비스 담당자" : "서비스 관리자") +
 						"</td></tr>";
 			}
-
+*/
 			contents += m.get_end();
 			
 		} else if (i == 3) {
-			contents += m.get_body(i).replaceAll("SKT_REGDATE", userVo.getREGDATE()).replaceAll("SKT_USER_NO", userVo.getUPDATE_USER_NO()).replaceAll("SKT_USER", userVo.getUPDATE_USER_NM());
+			contents += m.get_body(i).replaceAll("SKT_USER", userVo.getUPDATE_USER_NM()).replaceAll("SKT_SOSOK", userVo.getSOSOK());
+			
+			for (Object v : detail) {
+				eDetail3Vo re = (eDetail3Vo)v;
+				receiver.add(userVo.getEMAIL());
+				detailCon += "<tr>" + 
+							"<td style=\"width: 30%; border: 1px solid #cccccc;\">"+re.getNAME()+"</td>" + 
+							"<td style=\"width: 25%; border: 1px solid #cccccc;\">"+(re.getSERVICE_NM().equals("") ? "없음" : re.getSERVICE_NM() == null ? "없음" : re.getSERVICE_NM())+"</td>" + 
+							"<td style=\"width: 20%; border: 1px solid #cccccc;\">"+re.getPATH_CNT()+"</td>" + 
+							"<td style=\"width: 25%; border: 1px solid #cccccc;\">"+re.getFILE()+"</td> " + 
+							"</tr>";
+			}
+			
+			
+			contents += m.get_receiver(i).replaceAll("ACTION_DATE", userVo.getACTION_DATE()).replace("DETAILCON", detailCon);;
+			/*contents += m.get_body(i).replaceAll("SKT_REGDATE", userVo.getREGDATE()).replaceAll("SKT_USER_NO", userVo.getUPDATE_USER_NO()).replaceAll("SKT_USER", userVo.getUPDATE_USER_NM());
 			contents += m.get_receiver(i).replaceAll("SKT_USER", userVo.getUPDATE_USER_NM()).replaceAll("SKT_SOSOK", userVo.getSOSOK());
 			
 			for (Object v : detail) {
@@ -116,7 +162,7 @@ public class EmailVo {
 				contents+="<tr>\r\n" + 
 						"<td style=\"font-size: 13px; color: #222; font-weight: bold;\" width=\"575\">"+re.getNAME()+" : "+re.getPATH_CNT()+"개 파일 검출</td>\r\n" + 
 						"</tr>";
-			}		
+			}	*/	
 			
 			contents += m.get_end();
 
