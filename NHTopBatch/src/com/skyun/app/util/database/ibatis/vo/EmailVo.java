@@ -117,7 +117,7 @@ public class EmailVo {
 				detailCon += "<tr>" + 
 							"<td style=\"width: 30%; border: 1px solid #cccccc;\">"+re.getNAME()+"</td>" + 
 							"<td style=\"width: 30%; border: 1px solid #cccccc;\">"+
-							(re.getSERVICE_NM().equals("") ? "없음" : re.getSERVICE_NM() == null ? "없음" : re.getSERVICE_NM())+"</td>" + 
+							(re.getSERVICE_NM().equals("") ? "-" : re.getSERVICE_NM() == null ? "-" : re.getSERVICE_NM())+"</td>" + 
 							"<td style=\"width: 30%; border: 1px solid #cccccc;\">"+
 							(re.getTYPE() == 1 ? "인프라 담당자" : re.getTYPE() == 2 ? "서비스 담당자" : "서비스 관리자")+"</td> " + 
 							"</tr>";
@@ -145,7 +145,7 @@ public class EmailVo {
 				receiver.add(userVo.getEMAIL());
 				detailCon += "<tr>" + 
 							"<td style=\"width: 30%; border: 1px solid #cccccc;\">"+re.getNAME()+"</td>" + 
-							"<td style=\"width: 25%; border: 1px solid #cccccc;\">"+(re.getSERVICE_NM().equals("") ? "없음" : re.getSERVICE_NM() == null ? "없음" : re.getSERVICE_NM())+"</td>" + 
+							"<td style=\"width: 25%; border: 1px solid #cccccc;\">"+(re.getSERVICE_NM().equals("") ? "-" : re.getSERVICE_NM() == null ? "-" : re.getSERVICE_NM())+"</td>" + 
 							"<td style=\"width: 20%; border: 1px solid #cccccc;\">"+re.getPATH_CNT()+"</td>" + 
 							"<td style=\"width: 25%; border: 1px solid #cccccc;\">"+re.getFILE()+"</td> " + 
 							"</tr>";
