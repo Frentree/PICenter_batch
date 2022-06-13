@@ -42,7 +42,7 @@
 			driver, driver_pre, passport, passport_pre, account_num, account_num_pre,
 			card_num, card_num_pre, phone,phone_pre, phone_num, phone_num_pre,
 			mobile_phone, mobile_phone_pre, email, email_pre, total, total_pre, total_gap)
-		VALUES
+			
 			(#target_id#,DATE_FORMAT(now(), '%Y%m%d'),#ap_no#, #path_cnt#,#rrn#,#rrn_pre#,#foreigner#,#foreigner_pre#,
 			#driver#,#driver_pre#,#passport#,#passport_pre#,#account_num#,#account_num_pre#,
 			#card_num#,#card_num_pre#,#phone#,#phone_pre#,#phone_num#,#phone_num_pre#,

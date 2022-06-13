@@ -291,7 +291,6 @@ public class DaemonThread implements Runnable {
 	private void getNowData() {
 
 		try {
-			
 			// 금일 검색 완료한 타겟을 가져온다
 			List<CompletTargetVo> ctVo = this.sqlMapPIC.openSession().queryForList("query.getEndScheduleTarget");
 			
@@ -509,5 +508,6 @@ public class DaemonThread implements Runnable {
 
 		return builder.toString();
 	}
+	
 
 }
