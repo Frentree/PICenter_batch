@@ -178,7 +178,7 @@ public class MailForm {
 			"<p>금번 개인정보 검출 작업 결과, 아래와 같이 다당학보 계신 시스템에서 개인정보가 </p>" + 
 			"<p>포함된 파일이 검출되어 안내 드리오니, 상세정보 확인 후 조치 계획을 기한 내</p>" + 
 			"<p>등록 하여 주시기 바랍니다.</p><br>" + 
-			"<p><span style=\"font-size:13px; font-weight: bold;\">기타 문의사항은 본 메일에 회신 또는 아래 문의처로 연락주시기 바랍니다. <br></span><p>\r\n" + 
+			"<p><span style=\"font-size:13px; font-weight: bold;\">기타 문의사항은 본 메일에 회신 또는 아래 문의처로 연락주시기 바랍니다. <br></span><p>" + 
 			"<p><span style=\"font-size:13px; font-weight: bold;\">-관련 문의처: IT보안 운영실 담당(02-6400-8842, pimc@sktelecom.com)</span><p>" +
 			"<p>&nbsp;</p>" + 
 			"</div>" + 
@@ -416,12 +416,12 @@ public class MailForm {
 			"<table style=\"border-top: 1px solid #ccc;\" border=\"0\" width=\"700\"cellspacing=\"0\" cellpadding=\"0\">" + 
 			"<tbody>" + 
 			"<tr>" + 
-			"<td bgcolor=\"#e6e6e6\" height=\"120\"><table>" + 
+			"<td bgcolor=\"#e6e6e6\" height=\"86\"><table>" + 
 			"<tbody>" + 
 			"<tr>" + 
 			"<td style=\"padding-left: 40px;\" width=\"110\"><img src=\"https://pimc.sktelecom.com/resources/assets/images/SKT_mail_footer%20logo.png\" width=\"82\" height=\"32\" />"+
 			"</td>" +
-			"<td style=\"font-size: 13px; color: #000000; font-weight: bold;\" align=\"center\" height=\"42\" width=\"390\">Personal Information Management Center</td>" + 
+			"<td style=\"letter-spacing: -0.7px; font-size: 13px; color: #000000; font-weight: bold;\" align=\"center\" height=\"42\" width=\"390\">Personal Information Management Center</td>" + 
 			"<!-- <td style=\"font-size: 13px; color: #FF5000; font-weight: bold;\" align=\"center\" height=\"42\" width=\"390\">Personal Information Management Center</td> --> " + 
 			"</tr>" + 
 			"</tbody>" + 
