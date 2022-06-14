@@ -85,10 +85,10 @@ public class EmailVo {
 			
 			if(userVo.getAPPROVAL_STATUS().equals("E")) {
 				menu = "[결과 관리 > 결재 진행현황] 메뉴를 활용하여 결재 내역을 확인 바랍니다.";
-				link = "<a href=\"https://pimc.sktelecom.com/approval/pi_search_approval_list_skt\">";
+				link = "<a href=\"https://pimc.sktelecom.com/approval/pi_search_approval_list_skt\" target=\"_blank\">";
 			}else {
 				menu = "[결과 관리 > 결과조회/조치계획] 메뉴를 활용하여 결재 내역을 확인 바랍니다.";
-				link = "<a href=\"https://pimc.sktelecom.com/manage/pi_detection_list_skt\">";
+				link = "<a href=\"https://pimc.sktelecom.com/manage/pi_detection_list_skt\" target=\"_blank\">";
 			}
 			
 			contents += m.get_body(i).replaceAll("REQUEST_DATE", userVo.getREQUEST_DATE())

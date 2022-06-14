@@ -42,7 +42,7 @@ public class MailForm {
 			"<p>MENU</p>" + 
 			"<p>&nbsp;</p>" + 
 			"<div style=\"font-size: 14px; font-weight: bold;\">" + 
-			"<span style=\"background-color: #e6e6e6;\">개인정보검출관리센터(PIMC) 바로가기(<a href=\"https://pimc.sktelecom.com\" target=\"_blank\">https://pimc.sktelecom.com</a>)</span>" + 
+			"<span style=\"background-color: #e6e6e6;\">개인정보검출관리센터(PIMC) 바로가기(LINKhttps://pimc.sktelecom.com</a>)</span>" + 
 			"</div>" + 
 			"</div>" + 
 			"</td>" + 
@@ -276,7 +276,7 @@ public class MailForm {
 			"<td style=\"padding-left: 30px; height: 40px; width: 0px;\">&nbsp;</td>" + 
 			"<td style=\"height: 20px; width: 590px;\">" + 
 			"<p style=\"margin: 5px 0 0 0;\"><span style=\"background-color:#e6e6e6; font-size: 13px; font-weight: bold;\">개인정보검출관리센터(PIMC) 바로가기(<a href=\"https://pimc.sktelecom.com\" target=\"_blank\">https://pimc.sktelecom.com</a>)</span></p>" + 
-			"<p style=\"margin: 0px;\"><span style=\"font-size:13px; font-weight: bold; \">(메뉴이동 : 대상관리 -&gt; 대상조회 및 현행화)</span></p>" + 
+			"<p style=\"margin: 0px;\"><span style=\"font-size:13px; font-weight: bold; color:#999; \">(메뉴이동 : 대상관리 -&gt; 대상조회 및 현행화)</span></p>" + 
 			"</td>" + 
 			"</tr>" + 
 			"<tr style=\"height: 30px;\">" + 
@@ -368,7 +368,7 @@ public class MailForm {
 			"<td style=\"padding-left: 30px; height: 40px; width: 0px;\">&nbsp;</td>" + 
 			"<td style=\"height: 20px; width: 590px;\">" + 
 			"<p style=\"margin: 5px 0 0 0;\"><span style=\"background-color:#e6e6e6; font-size: 13px; font-weight: bold;\">개인정보검출관리센터(PIMC)바로가기(<a href=\"https://pimc.sktelecom.com\" target=\"_blank\">https://pimc.sktelecom.com</a>)</span></p>" + 
-			"<p style=\"margin: 0px;\"><span style=\"font-size:13px; font-weight: bold; \">(메뉴이동 : 결과 관리 -&gt; 결과조회/조치계획)</span></p>" + 
+			"<p style=\"margin: 0px;\"><span style=\"font-size:13px; font-weight: bold; color:#999; \">(메뉴이동 : 결과 관리 -&gt; 결과조회/조치계획)</span></p>" + 
 			"</td>" + 
 			"</tr>" + 
 			"<tr style=\"height: 30px;\">" + 
