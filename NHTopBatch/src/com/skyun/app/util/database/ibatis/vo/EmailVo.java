@@ -210,7 +210,7 @@ public class EmailVo {
 
 				contents=contents+"<tr> \n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getHOST()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr\">"+re.getSHORTNAME()+"</td>\n";
+				contents=contents+"<td class=\"tg-fymr\" style=\"white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">"+re.getSHORTNAME()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getOWNER()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr right\">"+re.getTYPE1()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr right\">"+re.getTYPE2()+"</td>\n";

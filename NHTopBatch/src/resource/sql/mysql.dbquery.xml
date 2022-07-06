@@ -195,12 +195,30 @@
 	</select>
 
 	<select id="getEmailMaster7" resultClass="com.skyun.app.util.database.ibatis.vo.eMasterVo">
-
-		SELECT USER_NO AS sender,
+		SELECT U.USER_NO AS sender,
+			U.USER_NAME AS sender_name,
+			'' AS receiver,
+			U.USER_NAME AS receiver_name
+		FROM PI_USER U, PI_FIND F
+			LEFT OUTER JOIN PI_DATA_PROCESSING DP ON F.HASH_ID = DP.HASH_ID AND F.TARGET_ID = DP.TARGET_ID
+		WHERE DP.HASH_ID IS NOT NULL
+		  AND F.OWNER = U.USER_NO 
+		GROUP BY U.USER_NO
+		
+		<!-- SELECT U.USER_NO AS sender,
+			U.USER_NAME AS sender_name,
+			'' AS receiver,
+			U.USER_NAME AS receiver_name
+		FROM PI_FIND F, PI_USER U
+		WHERE DATE(F.CREDATE) = DATE(NOW())
+		  AND F.OWNER = U.USER_NO 
+		GROUP BY U.USER_NO -->
+		
+		<!-- SELECT USER_NO AS sender,
 		USER_NAME AS sender_name,
 		'' AS receiver,
 		USER_NAME AS receiver_name
-		FROM PI_USER
+		FROM PI_USER -->
 
 	</select>
 
@@ -378,12 +396,11 @@
 			AND F.HASH_ID = S.OBJECT_ID
 			AND F.TARGET_ID = S.TARGET_ID
 			AND F.OWNER = #sender#
-			AND F.REGDATE > DATE_ADD(NOW(), INTERVAL -30 DAY)
-			AND (CASE WHEN IFNULL(PRC_FLAG.PROCESSING_FLAG,999) = 5 AND IFNULL(PRC.APPROVAL_STATUS,'D') = 'E' THEN 'X' ELSE 'O' END) = 'O'
+			AND (CASE WHEN IFNULL(PRC.APPROVAL_STATUS,'D') = 'E' THEN 'X' ELSE 'O' END) = 'O'
+			<!-- AND (CASE WHEN IFNULL(PRC_FLAG.PROCESSING_FLAG,999) = 5 AND IFNULL(PRC.APPROVAL_STATUS,'D') = 'E' THEN 'X' ELSE 'O' END) = 'O' -->
 		GROUP BY F.TARGET_ID, F.HASH_ID
 		HAVING TYPE != 0
 		ORDER BY F.TARGET_ID, F.PATH
-		
 	</select>
 
 
