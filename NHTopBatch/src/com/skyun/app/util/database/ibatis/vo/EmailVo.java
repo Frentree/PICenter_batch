@@ -103,7 +103,7 @@ public class EmailVo {
 
 	}
 
-	public boolean setContents(int i, List<?> detail, MailForm m, String rname,String rid) {
+	public boolean setContents(int i, List<?> detail, MailForm m, String rname,String rid, int pathCnt) {
 		
 		boolean ret=false;
 		
@@ -114,7 +114,7 @@ public class EmailVo {
 				eDetail1Vo re = (eDetail1Vo)v;
 
 				contents=contents+"<tr> \n";
-				contents=contents+"<td class=\"tg-fymr\">"+re.getPATH()+"</td>\n";
+				contents=contents+"<td class=\"tg-fymr\" style=\"white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">"+re.getPATH()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getREQ_USER_NAME()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getOK_USER_NAME()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getREGDATE() +"</td>\n";
@@ -129,7 +129,7 @@ public class EmailVo {
 				eDetail2Vo re = (eDetail2Vo)v;
 
 				contents=contents+"<tr> \n";
-				contents=contents+"<td class=\"tg-fymr\">"+re.getPATH()+"</td>\n";
+				contents=contents+"<td class=\"tg-fymr\" style=\"white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">"+re.getPATH()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getREQ_USER_NAME()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getOK_USER_NAME()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getREGDATE() +"</td>\n";
@@ -144,7 +144,7 @@ public class EmailVo {
 				eDetail3Vo re = (eDetail3Vo)v;
 
 				contents=contents+"<tr> \n";
-				contents=contents+"<td class=\"tg-fymr\">"+re.getPATH()+"</td>\n";
+				contents=contents+"<td class=\"tg-fymr\" style=\"white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">"+re.getPATH()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getREQ_USER_NAME()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getOK_USER_NAME()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getREGDATE() +"</td>\n";
@@ -160,7 +160,7 @@ public class EmailVo {
 
 				contents=contents+"<tr> \n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getHOST()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr\">"+re.getPATH()+"</td>\n";
+				contents=contents+"<td class=\"tg-fymr\" style=\"white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">"+re.getPATH()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getREG_USER_NAME()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getOK_USER_NAME()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getREGDATE()+"</td>\n";
@@ -176,7 +176,7 @@ public class EmailVo {
 
 				contents=contents+"<tr> \n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getHOST()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr\">"+re.getPATH()+"</td>\n";
+				contents=contents+"<td class=\"tg-fymr\" style=\"white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">"+re.getPATH()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getREG_USER_NAME()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getOK_USER_NAME()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getREGDATE()+"</td>\n";
@@ -187,12 +187,14 @@ public class EmailVo {
 			}						
 
 		} else if (i == 6) {
+			
 			for (Object v : detail) {
-				eDetail6Vo re = (eDetail6Vo)v;
 
+				eDetail6Vo re = (eDetail6Vo) v;
+				
 				contents=contents+"<tr> \n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getHOST()+"</td>\n";
-				contents=contents+"<td class=\"tg-fymr\">"+re.getPATH()+"</td>\n";
+				contents=contents+"<td class=\"tg-fymr\" style=\"white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\">"+re.getPATH()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getREG_USER_NAME()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getOK_USER_NAME()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getREGDATE()+"</td>\n";
@@ -225,7 +227,7 @@ public class EmailVo {
 
 		}
 		
-		contents = contents+m.get_end(i);
+		contents = contents.replaceAll("_pathCnt_", pathCnt + "");
 		
 		/*
 		if(i==7) {

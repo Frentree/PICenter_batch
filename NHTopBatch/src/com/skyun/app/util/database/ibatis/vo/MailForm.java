@@ -257,6 +257,9 @@ public class MailForm {
 			"		</div>\n" + 
 			"	    </td>\n" + 
 			"	  </tr>\n" + 
+			" 	  <tr>\n" + 
+			"	    <td class=\"tg-aoc1\">담당자 변경 승인 _pathCnt_ 건을 요청하였습니다.</td>\n" + 
+			"	  </tr>\n" +
 			"	  <tr>\n" + 
 			"	    <td class=\"tg-aoc1\">자세한 내용은 <a href=\"_url_\" target=\"_blank\" style=\"font-weight:bold;\"><U>농협 서버내 개인정보 검색 시스템</U></a> 에서 확인 바랍니다.</td>\n" + 
 			"	  </tr>\n" + 
@@ -388,7 +391,7 @@ public class MailForm {
 			"		    <th class=\"tg-qbec\">상태</th>\n" + 
 			"		    <th class=\"tg-qbec\">비고</th>\n" + 
 			"		  </tr>"; 
-	private String m6_end="		</table>\n" + 
+	private String m6_end="	</table>\n" + 
 			" 		</div>\n" +
 			"	    </td>\n" + 
 			"	  </tr>\n" + 
@@ -466,6 +469,21 @@ public class MailForm {
 	private String m7_end="		</table>\n" + 
 			"		</div>\n" +
 			"	    </td>\n" + 
+			"	  </tr>\n" +
+			" 	  <tr>\n" + 
+			"	    <td class=\"tg-aoc1\">_pathCnt_ 개의 파일에서 개인정보가 검출되었습니다.</td>\n" + 
+			"	  </tr>\n" +
+			"	  <tr>\n" + 
+			"	    <td class=\"tg-aoc1\">자세한 내용은 <a href=\"_url_\" target=\"_blank\"  style=\"font-weight:bold;\"><U>농협 서버내 개인정보 검색 시스템</U></a> 에서 확인 바랍니다.</td>\n" + 
+			"	  </tr>\n" + 
+			"	</table>\n" + 
+			"\n" + 
+			"	</body>\n" + 
+			"</html>\n" + 
+			"";
+/*	private String m7_end="		</table>\n" + 
+			"		</div>\n" +
+			"	    </td>\n" + 
 			"	  </tr>\n" + 
 			"	  <tr>\n" + 
 			"	    <td class=\"tg-aoc1\">자세한 내용은 <a href=\"_url_\" target=\"_blank\"  style=\"font-weight:bold;\"><U>농협 서버내 개인정보 검색 시스템</U></a> 에서 확인 바랍니다.</td>\n" + 
@@ -475,7 +493,7 @@ public class MailForm {
 			"	</body>\n" + 
 			"</html>\n" + 
 			"";
-
+*/
 	
 	private String m8_header="<html>\n" + 
 			"           <head>\n" + 

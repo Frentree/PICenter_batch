@@ -183,15 +183,23 @@ public class DaemonThread implements Runnable {
 				if (i == 7) {
 					emailobj.setReceiver(evo.getSender());
 					
-					if (emailobj.setContents(i, detail, M, evo.getSender_name(), evo.getSender()) == true) {
+					if (emailobj.setContents(i, detail, M, evo.getSender_name(), evo.getSender(), evo.getPath_cnt()) == true) {
 						tmp = jsonfile(emailobj);
 						ZipFile(tmp);
 
 					}
 
-				} else {
+				} else if(i == 4){
 					emailobj.setReceiver(evo.getReceiver());
-					if (emailobj.setContents(i, detail, M, evo.getReceiver_name(), evo.getReceiver()) == true) {
+					if (emailobj.setContents(i, detail, M, evo.getReceiver_name(), evo.getReceiver(), evo.getPath_cnt()) == true) {
+						tmp = jsonfile(emailobj);
+						ZipFile(tmp);
+
+					}
+					
+				}else {
+					emailobj.setReceiver(evo.getReceiver());
+					if (emailobj.setContents(i, detail, M, evo.getReceiver_name(), evo.getReceiver(), 0) == true) {
 						tmp = jsonfile(emailobj);
 						ZipFile(tmp);
 
