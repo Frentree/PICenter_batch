@@ -110,18 +110,23 @@ public class DaemonThread implements Runnable {
 			String user_phone = vo.getUser_phone();
 			String phone = user_phone.replaceAll("-", "");
 			
-			paramLt[1][0] = "RPLY_PHON_NUM";
-			paramLt[1][1] = rplyPhonNum;
-			paramLt[2][0] = "TITLE";
-			paramLt[2][1] = title;
-			paramLt[3][0] = "PHONE";
-			paramLt[3][1] = phone;
-			
-			if (rplyPhonNum != null && !rplyPhonNum.equals("")) {
-				logger.info("paramLt Sender : " + paramLt[0][1] + " , Rply_phon_num : " + paramLt[1][1] + ", title : " + paramLt[2][1]  );
-				getVo(paramLt);
+			if(!phone.substring(0,3).equals("010")) {
+				logger.info("사용자 전화번호가 지역번호로 등록됨. : 해제 안내 문자 발송 실패_" +vo.getUser_name()+"("+vo.getUser_no()+")_"+phone);
+			}else {
+				paramLt[1][0] = "RPLY_PHON_NUM";
+				paramLt[1][1] = rplyPhonNum;
+				paramLt[2][0] = "TITLE";
+				paramLt[2][1] = title;
+				paramLt[3][0] = "PHONE";
+				paramLt[3][1] = phone;
 				
+				if (rplyPhonNum != null && !rplyPhonNum.equals("")) {
+					logger.info("paramLt Sender : " + paramLt[0][1] + " , Rply_phon_num : " + paramLt[1][1] + ", title : " + paramLt[2][1]  );
+					getVo(paramLt);
+					
+				}
 			}
+		
 		}catch (Exception e) {
 			logger.error(e.getLocalizedMessage());
 		}
