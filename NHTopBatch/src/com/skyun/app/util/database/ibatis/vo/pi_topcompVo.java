@@ -332,21 +332,31 @@ public class pi_topcompVo {
 
 	@Override
 	public String toString() {
-		return "pi_topcompVo [target_id=" + target_id + ", regdate=" + regdate + ", rrn=" + rrn + ", rrn_pre=" + rrn_pre
-				+ ", foreigner=" + foreigner + ", foreigner_pre=" + foreigner_pre + ", driver=" + driver
-				+ ", driver_pre=" + driver_pre + ", passport=" + passport + ", passport_pre=" + passport_pre
-				+ ", account_num=" + account_num + ", account_num_pre=" + account_num_pre + ", card_num=" + card_num
-				+ ", card_num_pre=" + card_num_pre + ", phone=" + phone + ", phone_pre=" + phone_pre + ", phone_num="
-				+ phone_num + ", phone_num_pre=" + phone_num_pre + ", mobile_phone=" + mobile_phone
-				+ ", mobile_phone_pre=" + mobile_phone_pre + ", new_rrn=" + new_rrn + ", new_rrn_pre=" + new_rrn_pre
-				+ ", email=" + email + ", email_pre=" + email_pre + ", carnum=" + carnum + ", carnum_pre=" + carnum_pre
-				+ ", vehicleid=" + vehicleid + ", vehicleid_pre=" + vehicleid_pre + ", total=" + total + ", total_pre="
-				+ total_pre + ", total_gap=" + total_gap + "]";
+		return "pi_topcompVo [target_id=" + target_id + ", regdate=" + regdate + ", ap_no=" + ap_no + ", path_cnt="
+				+ path_cnt + ", rrn=" + rrn + ", rrn_pre=" + rrn_pre + ", foreigner=" + foreigner + ", foreigner_pre="
+				+ foreigner_pre + ", driver=" + driver + ", driver_pre=" + driver_pre + ", passport=" + passport
+				+ ", passport_pre=" + passport_pre + ", account_num=" + account_num + ", account_num_pre="
+				+ account_num_pre + ", card_num=" + card_num + ", card_num_pre=" + card_num_pre + ", phone=" + phone
+				+ ", phone_pre=" + phone_pre + ", phone_num=" + phone_num + ", phone_num_pre=" + phone_num_pre
+				+ ", mobile_phone=" + mobile_phone + ", mobile_phone_pre=" + mobile_phone_pre + ", new_rrn=" + new_rrn
+				+ ", new_rrn_pre=" + new_rrn_pre + ", email=" + email + ", email_pre=" + email_pre + ", carnum="
+				+ carnum + ", carnum_pre=" + carnum_pre + ", vehicleid=" + vehicleid + ", vehicleid_pre="
+				+ vehicleid_pre + ", total=" + total + ", total_pre=" + total_pre + ", total_gap=" + total_gap
+				+ ", getTarget_id()=" + getTarget_id() + ", getRegdate()=" + getRegdate() + ", getAp_no()=" + getAp_no()
+				+ ", getPath_cnt()=" + getPath_cnt() + ", getRrn()=" + getRrn() + ", getRrn_pre()=" + getRrn_pre()
+				+ ", getForeigner()=" + getForeigner() + ", getForeigner_pre()=" + getForeigner_pre() + ", getDriver()="
+				+ getDriver() + ", getDriver_pre()=" + getDriver_pre() + ", getPassport()=" + getPassport()
+				+ ", getPassport_pre()=" + getPassport_pre() + ", getAccount_num()=" + getAccount_num()
+				+ ", getAccount_num_pre()=" + getAccount_num_pre() + ", getCard_num()=" + getCard_num()
+				+ ", getCard_num_pre()=" + getCard_num_pre() + ", getTotal()=" + getTotal() + ", getTotal1()="
+				+ getTotal1() + ", getTotal_pre()=" + getTotal_pre() + ", getTotal_gap()=" + getTotal_gap()
+				+ ", getPhone()=" + getPhone() + ", getPhone_pre()=" + getPhone_pre() + ", getPhone_num()="
+				+ getPhone_num() + ", getPhone_num_pre()=" + getPhone_num_pre() + ", getMobile_phone()="
+				+ getMobile_phone() + ", getMobile_phone_pre()=" + getMobile_phone_pre() + ", getNew_rrn()="
+				+ getNew_rrn() + ", getNew_rrn_pre()=" + getNew_rrn_pre() + ", getEmail()=" + getEmail()
+				+ ", getEmail_pre()=" + getEmail_pre() + ", getCarnum()=" + getCarnum() + ", getCarnum_pre()="
+				+ getCarnum_pre() + ", getVehicleid()=" + getVehicleid() + ", getVehicleid_pre()=" + getVehicleid_pre()
+				+ "]";
 	}
-	
-	
-	
-	
-	
 
 }
