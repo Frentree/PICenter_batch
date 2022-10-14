@@ -123,6 +123,4 @@ public class PersonalVo {
 		this.vehicleid = vehicleid;
 	}
 	
-	
-
 }
