@@ -27,7 +27,7 @@ public class DaemonThread implements Runnable {
 		Configurator.setRootLevel(Level.INFO);
 
 		this.sqlMapPIC = SqlMapInstanceBATCH.getSqlMapInstance();
-		System.out.println("Batch work of information in the ti_topcomp table");
+		System.out.println("Batch work of information in the pi_targets net_type update");
 	}
 
    
