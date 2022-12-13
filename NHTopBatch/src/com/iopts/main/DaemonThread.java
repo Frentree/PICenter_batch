@@ -294,6 +294,8 @@ public class DaemonThread implements Runnable {
 			// 금일 검색 완료한 타겟을 가져온다
 			List<CompletTargetVo> ctVo = this.sqlMapPIC.openSession().queryForList("query.getEndScheduleTarget");
 			
+			logger.info("ctVo >>>> " + ctVo.toString());
+			
 			for (CompletTargetVo vo : ctVo) {
 				logger.info(">>> DB pi_topcomp Data :" + vo.getTarget_id() + " , ap: " + vo.getAp_no());
 				

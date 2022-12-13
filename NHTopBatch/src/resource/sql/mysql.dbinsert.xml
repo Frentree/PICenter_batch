@@ -15,29 +15,6 @@
 	</insert>
 
 	<insert id="settopcomp" parameterClass="com.skyun.app.util.database.ibatis.vo.pi_topcompVo">
-		<!--  INSERT INTO pi_topcomp
-			(target_id,regdate,rrn,rrn_pre,foreigner,foreigner_pre,driver,driver_pre,passport,passport_pre,account_num,account_num_pre,card_num,card_num_pre,total,total_pre,total_gap)
-		VALUES
-			(#target_id#,DATE_FORMAT(now(), '%Y%m%d'),#rrn#,#rrn_pre#,#foreigner#,#foreigner_pre#,#driver#,#driver_pre#,#passport#,#passport_pre#,#account_num#,#account_num_pre#,#card_num#,#card_num_pre#,#total#,#total_pre#,#total_gap#)
-		ON DUPLICATE KEY
-		UPDATE
-		  rrn=#rrn#,
-		  rrn_pre=#rrn_pre#,
-		  foreigner=#foreigner#,
-		  foreigner_pre=#foreigner_pre#,
-		  driver=#driver#,
-		  driver_pre=#driver_pre#,
-		  passport=#passport#,
-		  passport_pre=#passport_pre#,
-		  account_num=#account_num#,
-		  account_num_pre=#account_num_pre#,
-		  card_num=#card_num#,
-		  card_num_pre=#card_num_pre#,
-		  total=#total#,
-		  total_pre=#total_pre#,
-		  total_gap=#total_gap#,
-		  regdate=DATE_FORMAT(now(), '%Y%m%d')  -->
-		  
 		INSERT INTO pi_topcomp
 			(target_id,ap_no,regdate, path_cnt, rrn,rrn_pre,foreigner,foreigner_pre,driver,driver_pre,passport,passport_pre,account_num,account_num_pre,card_num,card_num_pre,phone,phone_pre, phone_num, phone_num_pre,
 			mobile_phone, mobile_phone_pre, email, email_pre, total,total_pre,total_gap)
