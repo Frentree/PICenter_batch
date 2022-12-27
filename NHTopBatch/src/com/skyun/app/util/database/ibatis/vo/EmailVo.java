@@ -60,11 +60,11 @@ public class EmailVo {
 		String title_init="";
 		
 		if(AppConfig.getProperty("config.email.title").equals("bank"))
-			title_init="["+ "ì€í–‰" + " - ì„œë²„ë‚´ ê°œì¸ì •ë³´ ê²€ìƒ‰] ";
+			title_init="["+ "ÀºÇà" + " - ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö] ";
 		else
-			title_init="["+ "ì¤‘ì•™íšŒ" + " - ì„œë²„ë‚´ ê°œì¸ì •ë³´ ê²€ìƒ‰] ";
+			title_init="["+ "Áß¾ÓÈ¸" + " - ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö] ";
 
-		title_arg.add(title_init+"ë¯¸ì ‘ì† ì—ì´ì „íŠ¸ ì•Œë¦¼");
+		title_arg.add(title_init+"¹ÌÁ¢¼Ó ¿¡ÀÌÀüÆ® ¾Ë¸²");
 
 	}
 	
@@ -73,30 +73,30 @@ public class EmailVo {
 		String title_init="";
 		
 		if(AppConfig.getProperty("config.email.title").equals("bank")) {
-			title_init="["+ "ì€í–‰" + " - ì„œë²„ë‚´ ê°œì¸ì •ë³´ ê²€ìƒ‰] ";
+			title_init="["+ "ÀºÇà" + " - ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö] ";
 		}else {
-			title_init="["+ "ì¤‘ì•™íšŒ" + " - ì„œë²„ë‚´ ê°œì¸ì •ë³´ ê²€ìƒ‰] ";
+			title_init="["+ "Áß¾ÓÈ¸" + " - ¼­¹ö³» °³ÀÎÁ¤º¸ °Ë»ö] ";
 		}
 
 
 		if (mail_id == 1) {
-			title_init = title_init+"ê²€ìƒ‰ ê²°ê³¼ ì¡°ì¹˜ ì˜ˆì • ê²°ì¬ ìš”ì²­ ì•Œë¦¼";
+			title_init = title_init+"°Ë»ö °á°ú Á¶Ä¡ ¿¹Á¤ °áÀç ¿äÃ» ¾Ë¸²";
 		} else if (mail_id == 2) {
-			title_init = title_init+"ê²€ìƒ‰ ê²°ê³¼ ì¡°ì¹˜ ì˜ˆì • ê²°ì¬ ë°˜ë ¤ ì•Œë¦¼";
+			title_init = title_init+"°Ë»ö °á°ú Á¶Ä¡ ¿¹Á¤ °áÀç ¹İ·Á ¾Ë¸²";
 		} else if (mail_id == 3) {
-			title_init = title_init+"ê²€ìƒ‰ ê²°ê³¼ ì¡°ì¹˜ ì˜ˆì • ê²°ì¬ ì™„ë£Œ ì•Œë¦¼";
+			title_init = title_init+"°Ë»ö °á°ú Á¶Ä¡ ¿¹Á¤ °áÀç ¿Ï·á ¾Ë¸²";
 		} else if (mail_id == 4) {
-			title_init = title_init+"ë‹´ë‹¹ì ë³€ê²½ ìš”ì²­ ì•Œë¦¼ ";
+			title_init = title_init+"´ã´çÀÚ º¯°æ ¿äÃ» ¾Ë¸² ";
 		} else if (mail_id == 5) {
-			title_init = title_init+"ë‹´ë‹¹ì ë³€ê²½ ë°˜ë ¤ ì•Œë¦¼";
+			title_init = title_init+"´ã´çÀÚ º¯°æ ¹İ·Á ¾Ë¸²";
 		} else if (mail_id == 6) {
-			title_init = title_init+"ë‹´ë‹¹ì ë³€ê²½ ì™„ë£Œ ì•Œë¦¼ ";
+			title_init = title_init+"´ã´çÀÚ º¯°æ ¿Ï·á ¾Ë¸² ";
 		} else if (mail_id == 7) {
-			title_init = title_init+"ë‹´ë‹¹ ê³„ì • ê°œì¸ì •ë³´ ê²€ì¶œ ì•Œë¦¼";
+			title_init = title_init+"´ã´ç °èÁ¤ °³ÀÎÁ¤º¸ °ËÃâ ¾Ë¸²";
 		} else if (mail_id == 8) {
-			title_init = title_init+"ê²€ìƒ‰ ê²°ê³¼ ì¥ê¸° ë¯¸ì¡°ì¹˜ ì•Œë¦¼";
+			title_init = title_init+"°Ë»ö °á°ú Àå±â ¹ÌÁ¶Ä¡ ¾Ë¸²";
 		} else if (mail_id == 9) {
-			title_init = title_init+"ë¯¸ì ‘ì† ì—ì´ì „íŠ¸ ì•Œë¦¼";
+			title_init = title_init+"¹ÌÁ¢¼Ó ¿¡ÀÌÀüÆ® ¾Ë¸²";
 		}
 
 		title_arg.add(title_init);
@@ -218,6 +218,7 @@ public class EmailVo {
 				contents=contents+"<td class=\"tg-fymr right\">"+re.getTYPE4()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr right\">"+re.getTYPE5()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr right\">"+re.getTYPE6()+"</td>\n";
+				contents=contents+"<td class=\"tg-fymr right\">"+re.getTYPE7()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr right\">"+re.getTYPE()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getAPPROVAL_STATUS_PRINT_NAME()+"</td>\n";
 				ret=true;

@@ -10,6 +10,7 @@ public class eDetail7Vo {
 	private String TYPE4;
 	private String TYPE5;
 	private String TYPE6; 
+	private String TYPE7;
 	private String TYPE;
 	private String APPROVAL_STATUS_PRINT_NAME;
 	
@@ -67,6 +68,12 @@ public class eDetail7Vo {
 	}
 	public void setTYPE6(String tYPE6) {
 		TYPE6 = tYPE6;
+	}
+	public String getTYPE7() {
+		return TYPE7;
+	}
+	public void setTYPE7(String tYPE7) {
+		TYPE7 = tYPE7;
 	}
 	public String getTYPE() {
 		return TYPE;

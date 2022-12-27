@@ -9,13 +9,9 @@ public class PersonalVo {
 	private long account_num=0;
 	private long card_num=0;
 	private long phone=0;
-	private long phone_num=0;
-	private long mobile_phone=0;
-	private long new_rrn=0;
-	private long email=0;
-	private long carnum=0;
-	private long vehicleid=0;
+	private long meritz_acc=0;
 	private long total=0;
+	
 	
 	public String getTarget_id() {
 		return target_id;
@@ -59,54 +55,24 @@ public class PersonalVo {
 	public void setCard_num(long card_num) {
 		this.card_num = card_num;
 	}
-	public long getTotal() {
-		total=rrn+foreigner+driver+passport+account_num+card_num+phone+phone_num+mobile_phone+new_rrn+email+carnum+vehicleid;
-		return total;
-	}
-	public void setTotal(long total) {
-		this.total = total;
-	}
 	public long getPhone() {
 		return phone;
 	}
 	public void setPhone(long phone) {
 		this.phone = phone;
 	}
-	public long getPhone_num() {
-		return phone_num;
+	public long getMeritz_acc() {
+		return meritz_acc;
 	}
-	public void setPhone_num(long phone_num) {
-		this.phone_num = phone_num;
+	public void setMeritz_acc(long meritz_acc) {
+		this.meritz_acc = meritz_acc;
 	}
-	public long getMobile_phone() {
-		return mobile_phone;
+	public long getTotal() {
+		//total=rrn+foreigner+driver+passport+account_num+card_num;
+		return total;
 	}
-	public void setMobile_phone(long mobile_phone) {
-		this.mobile_phone = mobile_phone;
-	}
-	public long getNew_rrn() {
-		return new_rrn;
-	}
-	public void setNew_rrn(long new_rrn) {
-		this.new_rrn = new_rrn;
-	}
-	public long getEmail() {
-		return email;
-	}
-	public void setEmail(long email) {
-		this.email = email;
-	}
-	public long getCarnum() {
-		return carnum;
-	}
-	public void setCarnum(long carnum) {
-		this.carnum = carnum;
-	}
-	public long getVehicleid() {
-		return vehicleid;
-	}
-	public void setVehicleid(long vehicleid) {
-		this.vehicleid = vehicleid;
+	public void setTotal(long total) {
+		this.total = total;
 	}
 	
 	

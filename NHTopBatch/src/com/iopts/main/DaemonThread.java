@@ -15,8 +15,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.apache.log4j.BasicConfigurator;
 
 import com.google.gson.Gson;
 import com.ibatis.sqlmap.client.SqlMapClient;
@@ -34,13 +33,12 @@ public class DaemonThread implements Runnable {
 	private static SqlMapClient sqlMapPIC = null;
 	List<pi_topcompVo> predata = new ArrayList<pi_topcompVo>();
 
-	private static Logger logger = LoggerFactory.getLogger(DaemonThread.class);
-
 	private String tgt_zip = "";
 	private String tgt = "";
 	private MailForm M = new MailForm();
 
 	public DaemonThread() {
+		/*BasicConfigurator.configure();*/
 		int seq = getFileNo(AppConfig.getProperty("config.email.path"));
 		
 		// tgt = AppConfig.getProperty("config.email.path") + "/" +
@@ -52,7 +50,7 @@ public class DaemonThread implements Runnable {
 				+ String.format("%s_%s_%s_%06d.zip", AppConfig.getProperty("config.email.init"), getCDate(), AppConfig.getProperty("config.email.division"), seq);
 
 		this.sqlMapPIC = SqlMapInstanceBATCH.getSqlMapInstance();
-		System.out.println("Batch work of information in the pi_topcomp table");
+		System.out.println("Batch work of information in the ti_topcomp table");
 		System.out.println("Agent connection failure send to mail ");
 	}
 
@@ -62,12 +60,12 @@ public class DaemonThread implements Runnable {
 		try {
 			predata = this.sqlMapPIC.openSession().queryForList("query.getPreCount");
 			getNowData();
-//			UpdateDelDate();
-			sendMail();
+			UpdateDelDate();
+			//sendMail();
 
-			for (int i = 1; i < 8; i++) {
+			/*for (int i = 1; i < 8; i++) {
 				sendMailLoop(i);
-			}
+			}*/
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -310,7 +308,7 @@ public class DaemonThread implements Runnable {
 
 				// 어제 데이타를 sum 한다.
 				pi_topcompVo r = predataSum(p);
-				System.out.println(r.toString());
+
 				this.sqlMapPIC.openSession().insert("insert.settopcomp", r);
 
 				System.out.println(">>> DB pi_topcomp Data Insert :" + v.getTarget_id() + " ,," + r.getTotal());
@@ -355,16 +353,10 @@ public class DaemonThread implements Runnable {
 				r.setRrn_pre(predata.get(i).getRrn());
 				r.setForeigner_pre(predata.get(i).getForeigner());
 				r.setDriver_pre(predata.get(i).getDriver());
-				r.setPassport_pre(predata.get(i).getForeigner());
+				r.setPassport_pre(predata.get(i).getPassport());
 				r.setAccount_num_pre(predata.get(i).getAccount_num());
 				r.setCard_num_pre(predata.get(i).getCard_num());
-				r.setPhone_pre(predata.get(i).getPhone_num());
-				r.setPhone_num_pre(predata.get(i).getPhone_num_pre());
-				r.setMobile_phone_pre(predata.get(i).getMobile_phone());
-				r.setNew_rrn_pre(predata.get(i).getNew_rrn());
-				r.setEmail_pre(predata.get(i).getEmail());
-				r.setCarnum_pre(predata.get(i).getCarnum());
-				r.setVehicleid_pre(predata.get(i).getVehicleid());
+				r.setPhone_pre(predata.get(i).getPhone());
 				r.setTotal_pre(predata.get(i).getTotal1());
 				r.setTotal_gap(r.getTotal() - predata.get(i).getTotal());
 			}
