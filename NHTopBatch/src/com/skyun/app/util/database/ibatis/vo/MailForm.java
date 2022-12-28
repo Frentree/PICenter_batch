@@ -459,7 +459,8 @@ public class MailForm {
 			"		    <th class=\"tg-qbec\">여권번호</th>\n" +
 			"		    <th class=\"tg-qbec\">운전번호</th>\n" +
 			"		    <th class=\"tg-qbec\">계좌번호</th>\n" +
-			"		    <th class=\"tg-qbec\">카드번호</th>\n" +			
+			"		    <th class=\"tg-qbec\">카드번호</th>\n" +
+			"		    <th class=\"tg-qbec\">전화번호</th>\n" +
 			"		    <th class=\"tg-qbec\">합계</th>\n" + 
 			"		    <th class=\"tg-qbec\">처리상태</th>\n" + 
 			"		  </tr>"; 

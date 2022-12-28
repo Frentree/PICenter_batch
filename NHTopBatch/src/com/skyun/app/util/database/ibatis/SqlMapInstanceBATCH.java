@@ -31,6 +31,7 @@ public class SqlMapInstanceBATCH {
 			reader.close();
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("DB Connect error _________________ check PICDB env");
 			System.out.println("DB URL     :"+AppConfig.getProperty("config.pic.db.username"));
 			System.out.println("DB userid  :"+AppConfig.getProperty("config.pic.db.url"));

@@ -218,6 +218,7 @@ public class EmailVo {
 				contents=contents+"<td class=\"tg-fymr right\">"+re.getTYPE4()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr right\">"+re.getTYPE5()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr right\">"+re.getTYPE6()+"</td>\n";
+				contents=contents+"<td class=\"tg-fymr right\">"+re.getTYPE7()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr right\">"+re.getTYPE()+"</td>\n";
 				contents=contents+"<td class=\"tg-fymr center\">"+re.getAPPROVAL_STATUS_PRINT_NAME()+"</td>\n";
 				ret=true;
