@@ -4,6 +4,15 @@
 
 <sqlMap namespace="insert">
 
+	<insert id="insertTopcomp">
+		INSERT INTO pi_topcomp (
+		SELECT T.TARGET_ID, DATE_FORMAT(now(), '%Y%m%d'), T.RRN, T.RRN_PRE, T.FOREIGNER, T.FOREIGNER_PRE, T.DRIVER, T.DRIVER_PRE, T.PASSPORT, T.PASSPORT_PRE, 
+			T.ACCOUNT_NUM, T.ACCOUNT_NUM_PRE, T.CARD_NUM, T.CARD_NUM_PRE, T.PHONE, T.PHONE_PRE, T.MERITZ_ACC, T.MERITZ_ACC_PRE, T.TOTAL, T.TOTAL_PRE, T.TOTAL_GAP 
+		FROM pi_topcomp T
+		WHERE date(regdate) = CURDATE() - INTERVAL 1 DAY
+		  AND NOT EXISTS (SELECT * FROM pi_topcomp T2 WHERE T2.TARGET_ID = T.TARGET_ID AND date(regdate) = CURDATE()))
+	</insert>
+	
 	<insert id="settopcomp" parameterClass="com.skyun.app.util.database.ibatis.vo.pi_topcompVo">
 		INSERT INTO pi_topcomp
 			(target_id,regdate,rrn,rrn_pre,foreigner,foreigner_pre,driver,driver_pre,passport,passport_pre,account_num,account_num_pre,card_num,card_num_pre,phone,phone_pre,meritz_acc,meritz_acc_pre,total,total_pre,total_gap)

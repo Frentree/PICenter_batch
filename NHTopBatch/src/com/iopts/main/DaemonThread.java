@@ -15,12 +15,16 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 // import org.apache.log4j.BasicConfigurator;
 
 import com.google.gson.Gson;
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.skyun.app.util.config.AppConfig;
 import com.skyun.app.util.database.ibatis.SqlMapInstanceBATCH;
+import com.skyun.app.util.database.ibatis.vo.CompletTargetVo;
 import com.skyun.app.util.database.ibatis.vo.EmailItemVo;
 import com.skyun.app.util.database.ibatis.vo.EmailVo;
 import com.skyun.app.util.database.ibatis.vo.MailForm;
@@ -36,42 +40,45 @@ public class DaemonThread implements Runnable {
 	private String tgt_zip = "";
 	private String tgt = "";
 	private MailForm M = new MailForm();
+	private static Logger logger = LoggerFactory.getLogger(DaemonThread.class);
 
 	public DaemonThread() {
 		/*BasicConfigurator.configure();*/
-		int seq = getFileNo(AppConfig.getProperty("config.email.path"));
+//		int seq = getFileNo(AppConfig.getProperty("config.email.path"));
 		
 		// tgt = AppConfig.getProperty("config.email.path") + "/" +
 		// String.format("%s_%s_%s_%06d.txt",
 		// AppConfig.getProperty("config.email.init"), getCDate(),
 		// AppConfig.getProperty("config.email.division"), seq);
-		tgt = AppConfig.getProperty("config.email.path") + "/" + String.format("BODY.mail");
-		tgt_zip = AppConfig.getProperty("config.email.path") + "/"
-				+ String.format("%s_%s_%s_%06d.zip", AppConfig.getProperty("config.email.init"), getCDate(), AppConfig.getProperty("config.email.division"), seq);
+//		tgt = AppConfig.getProperty("config.email.path") + "/" + String.format("BODY.mail");
+//		tgt_zip = AppConfig.getProperty("config.email.path") + "/"
+//				+ String.format("%s_%s_%s_%06d.zip", AppConfig.getProperty("config.email.init"), getCDate(), AppConfig.getProperty("config.email.division"), seq);
 
 		this.sqlMapPIC = SqlMapInstanceBATCH.getSqlMapInstance();
-		System.out.println("Batch work of information in the ti_topcomp table");
+		System.out.println("Batch work of information in the pi_topcomp table");
 		System.out.println("Agent connection failure send to mail ");
 	}
 
 	@Override
 	public void run() {
-
+		
+		getNowData();
+/*
 		try {
 			predata = this.sqlMapPIC.openSession().queryForList("query.getPreCount");
 			getNowData();
 			UpdateDelDate();
 			//sendMail();
 
-			/*for (int i = 1; i < 8; i++) {
+			for (int i = 1; i < 8; i++) {
 				sendMailLoop(i);
-			}*/
+			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getLocalizedMessage());
 		}
-
+*/
 	}
 
 	private void sendMail() {
@@ -295,7 +302,36 @@ public class DaemonThread implements Runnable {
 
 		try {
 
-			// 오늘의 전체 내역역을 가져온다.
+			// 금일 검색 완료한 타겟을 가져온다
+			List<CompletTargetVo> ctVo = this.sqlMapPIC.openSession().queryForList("query.getEndScheduleTarget");
+			
+			logger.info("ctVo >>>> " + ctVo.toString());
+			
+			for (CompletTargetVo vo : ctVo) {
+				logger.info(">>> DB pi_topcomp Data :" + vo.getTarget_id() + " , ap: " + vo.getAp_no());
+				
+				PersonalVo acct = (PersonalVo) this.sqlMapPIC.openSession().queryForObject("query.getPersonCount", vo);
+				
+				if(acct != null) {
+
+					pi_topcompVo p = new pi_topcompVo();
+					p.setPersol(acct);
+
+					// 어제 데이타를 sum 한다.
+					pi_topcompVo r = predataSum(p);
+					System.out.println(r.toString());
+					this.sqlMapPIC.openSession().insert("insert.settopcomp", r);
+					logger.info(">>> DB pi_topcomp Data Insert :" + acct.getTarget_id() + " ,," + r.getTotal());
+				} else {
+					logger.info(">>> DB pi_topcomp ID :" + vo.getTarget_id() + " Data Size 0 Num");
+				}
+			}
+			
+		/*	오늘 검색한 항목이 아닌 데이터도 가지고와 수정
+		 * this.sqlMapPIC.openSession().insert("insert.insertTopcomp");
+			logger.info(">>> DB pi_topcomp All Data Insert");*/
+			
+			/*// 오늘의 전체 내역역을 가져온다.
 			List<PersonalVo> acct = this.sqlMapPIC.openSession().queryForList("query.getPersonCount");
 			System.out.println("오늘 데이타 Size :" + acct.size());
 
@@ -306,12 +342,11 @@ public class DaemonThread implements Runnable {
 
 				// 어제 데이타를 sum 한다.
 				pi_topcompVo r = predataSum(p);
-
+				System.out.println(r.toString());
 				this.sqlMapPIC.openSession().insert("insert.settopcomp", r);
+				logger.info(">>> DB pi_topcomp Data Insert :" + v.getTarget_id() + " ,," + r.getTotal());
 
-				System.out.println(">>> DB pi_topcomp Data Insert :" + v.getTarget_id() + " ,," + r.getTotal());
-
-			}
+		}*/
 		} catch (SQLException e) {
 			System.err.println("File readError: " + e.getLocalizedMessage());
 			System.exit(1);
