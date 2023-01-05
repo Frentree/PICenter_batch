@@ -48,7 +48,7 @@ public class pi_topcompVo {
 		this.rrn=v.getRrn();
 		this.foreigner=v.getForeigner();
 		this.driver=v.getDriver();
-		this.passport=v.getForeigner();
+		this.passport=v.getPassport();
 		this.card_num=v.getCard_num();
 		this.account_num=v.getAccount_num();
 		this.phone=v.getPhone();

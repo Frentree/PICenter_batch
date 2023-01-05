@@ -372,7 +372,7 @@ public class DaemonThread implements Runnable {
 				r.setRrn_pre(vo.getRrn());
 				r.setForeigner_pre(vo.getForeigner());
 				r.setDriver_pre(vo.getDriver());
-				r.setPassport_pre(vo.getForeigner());
+				r.setPassport_pre(vo.getPassport());
 				r.setAccount_num_pre(vo.getAccount_num());
 				r.setCard_num_pre(vo.getCard_num());
 				r.setPhone_pre(vo.getPhone_num());
