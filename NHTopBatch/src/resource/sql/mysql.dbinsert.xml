@@ -13,31 +13,19 @@
 		WHERE date(regdate) = CURDATE() - INTERVAL 1 DAY
 		  AND NOT EXISTS (SELECT * FROM pi_topcomp T2 WHERE T2.TARGET_ID = T.TARGET_ID AND T.AP_NO = T2.AP_NO AND date(regdate) = CURDATE()))
 	</insert>
+	
+	<insert id="insertStatistics">
+		INSERT INTO PI_STATISTICS (
+			SELECT S.TARGET_ID, T.NAME AS HOST_NAME , S.REGDATE, S.PATH_CNT, S.RRN, S.FOREIGNER, S.DRIVER, S.PASSPORT, S.ACCOUNT_NUM, S.CARD_NUM, S.PHONE, S.PHONE_NUM, S.MOBILE_PHONE,
+					 S.NEW_RRN ,S.EMAIL, S.CARD_NUM, S.VEHICLEID, S.TOTAL, S.TOTAL_GAP
+			FROM PI_TARGETS T, PI_STATISTICS S
+			WHERE T.TARGET_ID = S.TARGET_ID
+				AND DATE(S.REGDATE) = CURDATE() - INTERVAL 1 DAY
+				AND NOT EXISTS (SELECT * FROM PI_STATISTICS S2 WHERE S2.TARGET_ID = S.TARGET_ID AND DATE(REGDATE) = CURDATE())
+		)
+	</insert>
 
 	<insert id="settopcomp" parameterClass="com.skyun.app.util.database.ibatis.vo.pi_topcompVo">
-		<!--  INSERT INTO pi_topcomp
-			(target_id,regdate,rrn,rrn_pre,foreigner,foreigner_pre,driver,driver_pre,passport,passport_pre,account_num,account_num_pre,card_num,card_num_pre,total,total_pre,total_gap)
-		VALUES
-			(#target_id#,DATE_FORMAT(now(), '%Y%m%d'),#rrn#,#rrn_pre#,#foreigner#,#foreigner_pre#,#driver#,#driver_pre#,#passport#,#passport_pre#,#account_num#,#account_num_pre#,#card_num#,#card_num_pre#,#total#,#total_pre#,#total_gap#)
-		ON DUPLICATE KEY
-		UPDATE
-		  rrn=#rrn#,
-		  rrn_pre=#rrn_pre#,
-		  foreigner=#foreigner#,
-		  foreigner_pre=#foreigner_pre#,
-		  driver=#driver#,
-		  driver_pre=#driver_pre#,
-		  passport=#passport#,
-		  passport_pre=#passport_pre#,
-		  account_num=#account_num#,
-		  account_num_pre=#account_num_pre#,
-		  card_num=#card_num#,
-		  card_num_pre=#card_num_pre#,
-		  total=#total#,
-		  total_pre=#total_pre#,
-		  total_gap=#total_gap#,
-		  regdate=DATE_FORMAT(now(), '%Y%m%d')  -->
-		  
 		INSERT INTO pi_topcomp
 			(target_id,ap_no,regdate, path_cnt, rrn,rrn_pre,foreigner,foreigner_pre,driver,driver_pre,passport,passport_pre,account_num,account_num_pre,card_num,card_num_pre,phone,phone_pre, phone_num, phone_num_pre,
 			mobile_phone, mobile_phone_pre, email, email_pre, total,total_pre,total_gap)
@@ -73,43 +61,32 @@
 		  total_pre=#total_pre#,
 		  total_gap=#total_gap#,
 		  regdate=DATE_FORMAT(now(), '%Y%m%d')
-		
-		<!-- INSERT INTO pi_topcomp
-			(target_id, regdate, ap_no, path_cnt, rrn, rrn_pre, foreigner, foreigner_pre,
-			driver, driver_pre, passport, passport_pre, account_num, account_num_pre,
-			card_num, card_num_pre, phone,phone_pre, phone_num, phone_num_pre,
-			mobile_phone, mobile_phone_pre, email, email_pre, total, total_pre, total_gap)
-			
-			(#target_id#,DATE_FORMAT(now(), '%Y%m%d'),#ap_no#, #path_cnt#,#rrn#,#rrn_pre#,#foreigner#,#foreigner_pre#,
-			#driver#,#driver_pre#,#passport#,#passport_pre#,#account_num#,#account_num_pre#,
-			#card_num#,#card_num_pre#,#phone#,#phone_pre#,#phone_num#,#phone_num_pre#,
-			#mobile_phone#,#mobile_phone_pre#,#email#,#email_pre#,#total#,#total_pre#,#total_gap#)
-		ON DUPLICATE KEY UPDATE
-		  path_cnt=#path_cnt#,
-		  rrn=#rrn#,
-		  rrn_pre=#rrn_pre#,
-		  foreigner=#foreigner#,
-		  foreigner_pre=#foreigner_pre#,
-		  driver=#driver#,
-		  driver_pre=#driver_pre#,
-		  passport=#passport#,
-		  passport_pre=#passport_pre#,
-		  account_num=#account_num#,
-		  account_num_pre=#account_num_pre#,
-		  card_num=#card_num#,
-		  card_num_pre=#card_num_pre#,
-		  phone=#phone#,
-		  phone_pre=#phone_pre#,
-		  phone_num=#phone_num#,
-		  phone_num_pre=#phone_num_pre#,
-		  mobile_phone=#mobile_phone#,
-		  mobile_phone_pre=#mobile_phone_pre#,
-		  email=#email#,
-		  email_pre=#email_pre#,
-		  total=#total#,
-		  total_pre=#total_pre#,
-		  total_gap=#total_gap#,
-		  regdate=DATE_FORMAT(now(), '%Y%m%d') -->
+	</insert>
+	
+	<insert id="setStatistics" parameterClass="com.skyun.app.util.database.ibatis.vo.pi_statisticsVo">
+		INSERT INTO pi_statistics
+			(target_id, host_name, regdate, PATH_CNT, rrn, foreigner, driver, passport, account_num, phone, phone_num, mobile_phone, new_rrn, email, car_num, vehicleid, total, total_gap)
+		VALUES
+			(#target_id#, #host_name#, DATE_FORMAT(now(), '%Y%m%d'), #path_cnt#, #rrn#, #foreigner#, #driver#, #passport#, #account_num#, #phone#,
+			#phone_num#, #mobile_phone#, #new_rrn#, #email#, #car_num#, #vehicleid#, #total#, #total_gap#)
+		ON DUPLICATE KEY
+		UPDATE
+			regdate= DATE_FORMAT(now(), '%Y%m%d'),
+			path_cnt=#path_cnt#,
+		  	rrn=#rrn#,
+		  	foreigner=#foreigner#,
+		  	driver=#driver#,
+		  	passport=#passport#,
+		  	account_num=#account_num#,
+		  	phone=#phone#,
+		  	phone_num=#phone_num#,
+		  	mobile_phone=#mobile_phone#,
+		  	new_rrn=#new_rrn#,
+		  	email=#email#,
+		  	car_num=#car_num#,
+		  	vehicleid=#vehicleid#,
+		  	total=#total#,
+		  	total_gap=#total_gap#
 	</insert>
 
 	<insert id="setDelUpdate" parameterClass="com.skyun.app.util.database.ibatis.vo.pifindVo">

@@ -28,6 +28,7 @@ import com.skyun.app.util.database.ibatis.vo.EmailVo;
 import com.skyun.app.util.database.ibatis.vo.MailForm;
 import com.skyun.app.util.database.ibatis.vo.PersonalVo;
 import com.skyun.app.util.database.ibatis.vo.eMasterVo;
+import com.skyun.app.util.database.ibatis.vo.pi_statisticsVo;
 import com.skyun.app.util.database.ibatis.vo.pi_topcompVo;
 import com.skyun.app.util.database.ibatis.vo.pifindVo;
 
@@ -302,12 +303,20 @@ public class DaemonThread implements Runnable {
 				if(acct != null) {
 
 					pi_topcompVo p = new pi_topcompVo();
+					pi_statisticsVo s = new pi_statisticsVo();
+					
 					p.setPersol(acct);
+					s.setPersol(acct);
 
 					// 어제 데이타를 sum 한다.
 					pi_topcompVo r = predataSum(p);
+					// target_name 을 가져온다
+					pi_statisticsVo st = getStaticsName(s);
+					
 					System.out.println(r.toString());
+					System.out.println(s.toString());
 					this.sqlMapPIC.openSession().insert("insert.settopcomp", r);
+					this.sqlMapPIC.openSession().insert("insert.setStatistics", st);
 					logger.info(">>> DB pi_topcomp Data Insert :" + acct.getTarget_id() + " ,," + r.getTotal());
 				} else {
 					logger.info(">>> DB pi_topcomp ID :" + vo.getTarget_id() + " Data Size 0 Num");
@@ -315,24 +324,9 @@ public class DaemonThread implements Runnable {
 			}
 			
 			this.sqlMapPIC.openSession().insert("insert.insertTopcomp");
+			this.sqlMapPIC.openSession().insert("insert.insertStatistics");
 			logger.info(">>> DB pi_topcomp All Data Insert");
 			
-			/*// 오늘의 전체 내역역을 가져온다.
-			List<PersonalVo> acct = this.sqlMapPIC.openSession().queryForList("query.getPersonCount");
-			System.out.println("오늘 데이타 Size :" + acct.size());
-
-			for (PersonalVo v : acct) {
-
-				pi_topcompVo p = new pi_topcompVo();
-				p.setPersol(v);
-
-				// 어제 데이타를 sum 한다.
-				pi_topcompVo r = predataSum(p);
-				System.out.println(r.toString());
-				this.sqlMapPIC.openSession().insert("insert.settopcomp", r);
-				logger.info(">>> DB pi_topcomp Data Insert :" + v.getTarget_id() + " ,," + r.getTotal());
-
-			}*/
 		} catch (SQLException e) {
 			System.err.println("File readError: " + e.getLocalizedMessage());
 			System.exit(1);
@@ -390,34 +384,29 @@ public class DaemonThread implements Runnable {
 			// TODO Auto-generated catch block
 			System.out.println(e.getLocalizedMessage());
 		}
-		
-		
-		/*
-		for (int i = 0; i < predata.size(); i++) {
-
-			if (predata.get(i).getTarget_id().equals(p.getTarget_id())) {
-				System.out.println("Target ID :" + predata.get(i).getTarget_id());
-				r.setRrn_pre(predata.get(i).getRrn());
-				r.setForeigner_pre(predata.get(i).getForeigner());
-				r.setDriver_pre(predata.get(i).getDriver());
-				r.setPassport_pre(predata.get(i).getForeigner());
-				r.setAccount_num_pre(predata.get(i).getAccount_num());
-				r.setCard_num_pre(predata.get(i).getCard_num());
-				r.setPhone_pre(predata.get(i).getPhone_num());
-				r.setPhone_num_pre(predata.get(i).getPhone_num_pre());
-				r.setMobile_phone_pre(predata.get(i).getMobile_phone());
-				r.setNew_rrn_pre(predata.get(i).getNew_rrn());
-				r.setEmail_pre(predata.get(i).getEmail());
-				r.setCarnum_pre(predata.get(i).getCarnum());
-				r.setVehicleid_pre(predata.get(i).getVehicleid());
-				r.setTotal_pre(predata.get(i).getTotal1());
-				r.setTotal_gap(r.getTotal() - predata.get(i).getTotal());
-			}
-		}*/
 
 		return r;
 	}
-
+	
+	private pi_statisticsVo getStaticsName(pi_statisticsVo p) {
+		
+		pi_statisticsVo r = p;
+		
+		try {
+			pi_statisticsVo vo = (pi_statisticsVo) this.sqlMapPIC.openSession().queryForObject("query.getTargetName", p);
+			
+			if(vo != null) {
+				r.setHost_name(vo.getHost_name());
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getLocalizedMessage());
+		}
+		
+		return r;
+	}
+	
 	public static String escape(String input) {
 		StringBuilder output = new StringBuilder();
 

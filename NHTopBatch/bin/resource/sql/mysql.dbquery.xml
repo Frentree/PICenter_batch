@@ -79,6 +79,10 @@
 		  AND AP_NO = #ap_no#
 		GROUP BY target_id, ap_no
 	</select>
+	
+	<select id="getTargetName" resultClass="com.skyun.app.util.database.ibatis.vo.pi_statisticsVo">
+		SELECT NAME AS HOST_NAME FROM PI_TARGETS WHERE TARGET_ID = #target_id#
+	</select>
 
 	<select id="getAgentDisconnectList" resultClass="com.skyun.app.util.database.ibatis.vo.EmailItemVo">
 		SELECT
