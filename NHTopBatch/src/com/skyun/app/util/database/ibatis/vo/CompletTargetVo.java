@@ -4,6 +4,8 @@ public class CompletTargetVo {
 	private String name;
 	private String target_id;
 	private int ap_no;
+	private String regdate;
+	
 	public String getName() {
 		return name;
 	}
@@ -21,6 +23,12 @@ public class CompletTargetVo {
 	}
 	public void setAp_no(int ap_no) {
 		this.ap_no = ap_no;
+	}
+	public String getRegdate() {
+		return regdate;
+	}
+	public void setRegdate(String regdate) {
+		this.regdate = regdate;
 	}
 	
 }

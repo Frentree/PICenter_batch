@@ -7,11 +7,12 @@
 	<select id="getEndScheduleTarget" resultClass="com.skyun.app.util.database.ibatis.vo.CompletTargetVo">
 		SELECT T.NAME,
 			S.AP_NO,
-			T.TARGET_ID
+			T.TARGET_ID,
+			DATE_FORMAT(FROM_UNIXTIME(SL.UPDATED), '%Y-%m-%d 00:00:00') AS REGDATE
 		FROM pi_targets T
 		  LEFT OUTER JOIN PI_SCHEDULES S ON T.AP_NO = S.AP_NO AND T.TARGET_ID = S.SCHEDULE_TARGET_ID
 		  LEFT OUTER JOIN pi_scheduled_location SL ON SL.AP_NO = S.AP_NO AND S.SCHEDULE_ID = SL.SCH_ID
-		WHERE T.AP_NO != 0
+		WHERE 1=1
 		  AND S.SCHEDULE_STATUS IN ('completed', 'stopped', 'interrupted')
 		  AND DATE_FORMAT(FROM_UNIXTIME(SL.UPDATED), '%Y-%m-%d %H:00') >= DATE_FORMAT(DATE_ADD(NOW(),INTERVAL -1 DAY), '%Y-%m-%d %H:00')
 		GROUP BY T.TARGET_ID, T.AP_NO
