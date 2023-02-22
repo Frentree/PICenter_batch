@@ -324,7 +324,7 @@ public class DaemonThread implements Runnable {
 			}
 			
 			this.sqlMapPIC.openSession().insert("insert.insertTopcomp");
-			this.sqlMapPIC.openSession().insert("insert.insertStatistics");
+			/*this.sqlMapPIC.openSession().insert("insert.insertStatistics");*/
 			logger.info(">>> DB pi_topcomp All Data Insert");
 			
 		} catch (SQLException e) {

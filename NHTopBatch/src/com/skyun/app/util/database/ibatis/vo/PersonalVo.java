@@ -2,7 +2,7 @@ package com.skyun.app.util.database.ibatis.vo;
 
 public class PersonalVo {
 	private String target_id;
-	private int ap_no;
+	private int ap_no=0;
 	private long path_cnt=0;
 	private long rrn=0;
 	private long foreigner=0;
