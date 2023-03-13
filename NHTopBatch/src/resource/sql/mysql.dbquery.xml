@@ -9,7 +9,7 @@
 		FROM pi_targets T
 		  LEFT OUTER JOIN pi_scheduled_location SL ON  SL.target_id = T.TARGET_ID
 		WHERE SL.STATUS IN ('completed', 'stopped', 'interrupted')
-		  AND DATE_FORMAT(FROM_UNIXTIME(SL.UPDATED), '%Y-%m-%d') >= DATE_FORMAT(CURRENT_TIMESTAMP() + INTERVAL -1 DAY, '%Y-%m-%d')
+		  AND DATE_FORMAT(FROM_UNIXTIME(SL.UPDATED), '%Y-%m-%d') = DATE_FORMAT(CURRENT_TIMESTAMP() + INTERVAL -1 DAY, '%Y-%m-%d')
 		GROUP BY T.TARGET_ID, T.AP_NO
 	</select>
 	
@@ -59,22 +59,22 @@
 
 	<select id="getPreCount" resultClass="com.skyun.app.util.database.ibatis.vo.pi_topcompVo">
 		SELECT
-		target_id,
-		ap_no,
-		path_cnt,
-		SUM(rrn) AS rrn,
-		SUM(foreigner) AS foreigner,
-		SUM(driver) AS driver,
-		SUM(passport) AS passport,
-		SUM(account_num) AS account_num,
-		SUM(card_num) AS card_num,
-		SUM(phone) AS phone,
-		SUM(phone_num) AS phone_num,
-		SUM(mobile_phone) AS mobile_phone,
-		SUM(email) AS email,
-		SUM(total) AS total
+			target_id,
+			ap_no,
+			path_cnt,
+			SUM(rrn) AS rrn,
+			SUM(foreigner) AS foreigner,
+			SUM(driver) AS driver,
+			SUM(passport) AS passport,
+			SUM(account_num) AS account_num,
+			SUM(card_num) AS card_num,
+			SUM(phone) AS phone,
+			SUM(phone_num) AS phone_num,
+			SUM(mobile_phone) AS mobile_phone,
+			SUM(email) AS email,
+			SUM(total) AS total
 		FROM pi_topcomp
-		WHERE date(regdate)=CURDATE()- INTERVAL 1 DAY
+		WHERE date(regdate)>=CURDATE()- INTERVAL 1 DAY
 		  AND TARGET_ID = #target_id#
 		  AND AP_NO = #ap_no#
 		GROUP BY target_id, ap_no
