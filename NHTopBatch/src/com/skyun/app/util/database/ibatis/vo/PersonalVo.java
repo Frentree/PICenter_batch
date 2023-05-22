@@ -122,5 +122,15 @@ public class PersonalVo {
 	public void setVehicleid(long vehicleid) {
 		this.vehicleid = vehicleid;
 	}
+	@Override
+	public String toString() {
+		return "PersonalVo [target_id=" + target_id + ", ap_no=" + ap_no + ", path_cnt=" + path_cnt + ", rrn=" + rrn
+				+ ", foreigner=" + foreigner + ", driver=" + driver + ", passport=" + passport + ", account_num="
+				+ account_num + ", card_num=" + card_num + ", phone=" + phone + ", phone_num=" + phone_num
+				+ ", mobile_phone=" + mobile_phone + ", new_rrn=" + new_rrn + ", email=" + email + ", carnum=" + carnum
+				+ ", vehicleid=" + vehicleid + ", total=" + total + "]";
+	}
+	
+	
 	
 }

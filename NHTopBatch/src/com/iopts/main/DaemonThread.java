@@ -300,7 +300,9 @@ public class DaemonThread implements Runnable {
 				
 				PersonalVo acct = (PersonalVo) this.sqlMapPIC.openSession().queryForObject("query.getPersonCount", vo);
 				
-				if(acct != null) {
+				logger.info("acct >>>> " + acct.toString());
+				
+				if(acct.getTarget_id() != null) {
 
 					pi_topcompVo p = new pi_topcompVo();
 					pi_statisticsVo s = new pi_statisticsVo();
