@@ -16,10 +16,10 @@
   </appender>
 	 
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-  		<file>D:/picenter/logs/approvalMail.log</file>
+  		<file>D:/workspace/picenter/Picenter_batch/log/approvalMail.log</file>
   		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
     		<!-- rollover daily -->
-    		<fileNamePattern>D:/picenter/logs/approvalMail-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+    		<fileNamePattern>D:/workspace/picenter/Picenter_batch/log/approvalMail-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
     			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
       			<!-- or whenever the file size reaches 100MB -->
       			<maxFileSize>100MB</maxFileSize>

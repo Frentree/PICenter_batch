@@ -9,14 +9,14 @@ public class MailForm {
 			"<table style=\"border-bottom: 2px solid #000;\" border=\"0\" width=\"620\" cellspacing=\"0\" cellpadding=\"0\">" + 
 			"<tbody>" + 
 			"<tr>" + 
-			"<td><img src=\"https://pimc.sktelecom.com/resources/assets/images/SKT_mail_title_1.png\" width=\"620\" height=\"91\" /></td>" + 
+			"<td><img src=\"http://192.168.0.108:8080/resources/assets/images/SKT_mail_title_1.png\" width=\"620\" height=\"91\" /></td>" + 
 			"</tr>" + 
 			"</tbody>" + 
 			"</table>" + 
 			"<table border=\"0\" width=\"620\" cellspacing=\"0\" cellpadding=\"0\">" + 
 			"<tbody>" + 
 			"<tr>" + 
-			"<td style=\"height: 90px;\" align=\"center\" valign=\"bottom\"><img src =\"https://pimc.sktelecom.com/resources/assets/images/SKT_mail_icon_2.png\" style=\"vertical-align: bottom;\" width=\"59\" height=\"60\" /></td>" + 
+			"<td style=\"height: 90px;\" align=\"center\" valign=\"bottom\"><img src =\"http://192.168.0.108:8080/resources/assets/images/SKT_mail_icon_2.png\" style=\"vertical-align: bottom;\" width=\"59\" height=\"60\" /></td>" + 
 			"</tr>" + 
 			"<tr>" + 
 			"<td style=\"font-size: 13px; color: #999; font-weight: bold; height: 22px; letter-spacing: -0.7px; line-height: 13px;\" align=\"center\" valign=\"bottom\">개인정보 검출관리센터(PIMC)에서 발송되는 안내 메일입니다.</td>" + 
@@ -419,7 +419,7 @@ public class MailForm {
 			"<td bgcolor=\"#e6e6e6\" height=\"86\"><table>" + 
 			"<tbody>" + 
 			"<tr>" + 
-			"<td style=\"padding-left: 40px;\" width=\"110\"><img src=\"https://pimc.sktelecom.com/resources/assets/images/SKT_mail_footer%20logo.png\" width=\"82\" height=\"32\" />"+
+			"<td style=\"padding-left: 40px;\" width=\"110\"><img src=\"http://192.168.0.108:8080/resources/assets/images/SKT_mail_footer%20logo.png\" width=\"82\" height=\"32\" />"+
 			"</td>" +
 			"<td style=\"letter-spacing: -0.7px; font-size: 13px; color: #000000; font-weight: bold;\" align=\"center\" height=\"42\" width=\"390\">Personal Information Management Center</td>" + 
 			"<!-- <td style=\"font-size: 13px; color: #FF5000; font-weight: bold;\" align=\"center\" height=\"42\" width=\"390\">Personal Information Management Center</td> --> " + 

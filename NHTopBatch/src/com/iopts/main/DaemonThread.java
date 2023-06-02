@@ -11,8 +11,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.apache.http.ParseException;
 import org.jdom2.Document;
@@ -49,7 +57,8 @@ public class DaemonThread implements Runnable {
 	private	String URL	= Config.domain + "/rest/SCBH000005/" + Config.apiKey;
 	private static String title = "";
 	private static String content = "";
-	private static String sendmail = AppConfig.getProperty("config.email.senderid");
+	private static String sendmail = AppConfig.getProperty("config.mail.senderid");
+	private static String user_pw = AppConfig.getProperty("config.mail.pw");
 	private static String receivermail = "";
 	
 	private static String[][] paramLt	= {{"SENDEREMAIL",sendmail},{"RECEIVEREMAIL", receivermail},{"SUBJECT", title},{"CONTENT",content}};
@@ -57,7 +66,7 @@ public class DaemonThread implements Runnable {
 	private static Logger logger = LoggerFactory.getLogger(DaemonThread.class);
 
 	public DaemonThread() {
-		sendmail = AppConfig.getProperty("config.email.senderid");
+		//sendmail = AppConfig.getProperty("config.email.senderid");
 		paramLt[0][0] = "SENDEREMAIL";
 		paramLt[0][1] = sendmail;
 		paramLt[1][0] = "RECEIVEREMAIL";
@@ -73,10 +82,10 @@ public class DaemonThread implements Runnable {
 	@Override
 	public void run() {
 		try {
-			sendMailLoop(1);
-			/*for (int i = 2; i < 4; i++) {
+			//sendMailLoop(1);
+			for (int i = 2; i < 4; i++) {
 				sendMailLoop(i);
-			}*/
+			}
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -94,6 +103,7 @@ public class DaemonThread implements Runnable {
 				master = this.sqlMapPIC.openSession().queryForList("query.getEmailMaster" + i);
 				
 				for (updateUserVo vo : master) {
+					logger.info("Mail :: " + vo.getEMAIL());
 					UpdateUserSendMail(vo, i);
 				}
 				
@@ -108,6 +118,7 @@ public class DaemonThread implements Runnable {
 			}else if(i == 3) {
 				master = this.sqlMapPIC.openSession().queryForList("query.getEmailMaster" + i);
 				for (updateUserVo vo : master) {
+					logger.info("Mail :: " + vo.getEMAIL());
 					UpdateUserSendMail(vo, i);
 				}
 				
@@ -119,6 +130,18 @@ public class DaemonThread implements Runnable {
 	}
 
 	private void UpdateUserSendMail(updateUserVo vo, int i) {
+		
+		Properties props = new Properties();
+		props.put("mail.smtp.host", "hosting.whoismail.net");  
+		props.put("mail.smtp.port", 587);  
+		props.put("mail.smtp.auth", "true");  
+		props.put("mail.smtp.ssl.enable", "false");  
+		
+		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(sendmail, user_pw);
+            }
+        });
 
 		try {
 			List<?> detail = this.sqlMapPIC.openSession().queryForList("query.getEmailDetail" + i, vo);
@@ -138,15 +161,28 @@ public class DaemonThread implements Runnable {
 			paramLt[3][0] = "CONTENT";
 			paramLt[3][1] = content;
 			
+			MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(sendmail));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(receivermail)); 
+
 			if (receivermail != null && !receivermail.equals("")) {
 				logger.info("paramLt Sender : " + paramLt[0][1] + " , Receiver : " + paramLt[1][1] + ", subject : " + paramLt[2][1]);
 				logger.info("paramLt Sender : " + paramLt[3][1]);
-				getVo();
+	            // Subject
+	            message.setSubject(title); //메일 제목을 입력
+
+	            // Text
+	            message.setContent(content, "text/html; charset=UTF-8");    //메일 내용을 입력
+
+	            // send the message
+	            Transport.send(message); ////전송
+
+				//getVo();
 			}
 		} catch (SQLException e) {
-			logger.error(e.getLocalizedMessage());
+			e.printStackTrace();
 		} catch (Exception e) {
-			logger.error(e.getLocalizedMessage());
+			e.printStackTrace();
 		}
 
 	}
