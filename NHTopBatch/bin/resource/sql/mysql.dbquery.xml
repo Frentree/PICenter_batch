@@ -69,7 +69,7 @@
 		FROM pi_find F, pi_target_user TU, pi_user U, pi_group G
 		WHERE F.TARGET_ID = TU.TARGET_ID
 		  AND F.AP_NO = TU.AP_NO
-		  AND F.AP_NO = 1
+		  AND F.AP_NO = 0
 		  AND DATE_FORMAT(F.REGDATE, '%Y-%m-%d %H:00:00') >= DATE_FORMAT(DATE_ADD(NOW(),INTERVAL -1 DAY), '%Y-%m-%d %H:00:00')
 		  AND U.USER_EMAIL IS NOT NULL
 		  AND TU.USER_NO = U.USER_NO
@@ -178,7 +178,7 @@
 			  AND F.AP_NO = S.AP_NO
 			  AND F.TARGET_ID = S.TARGET_ID
 			  AND F.AP_NO = TU.AP_NO
-			  AND F.AP_NO = 1
+			  AND F.AP_NO = 0
 			  AND TU.USER_NO = #UPDATE_USER_NO#
 			GROUP BY F.HASH_ID, F.TARGET_ID, F.AP_NO
 		) DAT, pi_targets T
