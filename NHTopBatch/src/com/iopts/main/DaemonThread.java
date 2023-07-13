@@ -74,10 +74,9 @@ public class DaemonThread implements Runnable {
 	@Override
 	public void run() {
 		try {
-			sendMailLoop(3);
-			/*for (int i = 2; i < 4; i++) {
+			for (int i = 1; i < 4; i++) {
 				sendMailLoop(i);
-			}*/
+			}
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
