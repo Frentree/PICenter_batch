@@ -36,6 +36,7 @@ import csp.comm.Config;
 import csp.comm.CspUtil;
 import csp.comm.vo.HeaderVo;
 import csp.comm.vo.ResultVo;
+import net.sf.json.JSONObject;
 
 public class DaemonThread implements Runnable {
 	private static SqlMapClient sqlMapPIC = null;
@@ -46,7 +47,7 @@ public class DaemonThread implements Runnable {
 	private MailForm M = new MailForm();
 
 	/*CBH 메일 전송*/
-	private	String URL	= Config.domain + "/rest/SCBH000005/" + Config.apiKey;
+	private	String URL	= Config.domain + "/ISNTC00005/" + Config.apiKey;
 	private static String title = "";
 	private static String content = "";
 	private static String sendmail = AppConfig.getProperty("config.email.senderid");
@@ -245,7 +246,7 @@ public class DaemonThread implements Runnable {
 
 
 	// XML 내부에서 Body 정보를 담아옴 - 서비스별 상의함
-	private Object getBody(HeaderVo hvo, Element body) {
+	private Object getBody(HeaderVo hvo, JSONObject body) {
 		GetSmsInfoVo vo = new GetSmsInfoVo();
 
 		if(body==null) return vo;
@@ -259,39 +260,25 @@ public class DaemonThread implements Runnable {
 	}
 
 	public ResultVo getVoData(String URL, String[][] paramLt, String METHOD, int timeout) {
-		ResultVo	vo = new ResultVo();
+		ResultVo vo = new ResultVo();
 
-		Document doc = CspUtil.getDocument(URL, paramLt, METHOD, timeout);
+	    String jsonString = CspUtil.getJsonString(URL, paramLt, METHOD, timeout);
+	    JSONObject jsonObject = JSONObject.fromObject(jsonString);
 
-		Element root	= doc.getRootElement();
-		Element head	= root.getChild("HEADER");
-		Element body	= root.getChild("BODY");
+	    if (jsonObject.containsKey("RESPONSE")) {
+	        JSONObject response = jsonObject.getJSONObject("RESPONSE");
+	        if (response.containsKey("HEADER")) {
+	            JSONObject header = response.getJSONObject("HEADER");
+	            vo.setHEADER(CspUtil.getHeader(header));
+	        }
 
-		if(head!=null) {
-			vo.setHEADER(CspUtil.getHeader(head));
-		}
+	        if (response.containsKey("BODY")) {
+	        	String body = response.getString("BODY");
+	            vo.setBODY(body);
+	        }
+	    }
 
-		if(body!=null) {
-			vo.setBODY(getBody(vo.getHEADER(), body));
-		}
-
-		return vo;
-	}
-
-
-	// XML 문자열 데이터
-//	@Test
-	public void getXmlData() {
-		try {
-			int timeout = 5000;
-			System.out.println(CspUtil.GET(URL, paramLt, timeout).getRtnText());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	    return vo;
 	}
 
 	// Value Object형 데이터
@@ -300,14 +287,5 @@ public class DaemonThread implements Runnable {
 		int timeout = 5000;
 		System.out.println(getVoData(URL, paramLt, "POST", timeout));
 	}
-
-	// JSON형 데이터
-//	@Test
-	public void getJSONData() {
-		Gson gson = new Gson();
-		int timeout = 5000;
-		System.out.println(gson.toJson(getVoData(URL, paramLt, "POST", timeout)).toString() );
-	}
-
 
 }
