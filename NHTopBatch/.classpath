@@ -29,5 +29,8 @@
 	<classpathentry kind="lib" path="lib/logback-classic-1.2.10.jar"/>
 	<classpathentry kind="lib" path="lib/logback-core-1.2.10.jar"/>
 	<classpathentry kind="lib" path="lib/json-lib-2.4-jdk15.jar"/>
+	<classpathentry kind="lib" path="lib/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="lib/ezmorph-1.0.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

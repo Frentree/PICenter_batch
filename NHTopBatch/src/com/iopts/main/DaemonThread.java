@@ -74,7 +74,7 @@ public class DaemonThread implements Runnable {
 	@Override
 	public void run() {
 		try {
-			sendMailLoop(1);
+			sendMailLoop(3);
 			/*for (int i = 2; i < 4; i++) {
 				sendMailLoop(i);
 			}*/
