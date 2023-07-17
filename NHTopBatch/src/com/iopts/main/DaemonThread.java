@@ -41,15 +41,6 @@ public class DaemonThread implements Runnable {
 	private static Logger logger = LoggerFactory.getLogger(DaemonThread.class);
 
 	public DaemonThread() {
-		//int seq = getFileNo(AppConfig.getProperty("config.email.path"));
-		
-		// tgt = AppConfig.getProperty("config.email.path") + "/" +
-		// String.format("%s_%s_%s_%06d.txt",
-		// AppConfig.getProperty("config.email.init"), getCDate(),
-		// AppConfig.getProperty("config.email.division"), seq);
-		/*tgt = AppConfig.getProperty("config.email.path") + "/" + String.format("BODY.mail");
-		tgt_zip = AppConfig.getProperty("config.email.path") + "/"
-				+ String.format("%s_%s_%s_%06d.zip", AppConfig.getProperty("config.email.init"), getCDate(), AppConfig.getProperty("config.email.division"), seq);*/
 
 		this.sqlMapPIC = SqlMapInstanceBATCH.getSqlMapInstance();
 		System.out.println("Batch work of information in the pi_topcomp table");
@@ -58,165 +49,9 @@ public class DaemonThread implements Runnable {
 	@Override
 	public void run() {
 		getNowData();
-		/*try {
-			//predata = this.sqlMapPIC.openSession().queryForList("query.getPreCount");
-			
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getLocalizedMessage());
-		}*/
 
 	}
 
-	private void sendMail() {
-		String strDisconnect = "\n\nAGENT_NAME AGENT_CONNECTED_IP AGENT_CONNECTED\n";
-		try {
-			List<EmailItemVo> email = this.sqlMapPIC.openSession().queryForList("query.getAgentDisconnectList");
-			
-
-			EmailVo emailobj = new EmailVo();
-
-			emailobj.setTitle2();
-
-			String originalStr = AppConfig.getProperty("config.security.chargename");
-			String nmae = new String(originalStr.getBytes("iso-8859-1"), "utf-8");
-
-			String imsi = M.get_header(8).replaceAll("_rname_", nmae).replaceAll("_sabun_", AppConfig.getProperty("config.security.charge"));
-			
-			
-
-			for (EmailItemVo evo : email) {
-				imsi = imsi + "<tr> \n";
-				imsi = imsi + "<td class=\"tg-fymr\">" + evo.getAgent_name() + "</td>\n";
-				imsi = imsi + "<td class=\"tg-fymr\">" + evo.getAgent_connected_ip() + "</td>\n";
-				imsi = imsi + "</tr>\n";
-
-			}
-
-			imsi = imsi + M.get_end(8);
-			emailobj.setContents(imsi);
-
-			emailobj.setSender(AppConfig.getProperty("config.email.senderid"));
-			emailobj.setReceiver(AppConfig.getProperty("config.email.receiverid"));
-
-			String tmp = jsonfile(emailobj);
-			ZipFile(tmp);
-
-			File deletefile = new File(tmp);
-			if (deletefile.exists()) {
-				if (deletefile.delete()) {
-					System.out.println("임시 메일 파일삭제 성공");
-				} else {
-					System.out.println("임시 메일 파일삭제 실패");
-				}
-			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getLocalizedMessage());
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getLocalizedMessage());
-		}
-
-	}
-
-	// HTML Tag 문서 임다.
-	private void sendMailLoop(int i) {
-		try {
-			List<eMasterVo> master = this.sqlMapPIC.openSession().queryForList("query.getEmailMaster" + i);
-			for (eMasterVo evo : master) {
-				RealSendMail(evo, i);
-			}
-
-		} catch (SQLException e) {
-			System.out.println(e.getLocalizedMessage());
-		}
-	}
-
-	private void RealSendMail(eMasterVo evo, int i) {
-		int seq = getFileNo(AppConfig.getProperty("config.email.path"));
-
-		// tgt = AppConfig.getProperty("config.email.path") + "/"+
-		// String.format("%s_%s_%s_%06d.txt",
-		// AppConfig.getProperty("config.email.init"), getCDate(),
-		// AppConfig.getProperty("config.email.division"), seq);
-		tgt = AppConfig.getProperty("config.email.path") + "/" + String.format("BODY.mail");
-
-		tgt_zip = AppConfig.getProperty("config.email.path") + "/"
-				+ String.format("%s_%s_%s_%06d.zip", AppConfig.getProperty("config.email.init"), getCDate(), AppConfig.getProperty("config.email.division"), seq);
-
-		try {
-			List<?> detail = this.sqlMapPIC.openSession().queryForList("query.getEmailDetail" + i, evo);
-
-			if (detail.size() > 0) {
-				EmailVo emailobj = new EmailVo();
-
-				// 보안 담당자
-
-				// 1 승인 대기
-				// 2 승인 반려
-				// 3 승인 완료
-				// 4 담당자 변경요청
-				// 5 담당자 변경반려
-				// 6 담당자 변경완료
-
-				if (i == 1 || i == 4 || i == 5 || i == 6) {
-					emailobj.setSender(evo.getSender());
-				} else {
-					emailobj.setSender(AppConfig.getProperty("config.security.charge"));
-				}
-				
-				emailobj.setTitle_(i, String.format("%s_%s_%s_%06d.txt", AppConfig.getProperty("config.email.init"), getCDate(), AppConfig.getProperty("config.email.division"), seq));
-				System.out.println(">>>" +i +"  :::: "+emailobj.getTitle_arg().get(0));
-
-
-				String tmp = "";
-				if (i == 7) {
-					emailobj.setReceiver(evo.getSender());
-					
-					if (emailobj.setContents(i, detail, M, evo.getSender_name(), evo.getSender()) == true) {
-						tmp = jsonfile(emailobj);
-						ZipFile(tmp);
-
-					}
-
-				} else {
-					emailobj.setReceiver(evo.getReceiver());
-					if (emailobj.setContents(i, detail, M, evo.getReceiver_name(), evo.getReceiver()) == true) {
-						tmp = jsonfile(emailobj);
-						ZipFile(tmp);
-
-					}
-
-				}
-
-
-
-				File deletefile = new File(tmp);
-				if (deletefile.exists()) {
-					if (deletefile.delete()) {
-						System.out.println("임시 메일 파일삭제 성공 :" + i + " 번째 멜폼작성");
-					} else {
-						System.out.println("임시 메일 파일삭제 실패 :" + i + " 번째 멜폼작성");
-					}
-				}
-
-				if (i == 9) {
-					System.out.println(emailobj.getSender());
-					System.out.println(emailobj.getReceiver());
-					System.out.println(emailobj.getTitle_arg());
-					System.out.println(emailobj.getContents());
-				}
-
-			}
-
-		} catch (SQLException e) {
-			System.out.println(e.getLocalizedMessage());
-		}
-
-	}
 
 	private int getFileNo(String path) {
 		int ret = 1;
@@ -317,22 +152,6 @@ public class DaemonThread implements Runnable {
 			this.sqlMapPIC.openSession().insert("insert.insertTopcomp");
 			logger.info(">>> DB pi_topcomp All Data Insert");
 			
-			/*// 오늘의 전체 내역역을 가져온다.
-			List<PersonalVo> acct = this.sqlMapPIC.openSession().queryForList("query.getPersonCount");
-			System.out.println("오늘 데이타 Size :" + acct.size());
-
-			for (PersonalVo v : acct) {
-
-				pi_topcompVo p = new pi_topcompVo();
-				p.setPersol(v);
-
-				// 어제 데이타를 sum 한다.
-				pi_topcompVo r = predataSum(p);
-				System.out.println(r.toString());
-				this.sqlMapPIC.openSession().insert("insert.settopcomp", r);
-				logger.info(">>> DB pi_topcomp Data Insert :" + v.getTarget_id() + " ,," + r.getTotal());
-
-			}*/
 		} catch (SQLException e) {
 			System.err.println("File readError: " + e.getLocalizedMessage());
 			System.exit(1);
