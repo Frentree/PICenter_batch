@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.SocketTimeoutException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,10 +43,10 @@ public class CspUtil {
 	    CloseableHttpClient client = HttpClients.createDefault();
 	    HttpPost httpPost = new HttpPost(URL);
 	    
-	    StringEntity entity = new StringEntity(json.toString());
+	    StringEntity entity = new StringEntity(json.toString(), StandardCharsets.UTF_8);
 	    httpPost.setEntity(entity);
 	    httpPost.setHeader("Accept", "application/json");
-	    httpPost.setHeader("Content-type", "application/json");
+	    httpPost.setHeader("Content-type", "application/json; charset=UTF-8");
 
 	    CloseableHttpResponse response = client.execute(httpPost);
 	    HttpEntity responseEntity = response.getEntity();
@@ -157,10 +158,10 @@ public class CspUtil {
 
 	    try {
 	        HttpPost httpPost = new HttpPost(URL);
-	        StringEntity entity = new StringEntity(paramJson.toString());
+	        StringEntity entity = new StringEntity(paramJson.toString(), StandardCharsets.UTF_8);
 	        httpPost.setEntity(entity);
 	        httpPost.setHeader("Accept", "application/json");
-	        httpPost.setHeader("Content-type", "application/json");
+	        httpPost.setHeader("Content-type", "application/json; charset=UTF-8");
 
 	        CloseableHttpResponse httpResponse = httpClient.execute(httpPost);
 
