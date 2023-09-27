@@ -97,4 +97,16 @@
 		AND   hash_id=#hash_id#
 	</insert>
 	
+	<insert id="setTotal" parameterClass="com.skyun.app.util.database.ibatis.vo.piFindDataVo">
+	INSERT INTO pi_total
+			(target_id, regdate, ap_no, path_cnt, pattern_data, total)
+		VALUES
+			(#TARGET_ID#, DATE_FORMAT(now(), '%Y%m%d'), #AP_NO#, #PATH_CNT#, #DATA_CNT#, #TOTAL#)
+		ON DUPLICATE KEY
+		UPDATE
+			path_cnt=#PATH_CNT#,
+		  	pattern_data=#DATA_CNT#,
+		  	total=#TOTAL#
+	</insert>
+	
 </sqlMap>

@@ -6,11 +6,12 @@
 
 	<select id="getEndScheduleTarget" resultClass="com.skyun.app.util.database.ibatis.vo.CompletTargetVo">
 		SELECT T.NAME, T.AP_NO, T.TARGET_ID
-		FROM pi_targets T
-		  LEFT OUTER JOIN pi_scheduled_location SL ON  SL.target_id = T.TARGET_ID
+		FROM pi_targets T, pi_scheduled_location SL
 		WHERE SL.STATUS IN ('completed', 'stopped', 'interrupted')
-		  AND DATE_FORMAT(FROM_UNIXTIME(SL.UPDATED), '%Y-%m-%d') = DATE_FORMAT(CURRENT_TIMESTAMP() + INTERVAL -1 DAY, '%Y-%m-%d')
-		GROUP BY T.TARGET_ID, T.AP_NO
+		  AND SL.TARGET_ID = T.TARGET_ID
+		  AND SL.AP_NO = T.AP_NO
+		  AND DATE_FORMAT(FROM_UNIXTIME(SL.UPDATED), '%Y-%m-%d') >= DATE_FORMAT(CURRENT_TIMESTAMP() + INTERVAL -20 DAY, '%Y-%m-%d')
+		GROUP BY T.TARGET_ID, T.AP_NO;
 	</select>
 	
 	<select id="getPersonCount" resultClass="com.skyun.app.util.database.ibatis.vo.PersonalVo">
@@ -407,6 +408,47 @@
 		HAVING TYPE != 0
 		ORDER BY F.TARGET_ID, F.PATH
 		
+	</select>
+	
+	<select id="getCustopPattern" resultClass="com.skyun.app.util.database.ibatis.vo.piCustomPatternVo">
+		SELECT CP.PATTERN_IDX,
+			(CASE WHEN CP.PATTERN_CODE IN 
+				('Visa', 'Diners Club', 'JCB', 'LASER', 'Mastercard', 'Private Label Card', 'AMERICAN EXPRESS', 'China Union Pay') 
+			THEN 'CARD NUMBER' ELSE CP.PATTERN_CODE END) AS PATTERN_CODE,
+			CP.PATTERN_KR_NAME
+		FROM PI_CUSTOM_PATTERN CP
+		GROUP BY CP.PATTERN_IDX
+	</select>
+	
+	<select id="getFindData" parameterClass="com.skyun.app.util.database.ibatis.vo.CompletTargetVo" resultClass="com.skyun.app.util.database.ibatis.vo.piFindDataVo">
+		SELECT D.TARGET_ID,
+			D.AP_NO,
+			D.REGDATE,
+			(SELECT COUNT(F.HASH_ID) FROM pi_find F WHERE F.DELDATE IS NULL AND F.TARGET_ID = #target_id# AND F.AP_NO = #ap_no# AND DATE(F.REGDATE) >= CURDATE()- INTERVAL 20 DAY) AS PATH_CNT,
+			CONCAT('[',GROUP_CONCAT(
+				JSON_OBJECT('PATTERN_NUM', D.PATTERN_IDX, 'PATTERN_CODE', D.PATTERN_CODE, 'PATTERN_NM', D.PATTERN_KR_NAME,'MATCH_CNT', D.MATCH_COUNT)
+			),']') AS DATA_CNT,
+			SUM(D.MATCH_COUNT) AS TOTAL
+		FROM
+		(SELECT F.TARGET_ID,
+			F.AP_NO,
+			DATE(NOW()) AS REGDATE,
+			SUM(S.MATCH_COUNT) AS MATCH_COUNT,
+			CP.PATTERN_IDX,
+			CP.PATTERN_KR_NAME,
+			CP.PATTERN_CODE AS PATTERN_CODE
+		FROM pi_find F, pi_summary S, PI_CUSTOM_PATTERN CP
+		WHERE F.DELDATE IS NULL
+		  AND F.TARGET_ID = S.TARGET_ID
+		  AND F.AP_NO = S.AP_NO
+		  AND F.HASH_ID = S.OBJECT_ID
+		  AND S.DELDATE IS NULL
+		  AND DATE(F.REGDATE) >= CURDATE()- INTERVAL 20 DAY 
+		  AND INSTR(UPPER(S.DATA_TYPE), UPPER(CP.PATTERN_CODE)) > 0
+		  AND F.TARGET_ID = #target_id#
+		  AND F.AP_NO = #ap_no#
+		GROUP BY CP.PATTERN_IDX, F.TARGET_ID, F.AP_NO) D
+		HAVING TARGET_ID IS NOT NULL
 	</select>
 
 

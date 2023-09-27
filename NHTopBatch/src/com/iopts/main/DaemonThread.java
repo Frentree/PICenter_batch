@@ -28,6 +28,8 @@ import com.skyun.app.util.database.ibatis.vo.EmailVo;
 import com.skyun.app.util.database.ibatis.vo.MailForm;
 import com.skyun.app.util.database.ibatis.vo.PersonalVo;
 import com.skyun.app.util.database.ibatis.vo.eMasterVo;
+import com.skyun.app.util.database.ibatis.vo.piCustomPatternVo;
+import com.skyun.app.util.database.ibatis.vo.piFindDataVo;
 import com.skyun.app.util.database.ibatis.vo.pi_statisticsVo;
 import com.skyun.app.util.database.ibatis.vo.pi_topcompVo;
 import com.skyun.app.util.database.ibatis.vo.pifindVo;
@@ -53,12 +55,14 @@ public class DaemonThread implements Runnable {
 				+ String.format("%s_%s_%s_%06d.zip", AppConfig.getProperty("config.email.init"), getCDate(), AppConfig.getProperty("config.email.division"), seq);*/
 
 		this.sqlMapPIC = SqlMapInstanceBATCH.getSqlMapInstance();
-		System.out.println("Batch work of information in the pi_topcomp table");
+		logger.info("UPDATE 2023-09-26 pi_topcomp table change");
+		logger.info("pi_topcomp >>> pi_total table ");
+		logger.info("column change data");
 	}
 
 	@Override
 	public void run() {
-		getNowData();
+		getNowNewData();
 		/*try {
 			//predata = this.sqlMapPIC.openSession().queryForList("query.getPreCount");
 			
@@ -288,16 +292,50 @@ public class DaemonThread implements Runnable {
 
 		return time1;
 	}
+	
+	/*
+	 * 순서
+	 * 1. 금일 검색 완료한 서버 목록 조회
+	 * 2. 검색 완료한 서버 기준 데이터 조회(관리자가 설정한 데이터 유형 기준 pi_custom_pattern table)
+	 * 3. 현재 날짜, target_id,ap_no, 개인정보 유형으로 pi_total 테이블 삽입
+	 * 
+	 */	
+	private void getNowNewData() {
+		try {
+			//1. 금일 검색 완료한 서버 목록 조회
+			List<CompletTargetVo> ctList = this.sqlMapPIC.queryForList("query.getEndScheduleTarget");
+			
+			for (CompletTargetVo cVo : ctList) {
+				// 2. 검색 완료한 서버 기준 데이터 조회(관리자가 설정한 데이터 유형 기준 pi_custom_pattern table)
+				piFindDataVo fVo = (piFindDataVo) this.sqlMapPIC.queryForObject("query.getFindData", cVo);
+				
+				if(fVo != null) {
+					logger.info(fVo.toString());
+					//3. 현재 날짜, target_id,ap_no, 개인정보 유형으로 pi_total 테이블 삽입
+					this.sqlMapPIC.insert("insert.setTotal", fVo);
+					logger.info("Target_ID :: " + fVo.getTARGET_ID() + " Insert Date Completed");
+				}
+				
+			}
+			
+		} catch (Exception e) {
+			logger.error(e.toString());
+		}
+		
+		logger.info("Total Data Success ");
+		
+	}
 
 	private void getNowData() {
 
 		try {
 			// 금일 검색 완료한 타겟을 가져온다
-			List<CompletTargetVo> ctVo = this.sqlMapPIC.openSession().queryForList("query.getEndScheduleTarget");
+			List<CompletTargetVo> ctList = this.sqlMapPIC.queryForList("query.getEndScheduleTarget");
 			
-			for (CompletTargetVo vo : ctVo) {
+			// 커스텀 패턴 유형
+			List<piCustomPatternVo> cVo = this.sqlMapPIC.queryForList("query.queryCustopPattern");
+			for (CompletTargetVo vo : ctList) {
 				logger.info(">>> DB pi_topcomp Data :" + vo.getTarget_id() + " , ap: " + vo.getAp_no());
-				
 				PersonalVo acct = (PersonalVo) this.sqlMapPIC.openSession().queryForObject("query.getPersonCount", vo);
 				
 				logger.info("acct >>>> " + acct.toString());

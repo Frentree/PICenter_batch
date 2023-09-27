@@ -12,7 +12,6 @@
  	<settings
 		 useStatementNamespaces="true" 
 		 lazyLoadingEnabled="true" 
-		 useColumnLabel="true" 
 		 defaultStatementTimeout="25" 
     />    	
 	
