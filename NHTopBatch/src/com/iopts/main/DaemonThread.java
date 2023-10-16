@@ -90,8 +90,6 @@ public class DaemonThread implements Runnable {
 			String nmae = new String(originalStr.getBytes("iso-8859-1"), "utf-8");
 
 			String imsi = M.get_header(8).replaceAll("_rname_", nmae).replaceAll("_sabun_", AppConfig.getProperty("config.security.charge"));
-			
-			
 
 			for (EmailItemVo evo : email) {
 				imsi = imsi + "<tr> \n";

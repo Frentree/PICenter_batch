@@ -229,6 +229,9 @@ public class EmailVo {
 		
 		contents = contents.replaceAll("_pathCnt_", pathCnt + "");
 		
+		contents = contents +  m.get_end(i);
+		
+		
 		/*
 		if(i==7) {
 			if(ret)
