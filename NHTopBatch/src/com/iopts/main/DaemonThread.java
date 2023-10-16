@@ -94,6 +94,7 @@ public class DaemonThread implements Runnable {
 				master = this.sqlMapPIC.openSession().queryForList("query.getEmailMaster" + i);
 				
 				for (updateUserVo vo : master) {
+					logger.info("Mail :: " + vo.getEMAIL());
 					UpdateUserSendMail(vo, i);
 				}
 				
@@ -108,6 +109,7 @@ public class DaemonThread implements Runnable {
 			}else if(i == 3) {
 				master = this.sqlMapPIC.openSession().queryForList("query.getEmailMaster" + i);
 				for (updateUserVo vo : master) {
+					logger.info("Mail :: " + vo.getEMAIL());
 					UpdateUserSendMail(vo, i);
 				}
 				
@@ -122,6 +124,23 @@ public class DaemonThread implements Runnable {
 
 		try {
 			List<?> detail = this.sqlMapPIC.openSession().queryForList("query.getEmailDetail" + i, vo);
+			
+			boolean targetIdChk = false;
+
+			for (Object obj : detail) {
+			    if (obj instanceof com.skyun.app.util.database.ibatis.vo.eDetail3Vo) {
+			        com.skyun.app.util.database.ibatis.vo.eDetail3Vo eDetailVo = (com.skyun.app.util.database.ibatis.vo.eDetail3Vo) obj;
+			        if (eDetailVo.getTARGET_ID() == null) {
+			        	targetIdChk = true;
+			            break;
+			        }
+			    }
+			}
+
+			if(targetIdChk) {
+				logger.info("paramLt NULL");
+				return;
+			}
 
 			EmailVo emailobj = new EmailVo();
 			emailobj.setTitle(i);

@@ -3,6 +3,9 @@ package com.skyun.app.util.database.ibatis.vo;
 public class updateUserVo {
 	private String UPDATE_USER_NO;
 	private String UPDATE_USER_NM;
+	private String target_id;
+	private int ap_no;
+	private String service_nm;
 	private String SOSOK;
 	private String REGDATE;
 	private String EMAIL;
@@ -25,7 +28,24 @@ public class updateUserVo {
 	public void setUPDATE_USER_NM(String uPDATE_USER_NM) {
 		UPDATE_USER_NM = uPDATE_USER_NM;
 	}
-	
+	public String getTarget_id() {
+		return target_id;
+	}
+	public void setTarget_id(String target_id) {
+		this.target_id = target_id;
+	}
+	public int getAp_no() {
+		return ap_no;
+	}
+	public void setAp_no(int ap_no) {
+		this.ap_no = ap_no;
+	}
+	public String getService_nm() {
+		return service_nm;
+	}
+	public void setService_nm(String service_nm) {
+		this.service_nm = service_nm;
+	}
 	public String getSOSOK() {
 		return SOSOK;
 	}
@@ -44,7 +64,6 @@ public class updateUserVo {
 	public void setEMAIL(String eMAIL) {
 		EMAIL = eMAIL;
 	}
-	
 	public String getREQUEST_DATE() {
 		return REQUEST_DATE;
 	}
@@ -63,14 +82,11 @@ public class updateUserVo {
 	public void setSERVICE_NM(String sERVICE_NM) {
 		SERVICE_NM = sERVICE_NM;
 	}
-	
 	public String getACTION_DATE() {
 		return ACTION_DATE;
 	}
 	public void setACTION_DATE(String aCTION_DATE) {
 		ACTION_DATE = aCTION_DATE;
 	}
-	
-	
 	
 }
