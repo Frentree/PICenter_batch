@@ -227,10 +227,7 @@ public class EmailVo {
 
 		}
 		
-		contents = contents.replaceAll("_pathCnt_", pathCnt + "");
-		
-		contents = contents +  m.get_end(i);
-		
+		contents = contents +  m.get_end(i).replaceAll("_pathCnt_", pathCnt + "");
 		
 		/*
 		if(i==7) {
