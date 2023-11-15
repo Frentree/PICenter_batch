@@ -10,7 +10,6 @@
 		WHERE 1=1
 		 AND A.AGENT_CONNECTED_IP IS NOT NULL
 		 AND T.AP_NO != 0
-		 AND (T.NET_TYPE IS NULL OR T.NET_TYPE = '')
 		 AND T.NAME = A.AGENT_NAME
 		 AND T.AP_NO = A.AP_NO
 	</select>
@@ -19,6 +18,7 @@
 		SELECT NI.TYPE, NI.IP, NI.MASK,
 		 CONCAT(NI.IP ,'/', NI.MASK) AS MASK_IP
 		FROM skt_net_ip NI
+		ORDER BY NI.MASK DESC, NI.IP
 	</select>
 
 	<select id="getAgentList" resultClass="int">
