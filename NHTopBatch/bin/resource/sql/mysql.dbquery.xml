@@ -18,7 +18,7 @@
 		SELECT NI.TYPE, NI.IP, NI.MASK,
 		 CONCAT(NI.IP ,'/', NI.MASK) AS MASK_IP
 		FROM skt_net_ip NI
-		ORDER BY NI.MASK DESC, NI.IP
+		ORDER BY CAST(NI.MASK AS SIGNED) DESC, NI.IP
 	</select>
 
 	<select id="getAgentList" resultClass="int">
