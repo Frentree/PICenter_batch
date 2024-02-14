@@ -28,6 +28,7 @@ import com.skyun.app.util.database.ibatis.vo.EmailVo;
 import com.skyun.app.util.database.ibatis.vo.MailForm;
 import com.skyun.app.util.database.ibatis.vo.PersonalVo;
 import com.skyun.app.util.database.ibatis.vo.eMasterVo;
+import com.skyun.app.util.database.ibatis.vo.piFindDataVo;
 import com.skyun.app.util.database.ibatis.vo.pi_topcompVo;
 import com.skyun.app.util.database.ibatis.vo.pifindVo;
 
@@ -53,11 +54,15 @@ public class DaemonThread implements Runnable {
 
 		this.sqlMapPIC = SqlMapInstanceBATCH.getSqlMapInstance();
 		System.out.println("Batch work of information in the pi_topcomp table");
+		logger.info("UPDATE 2024-02-01 pi_topcomp table change");
+		logger.info("pi_topcomp >>> pi_total table ");
+		logger.info("column change data");
 	}
 
 	@Override
 	public void run() {
-		getNowData();
+		getNowNewData();
+		// getNowData();
 		/*try {
 			//predata = this.sqlMapPIC.openSession().queryForList("query.getPreCount");
 			
@@ -69,225 +74,32 @@ public class DaemonThread implements Runnable {
 
 	}
 
-	private void sendMail() {
-		String strDisconnect = "\n\nAGENT_NAME AGENT_CONNECTED_IP AGENT_CONNECTED\n";
+	private void getNowNewData() {
 		try {
-			List<EmailItemVo> email = this.sqlMapPIC.openSession().queryForList("query.getAgentDisconnectList");
+			//1. 금일 검색 완료한 서버 목록 조회
+			List<CompletTargetVo> ctList = this.sqlMapPIC.queryForList("query.getEndScheduleTarget");
 			
-
-			EmailVo emailobj = new EmailVo();
-
-			emailobj.setTitle2();
-
-			String originalStr = AppConfig.getProperty("config.security.chargename");
-			String nmae = new String(originalStr.getBytes("iso-8859-1"), "utf-8");
-
-			String imsi = M.get_header(8).replaceAll("_rname_", nmae).replaceAll("_sabun_", AppConfig.getProperty("config.security.charge"));
-			
-			
-
-			for (EmailItemVo evo : email) {
-				imsi = imsi + "<tr> \n";
-				imsi = imsi + "<td class=\"tg-fymr\">" + evo.getAgent_name() + "</td>\n";
-				imsi = imsi + "<td class=\"tg-fymr\">" + evo.getAgent_connected_ip() + "</td>\n";
-				imsi = imsi + "</tr>\n";
-
-			}
-
-			imsi = imsi + M.get_end(8);
-			emailobj.setContents(imsi);
-
-			emailobj.setSender(AppConfig.getProperty("config.email.senderid"));
-			emailobj.setReceiver(AppConfig.getProperty("config.email.receiverid"));
-
-			String tmp = jsonfile(emailobj);
-			ZipFile(tmp);
-
-			File deletefile = new File(tmp);
-			if (deletefile.exists()) {
-				if (deletefile.delete()) {
-					System.out.println("임시 메일 파일삭제 성공");
-				} else {
-					System.out.println("임시 메일 파일삭제 실패");
-				}
-			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getLocalizedMessage());
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getLocalizedMessage());
-		}
-
-	}
-
-	// HTML Tag 문서 임다.
-	private void sendMailLoop(int i) {
-		try {
-			List<eMasterVo> master = this.sqlMapPIC.openSession().queryForList("query.getEmailMaster" + i);
-			for (eMasterVo evo : master) {
-				RealSendMail(evo, i);
-			}
-
-		} catch (SQLException e) {
-			System.out.println(e.getLocalizedMessage());
-		}
-	}
-
-	private void RealSendMail(eMasterVo evo, int i) {
-		int seq = getFileNo(AppConfig.getProperty("config.email.path"));
-
-		// tgt = AppConfig.getProperty("config.email.path") + "/"+
-		// String.format("%s_%s_%s_%06d.txt",
-		// AppConfig.getProperty("config.email.init"), getCDate(),
-		// AppConfig.getProperty("config.email.division"), seq);
-		tgt = AppConfig.getProperty("config.email.path") + "/" + String.format("BODY.mail");
-
-		tgt_zip = AppConfig.getProperty("config.email.path") + "/"
-				+ String.format("%s_%s_%s_%06d.zip", AppConfig.getProperty("config.email.init"), getCDate(), AppConfig.getProperty("config.email.division"), seq);
-
-		try {
-			List<?> detail = this.sqlMapPIC.openSession().queryForList("query.getEmailDetail" + i, evo);
-
-			if (detail.size() > 0) {
-				EmailVo emailobj = new EmailVo();
-
-				// 보안 담당자
-
-				// 1 승인 대기
-				// 2 승인 반려
-				// 3 승인 완료
-				// 4 담당자 변경요청
-				// 5 담당자 변경반려
-				// 6 담당자 변경완료
-
-				if (i == 1 || i == 4 || i == 5 || i == 6) {
-					emailobj.setSender(evo.getSender());
-				} else {
-					emailobj.setSender(AppConfig.getProperty("config.security.charge"));
+			for (CompletTargetVo cVo : ctList) {
+				// 2. 검색 완료한 서버 기준 데이터 조회(관리자가 설정한 데이터 유형 기준 pi_custom_pattern table)
+				piFindDataVo fVo = (piFindDataVo) this.sqlMapPIC.queryForObject("query.getFindData", cVo);
+				
+				if(fVo != null) {
+					logger.info(fVo.toString());
+					//3. 현재 날짜, target_id,ap_no, 개인정보 유형으로 pi_total 테이블 삽입
+					this.sqlMapPIC.insert("insert.setTotal", fVo);
+					logger.info("Target_ID :: " + fVo.getTARGET_ID() + " Insert Date Completed");
 				}
 				
-				emailobj.setTitle_(i, String.format("%s_%s_%s_%06d.txt", AppConfig.getProperty("config.email.init"), getCDate(), AppConfig.getProperty("config.email.division"), seq));
-				System.out.println(">>>" +i +"  :::: "+emailobj.getTitle_arg().get(0));
-
-
-				String tmp = "";
-				if (i == 7) {
-					emailobj.setReceiver(evo.getSender());
-					
-					if (emailobj.setContents(i, detail, M, evo.getSender_name(), evo.getSender()) == true) {
-						tmp = jsonfile(emailobj);
-						ZipFile(tmp);
-
-					}
-
-				} else {
-					emailobj.setReceiver(evo.getReceiver());
-					if (emailobj.setContents(i, detail, M, evo.getReceiver_name(), evo.getReceiver()) == true) {
-						tmp = jsonfile(emailobj);
-						ZipFile(tmp);
-
-					}
-
-				}
-
-
-
-				File deletefile = new File(tmp);
-				if (deletefile.exists()) {
-					if (deletefile.delete()) {
-						System.out.println("임시 메일 파일삭제 성공 :" + i + " 번째 멜폼작성");
-					} else {
-						System.out.println("임시 메일 파일삭제 실패 :" + i + " 번째 멜폼작성");
-					}
-				}
-
-				if (i == 9) {
-					System.out.println(emailobj.getSender());
-					System.out.println(emailobj.getReceiver());
-					System.out.println(emailobj.getTitle_arg());
-					System.out.println(emailobj.getContents());
-				}
-
 			}
-
-		} catch (SQLException e) {
-			System.out.println(e.getLocalizedMessage());
+			
+		} catch (Exception e) {
+			logger.error(e.toString());
 		}
-
+		
+		logger.info("Total Data Success ");
+		
 	}
-
-	private int getFileNo(String path) {
-		int ret = 1;
-
-		File dir = new File(path);
-		ret = dir.list().length + 1;
-
-		return ret;
-	}
-
-	private String jsonfile(EmailVo v) {
-
-		String fname = tgt;
-
-
-		Gson g = new Gson();
-		String json = "["+g.toJson(v)  +"]";
-
-		try {
-			FileWriter fw = new FileWriter(fname);
-			fw.write(json);
-			fw.close();
-		} catch (IOException e) {
-			System.out.println(e.getLocalizedMessage() );
-		}
-
-		return fname;
-
-	}
-
-	private void ZipFile(String src) {
-
-		try {
-			FileOutputStream fos = new FileOutputStream(tgt_zip);
-			ZipOutputStream zipOut = new ZipOutputStream(fos);
-
-			File fileToZip = new File(src);
-			FileInputStream fis = new FileInputStream(fileToZip);
-			ZipEntry zipEntry = new ZipEntry(fileToZip.getName());
-			zipOut.putNextEntry(zipEntry);
-
-			byte[] bytes = new byte[1024];
-			int length;
-			while ((length = fis.read(bytes)) >= 0) {
-				zipOut.write(bytes, 0, length);
-			}
-
-			fis.close();
-			zipOut.close();
-			fos.close();
-
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			System.out.println("ZipFile FileNotFoundException Error :" + e.getLocalizedMessage());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("ZipFile IOException Error :" + e.getLocalizedMessage());
-		}
-
-	}
-
-	private String getCDate() {
-
-		SimpleDateFormat format1 = new SimpleDateFormat(AppConfig.getProperty("config.email.dateformat"));
-
-		Date time = new Date();
-		String time1 = format1.format(time);
-
-		return time1;
-	}
-
+	
 	private void getNowData() {
 
 		try {

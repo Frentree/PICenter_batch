@@ -14,7 +14,7 @@
 		  LEFT OUTER JOIN pi_scheduled_location SL ON SL.AP_NO = S.AP_NO AND S.SCHEDULE_ID = SL.SCH_ID
 		WHERE 1=1
 		  AND S.SCHEDULE_STATUS IN ('completed', 'stopped', 'interrupted')
-		  AND DATE_FORMAT(FROM_UNIXTIME(SL.UPDATED), '%Y-%m-%d %H:00') >= DATE_FORMAT(DATE_ADD(NOW(),INTERVAL -1 DAY), '%Y-%m-%d %H:00')
+		  <!-- AND DATE_FORMAT(FROM_UNIXTIME(SL.UPDATED), '%Y-%m-%d %H:00') >= DATE_FORMAT(DATE_ADD(NOW(),INTERVAL -1 DAY), '%Y-%m-%d %H:00') -->
 		GROUP BY T.TARGET_ID, T.AP_NO
 	</select>
 	
@@ -312,316 +312,35 @@
 		AND deldate IS null
 
 	</select>
-
-	<!-- 승인 대기 -->
-	<select id="getEmailMaster1" resultClass="com.skyun.app.util.database.ibatis.vo.eMasterVo">
-		SELECT DPCG.OK_USER_NO               AS receiver,
-			   OK_USR.USER_NAME              AS receiver_name,
-		       ifnull(DPCG.USER_NO, ' ')     AS sender,
-		       ifnull(USR.USER_NAME, ' ')    AS sender_name
-		FROM PI_DATA_PROCESSING_CHARGE_GROUP AS DPCG,
-		    PI_USER AS USR,
-		   PI_USER AS OK_USR
-		WHERE DPCG.APPROVAL_STATUS = 'W'
-		AND DPCG.USER_NO = USR.USER_NO
-		AND DPCG.OK_USER_NO = OK_USR.USER_NO
-		AND DPCG.REGDATE > DATE_ADD(NOW(), INTERVAL -24 HOUR)
-		GROUP BY DPCG.OK_USER_NO,
-		DPCG.USER_NO
-		ORDER BY DPCG.OK_USER_NO,
-		DPCG.USER_NO
+	
+	<select id="getFindData" parameterClass="com.skyun.app.util.database.ibatis.vo.CompletTargetVo" resultClass="com.skyun.app.util.database.ibatis.vo.piFindDataVo">
+		SELECT D.TARGET_ID,
+			D.AP_NO,
+			D.REGDATE,
+			(SELECT COUNT(F.HASH_ID) FROM pi_find F WHERE F.DELDATE IS NULL AND F.TARGET_ID = #target_id# AND F.AP_NO = #ap_no# <!-- AND DATE(F.REGDATE) >= CURDATE()- INTERVAL 20 DAY -->) AS PATH_CNT,
+			CONCAT('[',GROUP_CONCAT(
+				JSON_OBJECT('PATTERN_NUM', D.PATTERN_IDX, 'PATTERN_CODE', D.PATTERN_CODE, 'PATTERN_NM', D.PATTERN_KR_NAME,'MATCH_CNT', D.MATCH_COUNT)
+			),']') AS DATA_CNT,
+			SUM(D.MATCH_COUNT) AS TOTAL
+		FROM
+		(SELECT F.TARGET_ID,
+			F.AP_NO,
+			DATE_FORMAT(F.REGDATE, '%Y-%m-%d 00:00:00') AS REGDATE,
+			SUM(S.MATCH_COUNT) AS MATCH_COUNT,
+			CP.PATTERN_IDX,
+			CP.PATTERN_KR_NAME,
+			CP.PATTERN_CODE AS PATTERN_CODE
+		FROM pi_find F, pi_summary S, PI_CUSTOM_PATTERN CP
+		WHERE F.DELDATE IS NULL
+		  AND F.TARGET_ID = S.TARGET_ID
+		  AND F.AP_NO = S.AP_NO
+		  AND F.HASH_ID = S.OBJECT_ID
+		  <!-- AND DATE(F.REGDATE) >= CURDATE() - INTERVAL 1 DAY --> 
+		  AND INSTR(UPPER(S.DATA_TYPE), UPPER(CP.PATTERN_CODE)) > 0
+		  AND F.TARGET_ID = #target_id#
+		  AND F.AP_NO = #ap_no#
+		GROUP BY CP.PATTERN_IDX, F.TARGET_ID, F.AP_NO) D
+		HAVING TARGET_ID IS NOT NULL
 	</select>
-
-	<!-- 승인 반려 -->
-	<select id="getEmailMaster2" resultClass="com.skyun.app.util.database.ibatis.vo.eMasterVo">
-			SELECT DPCG.OK_USER_NO    AS sender,
-		          OK_USR.USER_NAME   AS sender_name,
-		          ifnull(DPCG.USER_NO,' ')       AS receiver,
-		          ifnull(USR.USER_NAME,' ')     AS receiver_name
-		     FROM PI_DATA_PROCESSING_CHARGE_GROUP AS DPCG,
-		          PI_USER                         AS USR,
-		          PI_USER                         AS OK_USR
-		    WHERE DPCG.APPROVAL_STATUS = 'D'
-		      AND DPCG.USER_NO         = USR.USER_NO
-		      AND DPCG.OK_USER_NO      = OK_USR.USER_NO
-		      AND DPCG.OKDATE > DATE_ADD(NOW(), INTERVAL -24 HOUR)
-		   GROUP BY DPCG.OK_USER_NO,
-		            DPCG.USER_NO
-		   ORDER BY DPCG.OK_USER_NO,
-		            DPCG.USER_NO
-	</select>
-
-
-	<!-- 승인 완료 -->
-	<select id="getEmailMaster3" resultClass="com.skyun.app.util.database.ibatis.vo.eMasterVo">
-		SELECT DPCG.OK_USER_NO AS sender,
-			OK_USR.USER_NAME AS sender_name,
-			ifnull(DPCG.USER_NO,' ') AS receiver,
-			ifnull(USR.USER_NAME, ' ') AS receiver_name
-		FROM PI_DATA_PROCESSING_CHARGE_GROUP AS DPCG,
-			PI_USER AS USR,
-			PI_USER AS OK_USR
-		WHERE DPCG.APPROVAL_STATUS = 'E'
-		AND DPCG.USER_NO = USR.USER_NO
-		AND DPCG.OK_USER_NO = OK_USR.USER_NO
-		AND DPCG.OKDATE > DATE_ADD(NOW(), INTERVAL -24 HOUR)
-		GROUP BY DPCG.OK_USER_NO,
-		DPCG.USER_NO
-		ORDER BY DPCG.OK_USER_NO,
-		DPCG.USER_NO
-	</select>
-
-	<!-- 담당자 변경요청 -->
-	<select id="getEmailMaster4" resultClass="com.skyun.app.util.database.ibatis.vo.eMasterVo">
-		SELECT CU.REG_USER_NO AS receiver,
-		USR.USER_NAME AS receiver_name,
-		ifnull(CU.OK_USER_NO,' ') AS sender,
-		ifnull(OK_USR.USER_NAME, ' ') AS sender_name
-		FROM PI_CHARGE_UPDATE AS CU,
-		PI_TARGETS AS T,
-		PI_USER AS USR,
-		PI_USER AS OK_USR
-		WHERE T.TARGET_ID = CU.TARGET_ID
-		AND (CU.APPROVAL_STATUS = 'W' OR CU.APPROVAL_STATUS IS NULL OR CU.APPROVAL_STATUS = '')
-		AND CU.REG_USER_NO = USR.USER_NO
-		AND CU.OK_USER_NO = OK_USR.USER_NO
-		GROUP BY CU.REG_USER_NO,
-		CU.OK_USER_NO
-	</select>
-
-	<!-- 담당자 변경반려 -->
-	<select id="getEmailMaster5" resultClass="com.skyun.app.util.database.ibatis.vo.eMasterVo">
-
-		SELECT ifnull(CU.OK_USER_NO, ' ') AS sender,
-		ifnull(OK_USR.USER_NAME, ' ') AS sender_name,
-		CU.REG_USER_NO AS receiver,
-		USR.USER_NAME AS receiver_name
-		FROM PI_CHARGE_UPDATE AS CU,
-		PI_TARGETS AS T,
-		PI_USER AS USR,
-		PI_USER AS OK_USR
-		WHERE T.TARGET_ID = CU.TARGET_ID
-		AND CU.APPROVAL_STATUS = 'D'
-		AND CU.OKDATE > DATE_ADD(NOW(), INTERVAL -24 HOUR)
-		AND CU.REG_USER_NO = USR.USER_NO
-		AND CU.OK_USER_NO = OK_USR.USER_NO
-		GROUP BY CU.OK_USER_NO,
-		CU.REG_USER_NO
-
-	</select>
-
-
-	<!-- 담당자 변경완료 -->
-	<select id="getEmailMaster6" resultClass="com.skyun.app.util.database.ibatis.vo.eMasterVo">
-		SELECT ifnull(CU.OK_USER_NO, ' ') AS sender,
-		ifnull(OK_USR.USER_NAME, ' ') AS sender_name,
-		CU.REG_USER_NO AS receiver,
-		USR.USER_NAME AS receiver_name
-		FROM PI_CHARGE_UPDATE AS CU,
-		PI_TARGETS AS T,
-		PI_USER AS USR,
-		PI_USER AS OK_USR
-		WHERE T.TARGET_ID = CU.TARGET_ID
-		AND CU.APPROVAL_STATUS = 'E'
-		AND CU.OKDATE > DATE_ADD(NOW(), INTERVAL -24 HOUR)
-		AND CU.REG_USER_NO = USR.USER_NO
-		AND CU.OK_USER_NO = OK_USR.USER_NO
-		GROUP BY CU.OK_USER_NO, CU.REG_USER_NO
-
-	</select>
-
-	<select id="getEmailMaster7" resultClass="com.skyun.app.util.database.ibatis.vo.eMasterVo">
-
-		SELECT USER_NO AS sender,
-		USER_NAME AS sender_name,
-		'' AS receiver,
-		USER_NAME AS receiver_name
-		FROM PI_USER
-
-	</select>
-
-	<select id="getEmailDetail1" parameterClass="com.skyun.app.util.database.ibatis.vo.eMasterVo" resultClass="com.skyun.app.util.database.ibatis.vo.eDetail1Vo">
-			 SELECT DPCG.data_processing_charge_name AS PATH,
-		      USR.USER_NAME                    AS REQ_USER_NAME,
-		      OK_USR.USER_NAME                 AS OK_USER_NAME,
-		      DATE_FORMAT(DPCG.REGDATE, '%Y-%m-%d %H:%i:%s') AS REGDATE,
-		      ifnull(DATE_FORMAT(DPCG.OKDATE, '%Y-%m-%d %H:%i:%s'), ' ') AS OKDATE,
-		      '승인 대기'                         AS STATUS_NAME,
-		      ifnull(DPCG.REASON  ,' ')        AS REASON
-		 FROM PI_DATA_PROCESSING_CHARGE_GROUP AS DPCG,
-		      PI_USER AS USR,
-		      PI_USER AS OK_USR
-		WHERE DPCG.APPROVAL_STATUS = 'W'
-		  AND DPCG.OK_USER_NO      = #receiver#
-		AND DPCG.USER_NO         = #sender#
-		AND DPCG.REGDATE > DATE_ADD(NOW(), INTERVAL -24 HOUR)
-		  AND DPCG.USER_NO         = USR.USER_NO
-		  AND DPCG.OK_USER_NO      = OK_USR.USER_NO
-		ORDER BY DPCG.REGDATE DESC,
-		        DPCG.OKDATE DESC
-	</select>
-
-	<select id="getEmailDetail2" parameterClass="com.skyun.app.util.database.ibatis.vo.eMasterVo" resultClass="com.skyun.app.util.database.ibatis.vo.eDetail2Vo">
-
-		SELECT DPCG.data_processing_charge_name AS PATH,
-		USR.USER_NAME AS REQ_USER_NAME,
-		OK_USR.USER_NAME AS OK_USER_NAME,
-		DATE_FORMAT(DPCG.REGDATE, '%Y-%m-%d %H:%i:%s') AS REGDATE,
-		ifnull(DATE_FORMAT(DPCG.OKDATE, '%Y-%m-%d %H:%i:%s'), ' ') AS OKDATE,
-		'승인 반려' AS STATUS_NAME,
-		ifnull(DPCG.REASON ,' ') AS REASON
-		FROM PI_DATA_PROCESSING_CHARGE_GROUP AS DPCG,
-		PI_USER AS USR,
-		PI_USER AS OK_USR
-		WHERE DPCG.APPROVAL_STATUS = 'D'
-		AND DPCG.OK_USER_NO = #sender#
-		AND DPCG.USER_NO = #receiver#
-		AND DPCG.OKDATE > DATE_ADD(NOW(), INTERVAL -24 HOUR)
-		AND DPCG.USER_NO = USR.USER_NO
-		AND DPCG.OK_USER_NO = OK_USR.USER_NO
-		ORDER BY DPCG.REGDATE DESC,
-		DPCG.OKDATE DESC;
-
-	</select>
-
-	<select id="getEmailDetail3" parameterClass="com.skyun.app.util.database.ibatis.vo.eMasterVo" resultClass="com.skyun.app.util.database.ibatis.vo.eDetail3Vo">
-		SELECT DPCG.data_processing_charge_name AS PATH,
-		USR.USER_NAME AS REQ_USER_NAME,
-		OK_USR.USER_NAME AS OK_USER_NAME,
-		DATE_FORMAT(DPCG.REGDATE, '%Y-%m-%d %H:%i:%s') AS REGDATE,
-		ifnull(DATE_FORMAT(DPCG.OKDATE, '%Y-%m-%d %H:%i:%s'), ' ') AS OKDATE,
-		'승인 완료' AS STATUS_NAME,
-		ifnull(DPCG.REASON ,' ') AS REASON
-		FROM PI_DATA_PROCESSING_CHARGE_GROUP AS DPCG,
-		PI_USER AS USR,
-		PI_USER AS OK_USR
-		WHERE DPCG.APPROVAL_STATUS = 'E'
-		AND DPCG.OK_USER_NO = #sender#
-		AND DPCG.USER_NO = #receiver#
-		AND DPCG.OKDATE > DATE_ADD(NOW(), INTERVAL -24 HOUR)
-		AND DPCG.USER_NO = USR.USER_NO
-		AND DPCG.OK_USER_NO = OK_USR.USER_NO
-		ORDER BY DPCG.REGDATE DESC, DPCG.OKDATE DESC
-	</select>
-	<select id="getEmailDetail4" parameterClass="com.skyun.app.util.database.ibatis.vo.eMasterVo" resultClass="com.skyun.app.util.database.ibatis.vo.eDetail4Vo">
-		SELECT T.NAME AS HOST,
-		CU.PATH AS PATH,
-		(SELECT Z.USER_NAME FROM PI_USER Z WHERE Z.USER_NO = CU.REG_USER_NO) AS REG_USER_NAME,
-		(SELECT Z.USER_NAME FROM PI_USER Z WHERE Z.USER_NO = CU.OK_USER_NO) AS OK_USER_NAME,
-		DATE_FORMAT(CU.REGDATE, '%Y-%m-%d %H:%i:%s') AS REGDATE,
-		ifnull(DATE_FORMAT(CU.OKDATE, '%Y-%m-%d %H:%i:%s'),' ') AS OKDATE,
-		'승인대기' AS STATUS_NAME,
-		ifnull(CU.REASON ,' ') AS REASON,
-		ifnull(CU.REG_USER_NO ,' ') AS REG_USER_NO,
-		ifnull(CU.OK_USER_NO ,' ') AS OK_USER_NO
-		FROM PI_CHARGE_UPDATE AS CU,
-		PI_TARGETS AS T
-		WHERE T.TARGET_ID = CU.TARGET_ID
-		AND (CU.APPROVAL_STATUS = 'W' OR CU.APPROVAL_STATUS IS NULL OR CU.APPROVAL_STATUS = '')
-		AND CU.REG_USER_NO = #sender#
-		AND CU.OK_USER_NO = #receiver#
-		ORDER BY CU.REGDATE DESC, CU.OKDATE DESC
-	</select>
-
-
-	<select id="getEmailDetail5" parameterClass="com.skyun.app.util.database.ibatis.vo.eMasterVo" resultClass="com.skyun.app.util.database.ibatis.vo.eDetail5Vo">
-		SELECT T.NAME AS HOST,
-		CU.PATH AS PATH,
-		(SELECT Z.USER_NAME FROM PI_USER Z WHERE Z.USER_NO = CU.REG_USER_NO) AS REG_USER_NAME,
-		(SELECT Z.USER_NAME FROM PI_USER Z WHERE Z.USER_NO = CU.OK_USER_NO) AS OK_USER_NAME,
-		DATE_FORMAT(CU.REGDATE, '%Y-%m-%d %H:%i:%s') AS REGDATE,
-		ifnull(DATE_FORMAT(CU.OKDATE, '%Y-%m-%d %H:%i:%s'),' ') AS OKDATE,
-		'반려' AS STATUS_NAME,
-		ifnull( CU.REASON ,' ') AS REASON,
-		ifnull( CU.REG_USER_NO ,' ') AS REG_USER_NO,
-		ifnull(CU.OK_USER_NO ,' ') AS OK_USER_NO
-		FROM PI_CHARGE_UPDATE AS CU,
-		PI_TARGETS AS T
-		WHERE T.TARGET_ID = CU.TARGET_ID
-		AND CU.APPROVAL_STATUS = 'D'
-		AND CU.OKDATE > DATE_ADD(NOW(), INTERVAL -24 HOUR)
-		AND CU.OK_USER_NO = #sender#
-		AND CU.REG_USER_NO = #receiver#
-		ORDER BY CU.REGDATE DESC, CU.OKDATE DESC
-	</select>
-
-	<select id="getEmailDetail6" parameterClass="com.skyun.app.util.database.ibatis.vo.eMasterVo" resultClass="com.skyun.app.util.database.ibatis.vo.eDetail6Vo">
-		SELECT T.NAME AS HOST,
-		CU.PATH AS PATH,
-		(SELECT Z.USER_NAME FROM PI_USER Z WHERE Z.USER_NO = CU.REG_USER_NO) AS REG_USER_NAME,
-		(SELECT Z.USER_NAME FROM PI_USER Z WHERE Z.USER_NO = CU.OK_USER_NO) AS OK_USER_NAME,
-		DATE_FORMAT(CU.REGDATE, '%Y-%m-%d %H:%i:%s') AS REGDATE,
-		ifnull(DATE_FORMAT(CU.OKDATE, '%Y-%m-%d %H:%i:%s'), ' ') AS OKDATE,
-		'승인완료' AS STATUS_NAME,
-		ifnull( CU.REASON ,' ') AS REASON,
-		ifnull( CU.REG_USER_NO ,' ') AS REG_USER_NO,
-		ifnull(CU.OK_USER_NO ,' ') AS OK_USER_NO
-		FROM PI_CHARGE_UPDATE AS CU,
-		PI_TARGETS AS T
-		WHERE T.TARGET_ID = CU.TARGET_ID
-		AND CU.APPROVAL_STATUS = 'E'
-		AND CU.OKDATE > DATE_ADD(NOW(), INTERVAL -24 HOUR)
-		AND CU.OK_USER_NO = #sender#
-		AND CU.REG_USER_NO = #receiver#
-		ORDER BY CU.REGDATE DESC, CU.OKDATE DESC
-	</select>
-
-	<select id="getEmailDetail7" parameterClass="com.skyun.app.util.database.ibatis.vo.eMasterVo" resultClass="com.skyun.app.util.database.ibatis.vo.eDetail7Vo">
-		SELECT 
-			F.PATH      AS SHORTNAME,
-			T.NAME      AS HOST,
-			F.OWNER     AS OWNER,
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'SOUTH KOREAN RRN') > 0 THEN S.MATCH_COUNT ELSE 0 END)						AS TYPE1,
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'SOUTH KOREAN FOREIGNER NUMBER') > 0 THEN S.MATCH_COUNT ELSE 0 END)			AS TYPE2,
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'SOUTH KOREAN PASSPORT') > 0 THEN S.MATCH_COUNT ELSE 0 END)					AS TYPE3,
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'SOUTH KOREAN DRIVER LICENSE NUMBER') > 0 THEN S.MATCH_COUNT ELSE 0 END)	AS TYPE4,
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'ACCOUNT NUMBER') > 0 THEN S.MATCH_COUNT ELSE 0 END)						AS TYPE5,
-			(SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'VISA') > 0 THEN S.MATCH_COUNT ELSE 0 END) +
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'MAESTRO') > 0 THEN S.MATCH_COUNT ELSE 0 END) +
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'PRIVATE LABEL CARD') > 0 THEN S.MATCH_COUNT ELSE 0 END) +
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'DINERS CLUB') > 0 THEN S.MATCH_COUNT ELSE 0 END) +
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'JCB') > 0 THEN S.MATCH_COUNT ELSE 0 END) +
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'LASER') > 0 THEN S.MATCH_COUNT ELSE 0 END) +
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'MASTERCARD') > 0 THEN S.MATCH_COUNT ELSE 0 END) +
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'AMERICAN EXPRESS') > 0 THEN S.MATCH_COUNT ELSE 0 END) )					AS TYPE6,
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'SOUTH KOREAN PHONE NUMBER') > 0 THEN S.MATCH_COUNT ELSE 0 END) 			AS TYPE7,
-			(SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'SOUTH KOREAN DRIVER LICENSE NUMBER') > 0 THEN S.MATCH_COUNT ELSE 0 END) + 
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'SOUTH KOREAN FOREIGNER NUMBER') > 0 THEN S.MATCH_COUNT ELSE 0 END) + 
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'SOUTH KOREAN PASSPORT') > 0 THEN S.MATCH_COUNT ELSE 0 END) + 
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'SOUTH KOREAN RRN') > 0 THEN S.MATCH_COUNT ELSE 0 END) +
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'ACCOUNT NUMBER') > 0 THEN S.MATCH_COUNT ELSE 0 END) + 
-			(SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'VISA') > 0 THEN S.MATCH_COUNT ELSE 0 END) +
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'MAESTRO') > 0 THEN S.MATCH_COUNT ELSE 0 END) +
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'PRIVATE LABEL CARD') > 0 THEN S.MATCH_COUNT ELSE 0 END) +
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'DINERS CLUB') > 0 THEN S.MATCH_COUNT ELSE 0 END) +
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'JCB') > 0 THEN S.MATCH_COUNT ELSE 0 END) +
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'LASER') > 0 THEN S.MATCH_COUNT ELSE 0 END) +
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'MASTERCARD') > 0 THEN S.MATCH_COUNT ELSE 0 END) +
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'AMERICAN EXPRESS') > 0 THEN S.MATCH_COUNT ELSE 0 END) + 
-			SUM(CASE WHEN INSTR(UPPER(S.DATA_TYPE), 'SOUTH KOREAN PHONE NUMBER') > 0 THEN S.MATCH_COUNT ELSE 0 END)) )					AS TYPE,
-			(CASE	
-				WHEN PRC_FLAG.PROCESSING_FLAG IS NULL THEN ''
-		           ELSE CONCAT((CASE 	WHEN PRC.APPROVAL_STATUS = 'W' THEN '처리 등록'
-								     	WHEN PRC.APPROVAL_STATUS = 'E' THEN '처리 완료' 
-								     	WHEN PRC.APPROVAL_STATUS = 'D' THEN '처리 반려' 
-								        ELSE '처리 대기' END 
-								), '_', PRC_FLAG.PROCESSING_FLAG_NAME) 
-			END) AS APPROVAL_STATUS_PRINT_NAME
-		FROM pi_targets T, pi_Summary S, pi_find F
-		   LEFT OUTER JOIN PI_DATA_PROCESSING PRC           ON PRC.TARGET_ID = F.TARGET_ID AND F.HASH_ID = PRC.HASH_ID AND F.GROUP_ID = PRC.GROUP_ID
-		   LEFT OUTER JOIN PI_DATA_PROCESSING_FLAG PRC_FLAG ON PRC.PROCESSING_FLAG = PRC_FLAG.PROCESSING_FLAG
-		WHERE 1 = 1
-			AND T.TARGET_ID = F.TARGET_ID
-			AND F.HASH_ID = S.OBJECT_ID
-			AND F.TARGET_ID = S.TARGET_ID
-			AND F.OWNER = #sender#
-			AND F.REGDATE > DATE_ADD(NOW(), INTERVAL -30 DAY)
-			AND (CASE WHEN IFNULL(PRC_FLAG.PROCESSING_FLAG,999) = 5 AND IFNULL(PRC.APPROVAL_STATUS,'D') = 'E' THEN 'X' ELSE 'O' END) = 'O'
-		GROUP BY F.TARGET_ID, F.HASH_ID
-		HAVING TYPE != 0
-		ORDER BY F.TARGET_ID, F.PATH
-		
-	</select>
-
 
 </sqlMap>
